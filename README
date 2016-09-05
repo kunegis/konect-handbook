@@ -1,0 +1,31 @@
+            ================================
+            The Handbook of Network Analysis
+
+                (by the KONECT project)
+            ================================
+
+This is the Handbook of Network Analysis, a part of the KONECT project:
+
+http://konect.uni-koblenz.de/
+
+This directory compiles to a PDF file (konect-handbook.pdf) that
+contains the Handbook.  This PDF file is also committed to version
+control, so you only have to rebuild it if you change the text. 
+
+To compile, you need Stu, available at:
+
+https://github.com/kunegis/stu/
+
+This Handbook is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.  
+
+This Handbook is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details. 
+
+If you find errors or omissions, please write to Jérôme Kunegis
+<kunegis@gmail.com>.
+
