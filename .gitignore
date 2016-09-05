@@ -1,0 +1,8 @@
+FILES
+analysis
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+konect-toolbox

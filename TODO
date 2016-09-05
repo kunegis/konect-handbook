@@ -1,0 +1,7 @@
+* use longtable for all tables, so as to include the tables in their
+  respective subsection. 
+* acknowledgments 
+* glossary:  link to the relevant sections 
+* definition of the weight function for a node pair:  add a case for DYNAMIC 
+* include a table of content 
+* write a longer definition of assortativity and include it on the website 

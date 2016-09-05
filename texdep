@@ -1,0 +1,90 @@
+#! /bin/sh
+#
+# Determine the dependencies of a *.tex file. 
+#
+# INVOCATION 
+# 	$0 FILENAME
+#
+# STDOUT 
+#	List of dependencies, one file per line
+#
+# ENVIRONMENT
+#	$TEXDEP_GRAPHICSEXT	(optional) extension of included graphics,
+#				without the dot; defaults to "pdf"
+#
+# ABOUT
+#	(c) 2015, 2016 Written by Jérôme Kunegis <kunegis@uni-koblenz.de>
+#
+
+file="$1"
+
+[ "$file" ] || {
+	echo >&2 '*** Missing filename'
+	echo >&2 "Invocation:  $0  FILENAME"
+	exit 1
+}
+
+if [ -z "$TEXDEP_GRAPHICSEXT" ] ; then
+	graphicsext=pdf
+else
+	graphicsext="$TEXDEP_GRAPHICSEXT"
+fi
+
+#
+# The file itself
+#
+
+echo "$file"
+
+#
+# Bibtex source files
+#
+
+<"$file" sed -e '
+/\\bibliography{/!d
+s,^[^{]*{\([^}]*\).*$,\1,
+' | tr ',' '
+' |
+sed -e 's,$,.bib,'
+
+#
+# Plots
+#
+
+<"$file" sed -re '/^\s*%/d;/^.*\\includegraphics/!d;s,^.*\\includegraphics[^{]*\{([^}]+)\}.*$,\1,' |
+while read name ; do
+	if [ -z "$name" ] ; then
+		continue
+	fi
+
+	if echo "$name" | grep -qvE '\.pdf$' ; then
+		if echo "$name" | grep -qvE '\.png$' ; then
+			name="$name.$graphicsext"
+		fi
+	fi
+	echo "$name"
+done
+
+#
+# Other included .tex files
+#
+
+<"$file" sed -re '/\\input.*\{/!d;s,^.*\{,,;s,\}.*$,,' |
+while read -r name ; do
+	if [ -z "$name" ] ; then
+		continue
+	fi
+	if echo "$name" | grep -qvE '\.tex$' ; then
+		name="$name.tex"
+	fi
+	echo "$name"
+done
+
+#
+# CLS files
+#
+
+<"$file" sed -re '/\\documentclass\{/!d;s,^.*\\documentclass\{(.*)\}.*$,\1,;/article/d' |
+while read -r name ; do
+	echo "$name.cls"
+done

@@ -1,0 +1,72 @@
+#! /bin/sh
+#
+# Copy an image from SRC to DST, transforming it along the way such that
+# it is suitable to be used in Latex. 
+#
+# INVOCATION
+#
+#	$0 SRC DST
+#
+# SEE ALSO
+# 
+# This code is based on the file "mkimg" in svn/kunegis/papers/phd/. 
+#
+# TO DO
+#
+# Support more formats -- see svn/kunegis/papers/phd/mkimg for code.  
+#
+# ABOUT 
+#
+# Written by Jerome Kunegis.
+#
+
+set -e
+
+if [ -z "$1" -o -z "$2" ] ; then
+	echo >&2 "*** Filenames missing"
+	exit 1
+fi
+
+src="$1"
+dst="$2"
+
+# Threshold filesize for converting a file to bitmap 
+FILESIZE_THRESHOLD=500000 
+
+if [ ! -e "$src" ] ; then
+	echo >&2 "$0:  *** source file '$src' must exist"
+	exit 1
+fi
+
+if echo "$src" | grep -qE '\.eps$' ; then
+
+	if echo "$dst" | grep -qE '\.pdf$' ; then
+		if [ "$(stat -c %s $src)" -lt $FILESIZE_THRESHOLD ] ; then
+  			epstopdf $src --outfile=$dst
+		else
+			convert $src -resize 100% $dst
+		fi
+	else
+		echo >&2 "*** Unknown destination file type for EPS source:  $dst"
+		exit 1
+	fi
+
+elif echo "$src" | grep -qE '\.svg$' ; then
+
+	if echo "$dst" | grep -qE '\.pdf$' ; then
+		inkscape -z "$src" -A "$dst"
+		if [ "$(stat -c %s $dst)" -ge $FILESIZE_THRESHOLD ] ; then
+			cp $dst $TMP/$$.pdf
+			convert $TMP/$$.pdf -resize 100% $dst
+		fi
+	else
+		echo >&2 "*** Unknown destination file type for SVG source:  $dst"
+		exit 1
+	fi
+
+else
+	echo >&2 "*** Unknown source file type:  $src"
+	exit 1
+fi
+
+exit 0

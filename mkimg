@@ -1,0 +1,196 @@
+UNUSED -- use cpimg
+
+#! /bin/sh
+#
+# Create and update image files.  This will copy EPS or PDF images from
+# a given source directory to PDFs or EPSs in a target directory.  Files
+# are only copied when necessary, in a way similar to Make.  A warning
+# is printed when the source files does not exist, but the target file
+# exists.
+#
+# All combinations of from/to PDF/EPS are supported.  The name of files
+# is automatically from *.tex files.  All embedded fonts are stripped in
+# the conversion process.
+#
+# ENVIRONMENT
+#
+#	SOURCES
+#
+#		$SRC_PDF_DIR	Used to copy PDFs from SRC to $PDF_DIR
+#		$SRC_EPS_DIR 	Without trailing slash
+#		$SRC_SVG_DIR	For SVGs
+#
+#	TARGETS
+#
+#		$DST_PDF_DIR 	Without trailing slash
+#		$DST_EPS_DIR	
+#
+#	OTHER 
+#
+#		$DISABLE_SAVE		Don't copy the original file along 
+#		$DISABLE_SAVE_EPS	Deprecated--Don't save the EPS along with
+#			the PDF; use when the two directories are the
+#			same to just convert EPSs to PDF.  
+#		$DISABLE_SAVE_PDF	Deprecated--The same for saving PDFs 
+#		$TEXDIR			Location of *.tex files; defaults to "."
+#
+
+set -e
+
+# Threshold filesize for converting a file to bitmap 
+FILESIZE_THRESHOLD=500000 
+
+TMP=${TMP:-/tmp/}
+TEXDIR=${TEXDIR:-.}
+
+# Embed all fonts during the conversion 
+export GS_OPTIONS="-dEmbedAllFonts=true -dPDFSETTINGS=/printer"
+
+if [ "$EPS_DIR" -a -z "$SRC_EPS_DIR" ] ; then SRC_EPS_DIR="$EPS_DIR" ; fi
+if [ "$PDF_DIR" -a -z "$DST_PDF_DIR" ] ; then DST_PDF_DIR="$PDF_DIR" ; fi
+
+error=0
+
+if [ "$DST_PDF_DIR" ] ; then DST_DIR="$DST_PDF_DIR" ; else
+    DST_DIR="$DST_EPS_DIR" ; fi 
+
+doo() {
+	[ "$verbose" ] && echo "$@"
+	"$@"
+}
+
+cat "$TEXDIR"/*.tex | sed -re '/\{'$DST_DIR'\/.*\}/!d;s,^.*\{'$DST_DIR'/,,;s,\}.*$,,' |
+while read name
+do
+    if [ "$SRC_PDF_DIR" ]
+    then
+	if [ "$DST_PDF_DIR" ] 
+	then 
+            if [ \! -r "$SRC_PDF_DIR/$name.pdf" ]
+            then
+  		echo >&2 "*** No such source PDF:  $SRC_PDF_DIR/$name.pdf"
+		error=1
+		error_name=$name
+		continue
+	    fi
+	    if [ \! -r $DST_PDF_DIR/$name.pdf -o $SRC_PDF_DIR/$name.pdf -nt $DST_PDF_DIR/$name.pdf ]
+	    then
+  		echo NAME=»$name«    
+		SRC_FILE=$SRC_PDF_DIR/$name.pdf
+		echo SRC_FILE=$SRC_FILE
+		doo cp $SRC_PDF_DIR/$name.pdf $DST_PDF_DIR/$name.pdf
+	    fi
+	else # DST_EPS_DIR
+	    if [ \! -r "$SRC_PDF_DIR/$name.pdf" ]
+	    then
+  		echo >&2 "*** No such source PDF:  $SRC_PDF_DIR/$name.pdf"
+		error=1
+		error_name=$name
+		continue
+	    fi
+
+	    if [ \! -r $DST_EPS_DIR/$name.eps -o $SRC_PDF_DIR/$name.pdf -nt $DST_EPS_DIR/$name.eps ]
+	    then
+  		echo NAME=»$name«    
+  		doo pdf2ps $SRC_PDF_DIR/$name.pdf $DST_EPS_DIR/$name.eps
+		if [ -z "$DISABLE_SAVE_PDF" -a -z "$DISABLE_SAVE" ] 
+		then
+  		    doo cp $SRC_PDF_DIR/$name.pdf $DST_EPS_DIR/$name.pdf
+		fi
+	    fi
+	fi
+    elif [ "$SRC_EPS_DIR" ]
+    then 
+	if [ "$DST_PDF_DIR" ]
+	then
+	    if [ \! -r "$SRC_EPS_DIR/$name.eps" ]
+	    then
+  		echo >&2 "*** No such source EPS:  $SRC_EPS_DIR/$name.eps"
+		error=1
+		error_name=$name
+		continue
+	    fi
+
+	    if [ \! -r $DST_PDF_DIR/$name.pdf -o $SRC_EPS_DIR/$name.eps -nt $DST_PDF_DIR/$name.pdf ]
+	    then
+  		echo NAME=»$name«    
+		if [ "`stat -c %s $SRC_EPS_DIR/$name.eps`" -lt $FILESIZE_THRESHOLD ] ; then
+  		    doo epstopdf $SRC_EPS_DIR/$name.eps --outfile=$DST_PDF_DIR/$name.pdf
+		else
+		    doo convert $SRC_EPS_DIR/$name.eps -resize 100% $DST_PDF_DIR/$name.pdf
+		fi
+		if [ -z "$DISABLE_SAVE_EPS" -a -z "$DISABLE_SAVE" ] 
+		then
+  		    doo cp $SRC_EPS_DIR/$name.eps $DST_PDF_DIR/$name.eps
+		fi
+	    fi
+	else
+            if [ \! -r "$SRC_EPS_DIR/$name.eps" ]
+            then
+  		echo >&2 "*** No such source EPS:  $SRC_EPS_DIR/$name.eps"
+		error=1
+		error_name=$name
+		continue
+	    fi
+	    if [ \! -r $DST_EPS_DIR/$name.eps -o $SRC_EPS_DIR/$name.eps -nt $DST_EPS_DIR/$name.eps ]
+	    then
+  		echo NAME=»$name«    
+		SRC_FILE=$SRC_EPS_DIR/$name.eps
+		echo SRC_FILE=$SRC_FILE
+		doo eps2eps $SRC_EPS_DIR/$name.eps $DST_EPS_DIR/$name.eps
+		# doo cp $SRC_EPS_DIR/$name.eps $DST_EPS_DIR/$name.eps
+	    fi
+	fi
+    elif [ "$SRC_SVG_DIR" ]
+    then
+	if [ "$DST_PDF_DIR" ]
+	then
+	    if [ \! -r "$SRC_SVG_DIR/$name.svg" ]
+	    then
+  		echo >&2 "*** No such source SVG:  $SRC_SVG_DIR/$name.svg"
+		error=1
+		error_name=$name
+		continue
+	    fi
+
+	    if [ \! -r $DST_PDF_DIR/$name.pdf -o $SRC_SVG_DIR/$name.svg -nt $DST_PDF_DIR/$name.pdf ]
+	    then
+  		echo NAME=»$name«    
+		doo inkscape -z "$SRC_SVG_DIR/$name.svg" -A "$DST_PDF_DIR/$name.pdf"
+		if [ "`stat -c %s $DST_PDF_DIR/$name.pdf`" -ge $FILESIZE_THRESHOLD ] ; then
+		    doo cp $DST_PDF_DIR/$name.pdf $TMP/$$.$name.pdf
+		    doo convert $TMP/$$.$name.pdf -resize 100% $DST_PDF_DIR/$name.pdf
+		fi
+		if [ -z "$DISABLE_SAVE" ] 
+		then
+  		    doo cp $SRC_SVG_DIR/$name.svg $DST_PDF_DIR/$name.svg
+		fi
+	    fi
+	else
+	    if [ \! -r "$SRC_SVG_DIR/$name.svg" ]
+	    then
+  		echo >&2 "*** No such source SVG:  $SRC_SVG_DIR/$name.svg"
+		error=1
+		error_name=$name
+		continue
+	    fi
+
+	    if [ \! -r $DST_EPS_DIR/$name.eps -o $SRC_SVG_DIR/$name.svg -nt $DST_EPS_DIR/$name.eps ]
+	    then
+  		echo NAME=»$name«    
+		doo inkscape -z "$SRC_SVG_DIR/$name.svg" -E "$DST_EPS_DIR/$name.eps"
+		if [ -z "$DISABLE_SAVE" ] 
+		then
+  		    doo cp $SRC_SVG_DIR/$name.svg $DST_EPS_DIR/$name.svg
+		fi
+	    fi
+	fi
+    else
+        echo >&2 '*** Missing SRC directory'
+	exit 1
+    fi
+done
+
+[ "$error" = 1 ] && { exit 1 ; } 
+
+exit 0
