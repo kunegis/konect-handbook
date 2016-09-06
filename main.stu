@@ -22,17 +22,12 @@
 }
 
 konect-handbook.pdf:  [FILES]
-#	konect-handbook.tex colors.tex 
-#	./ref.bib ./kunegis.bib mkimg
 {
-#	SRC_EPS_DIR=../analysis/plot DST_PDF_DIR=plot ./mkimg 
 	pdflatex -file-line-error -halt-on-error konect-handbook.tex
 	bibtex konect-handbook
 	pdflatex -file-line-error -halt-on-error konect-handbook.tex
 	pdflatex -file-line-error -halt-on-error konect-handbook.tex
 }
-
-## mkimg = -o ../../../papers/phd/;
 
 >colors.tex:  <konect-toolbox/m/konect_data_category.m mkcolors
 {
@@ -54,16 +49,16 @@ konect-toolbox: {
 	./texdep konect-handbook.tex
 }
 
-#>FILES 
-#{ 
-#	echo \
-#		konect-handbook.tex colors.tex konect-logo.pdf \
-#		plot/*.pdf konect-handbook.bbl category-tabular.tex
-#}
-
-arxiv.tar.gz: [FILES] FILES
+>FILES-ARXIV:  <FILES
 {
-	tar cfvvz arxiv.tar.gz $(cat FILES)
+	# Replace the .bib files by the .bbl file
+	sed -e '/.bib$/d'
+	echo konect-handbook.bbl
+}
+
+arxiv.tar.gz: [FILES-ARXIV] FILES-ARXIV
+{
+	tar cfvvz arxiv.tar.gz $(cat FILES-ARXIV)
 }
 
 plot/$name.pdf:

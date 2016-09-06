@@ -17,7 +17,7 @@
 #
 # ABOUT 
 #
-# Written by Jerome Kunegis.
+#     Written by Jerome Kunegis.
 #
 
 set -e
@@ -33,8 +33,12 @@ dst="$2"
 # Threshold filesize for converting a file to bitmap 
 FILESIZE_THRESHOLD=500000 
 
+if [ -z "$TMPDIR" ] ; then
+	TMPDIR=/tmp
+fi
+
 if [ ! -e "$src" ] ; then
-	echo >&2 "$0:  *** source file '$src' must exist"
+	echo >&2 "$0:  *** Source file '$src' must exist"
 	exit 1
 fi
 
@@ -47,7 +51,7 @@ if echo "$src" | grep -qE '\.eps$' ; then
 			convert $src -resize 100% $dst
 		fi
 	else
-		echo >&2 "*** Unknown destination file type for EPS source:  $dst"
+		echo >&2 "*** Unknown destination file type for EPS source:  '$dst'"
 		exit 1
 	fi
 
@@ -56,16 +60,16 @@ elif echo "$src" | grep -qE '\.svg$' ; then
 	if echo "$dst" | grep -qE '\.pdf$' ; then
 		inkscape -z "$src" -A "$dst"
 		if [ "$(stat -c %s $dst)" -ge $FILESIZE_THRESHOLD ] ; then
-			cp $dst $TMP/$$.pdf
-			convert $TMP/$$.pdf -resize 100% $dst
+			cp $dst $TMPDIR/$$.pdf
+			convert $TMPDIR/$$.pdf -resize 100% $dst
 		fi
 	else
-		echo >&2 "*** Unknown destination file type for SVG source:  $dst"
+		echo >&2 "*** Unknown destination file type for SVG source:  '$dst'"
 		exit 1
 	fi
 
 else
-	echo >&2 "*** Unknown source file type:  $src"
+	echo >&2 "*** Unknown source file type:  '$src'"
 	exit 1
 fi
 
