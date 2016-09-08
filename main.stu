@@ -79,7 +79,9 @@ plot/$name.pdf:
 
 texdep      = -o ../kunegis/papers/;
 cpimg       = -o ../kunegis/papers/;
-./$name.bib = -o ../kunegis/bibtex/;
+$name.bib   = -o ../kunegis/bibtex/;
 
 category-tabular.tex = -o tex/; 
+
+../kunegis/bibtex/$name.bib;
 

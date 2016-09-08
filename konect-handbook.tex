@@ -116,7 +116,7 @@ online.\footnote{\href{http://konect.uni-koblenz.de/networks}{konect.uni-koblenz
 
 The KONECT project consists of several components, whose interactions is
 summarized in Figure~\ref{fig:organization}.  Various parts of the
-KONECT project are available at Github, including this Handbook.\footnote{\href{https://github.com/kunegis/konect-analysis}{github.com/kunegis/konect-analysis}}\footnote{\href{https://github.com/kunegis/konect-toolbox}{github.com/kunegis/konect-toolbox}}\footnote{\href{https://github.com/kunegis/konect-handbook}{github.com/kunegis/konect-handbook}}
+KONECT project are available at Github, including this Handbook.\footnote{\href{https://github.com/kunegis/konect-analysis}{github.com/kunegis/konect-analysis}}\footnote{\href{https://github.com/kunegis/konect-toolbox}{github.com/kunegis/konect-toolbox}}\footnote{\href{https://github.com/kunegis/konect-handbook}{github.com/kunegis/konect-handbook}}\footnote{\href{https://github.com/kunegis/konect-extr}{github.com/kunegis/konect-extr}}
 
 \begin{figure}
   \centering
@@ -739,6 +739,13 @@ networks and networks with multiple edges.
 The weight of a node may also be called its strength~\cite{b792}. 
 % TODO update reference to journal paper 
 
+For directed graphs, we can distinguish the outdegree weight and the
+indegree weight:
+\begin{align}
+  w_{\mathrm O}(u) &= \sum_{(u,v)\in E} |w((u,v))| \\
+  w_{\mathrm I}(u) &= \sum_{(v,u)\in E} |w((v,u))| 
+\end{align}
+
 \subsection{Graph Transformations}
 Sometimes, it is necessary to construct a graph out of another graph.
 In the following, we briefly review such constructions.  
@@ -819,6 +826,13 @@ the absolute weights of all nodes, i.e.,
 Note that we define the degree matrix explicitly to contain node weights
 instead of degrees, to be consistent with the definition of $\mathbf
 A$. 
+
+For directed graphs, we can define the diagonal degree matrix
+specifically for outdegrees and indegrees as follows:
+\begin{align}
+  [\mathbf D_{\mathrm O}]_{uu} &= |w_{\mathrm O}(u)| \\
+  [\mathbf D_{\mathrm I}]_{uu} &= |w_{\mathrm I}(u)| 
+\end{align}
 
 The normalized adjacency matrix $\mathbf N$ is a $|V|$-by-$|V|$ matrix
 given by
@@ -2260,7 +2274,7 @@ corresponding eigenvectors as columns.
 The largest absolute eigenvalue of $\mathbf A$ is the networks spectral norm,
 i.e.,
 \begin{align*}
-  \max_i |\Lambda_{ii}| &= \left\| \mathbf A \right\|_2.
+  \max_i |\mathbf \Lambda_{ii}| &= \left\| \mathbf A \right\|_2.
 \end{align*}
 
 The sum of all eigenvalues $\lambda_i$ equal the trace of $\mathbf A$,
@@ -2507,6 +2521,108 @@ This matrix is positive-semidefinite, and its smallest eigenvalue is
 zero if and only if the graph is bipartite.  Thus, $\mathbf K$ is used
 in measures of bipartivity. 
 
+\subsection{Directed Graphs}
+In directed graphs, the adjacency matrix $\mathbf A$ is itself
+asymmetric, and there is no special half-adjacency matrix.  Since the
+adjacency matrix is symmetric, decompositions are more complex.  For
+instance, $\mathbf A$ is not normal in the general case, and therefore
+there is no simply defined eigenvalue decomposition anymore. 
+
+\subsubsection{Singular Value Decomposition}
+The singular value decomposition is defined for any matrix, including
+those that are not symmetric, and even those that are not quadratic.
+Thus, it can be applied to the adjacency matrix of directed graphs. 
+\begin{align}
+  \marginnote{\texttt{svd}}
+  \mathbf A &= \mathbf U \mathbf \Sigma \mathbf V^{\mathrm T}
+\end{align}
+The matrices $\mathbf U$ and $\mathbf V$ are each orthogonal, but they
+are not equal.  They contain the left and right singular vectors are
+columns.  The matrix $\mathbf \Sigma$ is diagonal, and contains the
+singular values, which are all nonnegative. 
+
+\subsubsection{Normalized Adjacency Matrix}
+The adjacency matrix can be normalized for directed network, in the same
+way as for undirected networks.
+\begin{align}
+  \mathbf N &= \mathbf D_{\mathrm O}^{-1/2} \mathbf A \mathbf D_{\mathbf I}^{-1/2}
+\end{align}
+Here, $\mathbf D_{\mathrm O}^{-1/2}$ and $\mathbf D_{\mathbf I}^{-1/2}$
+are the diagonal matrices of out- and indegrees. 
+
+The normalized adjacency matrix $\mathbf N$ can be used in the singular
+value decomposition, too:
+\begin{align}
+  \marginnote{\texttt{svd-n}}
+  \mathbf N &= \mathbf U \mathbf \Sigma \mathbf V^{\mathrm T}
+\end{align}
+
+\subsubsection{Eigenvectors}
+While the eigenvalue decomposition is not defined in the general case
+for an asymmetric matrix $\mathbf A$, its eigenvectors and eigenvalues
+are well-defined, if we distinguish between left and right
+eigenvectors.
+
+\marginnote{diag}
+Thus, we define the method \texttt{diag}, which is a decomposition in
+the KONECT sense, but not in the strict mathematical sense. 
+$\mathbf U$ and $\mathbf V$ are then defined as the matrices containing
+the left and right eigenvectors of $\mathbf A$, and $\mathbf \Lambda$ is
+the diagonal matrix of corresponding eigenvalues. 
+
+Note that while left and right eigenvectors differ, their eigenvalues
+are identical. 
+
+\subsubsection{Skew Decomposition}
+While an asymmetric matrix $\mathbf A$ may be transformed to $\mathbf A
++ \mathbf A^{\mathrm T}$ to give a symmetric matrix, we can also use
+$\mathbf A - \mathbf A^{\mathrm T}$ to get a skew-symmetric matrix.  A
+skew symmetric matrix $\mathbf X$ is a matrix such that $\mathbf X =
+-\mathbf X^{\mathrm T}$.
+
+Skew symmetric matrices have well-defined eigenvalue decompositions,
+which are however complex, as both the eigenvectors and eigenvalues will
+be complex numbers.  The eigenvectors and eigenvalues however follow a
+specific pattern, that we can exploit to represent such a decomposition
+using only real numbers:
+\begin{align}
+  \mathbf A - \mathbf A^{\mathrm T} &= \mathbf Q \mathbf L \mathbf Q^{\mathrm T}
+\end{align}
+such that
+\begin{align}
+  \mathbf Q &= \frac 1 {\sqrt{2}} \left[
+    \begin{array}{cc}
+      \mathbf U + i \mathbf V \\
+      \mathbf U - i \mathbf V 
+    \end{array}
+    \right] \\
+  \mathbf L &= \left[ \begin{array}{cc}
+      i \mathbf D & \mathbf 0 \\
+      \mathbf 0 & -i \mathbf D
+    \end{array} \right]
+\end{align}
+where $\mathbf U$, $\mathbf V$ and $\mathbf D$ are real matrices.  In
+fact, this decomposition can be equivalently written as
+\begin{align}
+  \marginnote{skew}
+  \mathbf A - \mathbf A^{\mathrm T} &=
+  \mathbf U \mathbf D \mathbf V^{\mathrm T} - \mathbf V \mathbf D \mathbf U^{\mathrm T}.
+\end{align}
+This decompositioni is equivalent to that given by Constantine and Gower
+\cite{b869}.  It shows that the skew-symmetric matrix $\mathbf A -
+\mathbf A^{\mathrm T}$ has eigenvalues that are purely imaginary, come
+in pairs $\{\pm \lambda\}$ that are the negative of each other (or
+equivalently, the complex conjugate), and their corresponding
+eigenvectors are also complex conjugates of each other.
+
+Note also that the number of columns of both $\mathbf U$ and $\mathbf V$
+is at most $\lfloor n \rfloor$, and thus, if $n$ is odd, the
+skew-symmetric matrix $\mathbf A - \mathbf A^{\mathrm T}$ has the
+eigenvalue zero, which is the complex conjugate of itself.  Also, the
+expression $\mathbf U \mathbf D \mathbf V^{\mathrm T}$ is \emph{not} the
+singular value decomposition of $\mathbf A$, even if the form of the
+decomposition is the same. 
+
 \section{KONECT Toolbox}
 \label{sec:toolbox}
 
@@ -2747,9 +2863,9 @@ In the following, we describe KONECT's text format.  Each network
   \item \texttt{out.\$NETWORK}: The edges stored as tab separated values
     (TSV).  The file is a text file, and each line contains information
     about one edge.  Each line contains two, three or four numbers
-    represented textually, and separated by any sequence of whitespace
-    (most KONECT code uses a single tab character when generating such
-    files). The first two  
+    represented textually, and separated by any sequence of whitespace. 
+    The preferred separator is a single tab. 
+    The first two  
     columns are mandatory and contain the source and destination node ID
     of the edge.  The third column is optional and contains the edge
     weight.  When the network is dynamic, the third column contains $+1$
@@ -3218,4 +3334,3 @@ measures. \\
 \end{tabular}
 
 \end{document}
-
