@@ -1913,6 +1913,25 @@ KONECT
 website\footnote{\href{http://konect.uni-koblenz.de/plots/}{konect.uni-koblenz.de/plots}}. The
 KONECT Toolbox contains Matlab code for generating these plot types.
 
+\subsection{Layout}
+Layout plots show the nodes and edges of a graph in a way that makes
+features if the graph visible.  Usually, this only makes sense for small
+graphs.\footnote{See
+  \href{https://networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment/}{networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment}
+  for an explanation.}
+In KONECT, we use the Fruchterman--Reingold algorithm~\cite{b870}.  An
+example is shown in Figure~\ref{fig:fruchterman-reingold}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\wPlot]{plot/layout.a.moreno_highschool}
+  \caption{
+    \label{fig:fruchterman-reingold}
+    A layout of a highschool social network (\href{http://konect.uni-koblenz.de/networks/moreno_highschool}{\textsf{MH}}), using the
+    Fruchterman--Reingold algorithm~\cite{b870}. 
+  }
+\end{figure}
+
 \subsection{Temporal Distribution}
 The temporal distributions shows the distribution of edge creation
 times.  It is only defined for networks with known edge creation times.

@@ -23,10 +23,10 @@
 
 konect-handbook.pdf:  [FILES]
 {
-	pdflatex -file-line-error -halt-on-error konect-handbook.tex
+	pdflatex -file-line-error -halt-on-error -interaction batchmode konect-handbook.tex
 	bibtex konect-handbook
-	pdflatex -file-line-error -halt-on-error konect-handbook.tex
-	pdflatex -file-line-error -halt-on-error konect-handbook.tex
+	pdflatex -file-line-error -halt-on-error -interaction batchmode konect-handbook.tex
+	pdflatex -file-line-error -halt-on-error -interaction batchmode konect-handbook.tex
 }
 
 >colors.tex:  <konect-toolbox/m/konect_data_category.m mkcolors
@@ -63,7 +63,8 @@ arxiv.tar.gz: [FILES-ARXIV] FILES-ARXIV
 
 plot/$name.pdf:
 	cpimg
-	-o analysis/plot/$name.eps
+#	-o
+	analysis/plot/$name.eps
 {
 	if [ ! -e analysis/plot/"$name".eps ] ; then
 		echo >&2 "Warning: 'analysis/plot/$name.eps' does not exist"
