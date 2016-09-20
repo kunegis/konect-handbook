@@ -12,7 +12,7 @@ This Handbook is contains all definitions used by the KONECT projects,
 covering many aspects of network analysis and corresponding parts of
 graph theory, as well as definitions of plots, statistics and internal
 data structures used in KONECT.  It also serves as a brief introduction
-to network analysis, using KONECT. 
+to network analysis, using KONECT.
 
 This directory compiles to a PDF file (konect-handbook.pdf) that
 contains the Handbook.  This PDF file is also committed to version
@@ -38,16 +38,29 @@ the handbook.  See the file 'main.stu' for details.
 License
 =======
 
-This Handbook is free software: you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation, either version 3 of the License, or (at your
-option) any later version.  
+For the Handbook proper (i.e., the file konect-handbook.tex)
+------------------------------------------------------------
 
-This Handbook is distributed in the hope that it will be useful, but
+The Handbook proper is released under the Creative Commons CC-BY-SA 4.0
+License; see: 
+
+https://creativecommons.org/licenses/by-sa/4.0/
+
+
+For the code in this directory
+------------------------------
+
+This is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+This software is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details. 
+General Public License for more details.
+
+The GPLv3 is found in the file 'COPYING' in this directory. 
 
 If you find errors or omissions, please write to Jérôme Kunegis
 <kunegis@gmail.com>.
-
