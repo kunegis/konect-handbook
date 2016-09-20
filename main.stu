@@ -3,12 +3,8 @@
 #
 #       https://github.com/kunegis/stu
 #
-# Once installed, execute 'stu' instead of 'make', form within this
+# Once installed, execute 'stu' instead of 'make', from within this
 # directory.  
-#
-# Files copied using '= -o' will be updated if their source are
-# available, but will use the present version if ne source is present.
-# (See the Stu manpage for copy rules.)
 #
 
 % version 2.4
