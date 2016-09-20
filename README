@@ -8,13 +8,35 @@ This is the Handbook of Network Analysis, a part of the KONECT project:
 
 http://konect.uni-koblenz.de/
 
+This Handbook is contains all definitions used by the KONECT projects,
+covering many aspects of network analysis and corresponding parts of
+graph theory, as well as definitions of plots, statistics and internal
+data structures used in KONECT.  It also serves as a brief introduction
+to network analysis, using KONECT. 
+
 This directory compiles to a PDF file (konect-handbook.pdf) that
 contains the Handbook.  This PDF file is also committed to version
 control, so you only have to rebuild it if you change the text. 
 
+The Handbooks is also available on arXiv, but usually not the newest
+version:
+
+http://arxiv.org/abs/1402.5500
+
+
+Compilation
+===========
+
 To compile, you need Stu, available at:
 
 https://github.com/kunegis/stu/
+
+Once Stu is installed, just execute 'stu' within this directory to build
+the handbook.  See the file 'main.stu' for details. 
+
+
+License
+=======
 
 This Handbook is free software: you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
