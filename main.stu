@@ -59,8 +59,7 @@ arxiv.tar.gz: [FILES-ARXIV] FILES-ARXIV
 
 plot/$name.pdf:
 	cpimg
-#	-o
-	analysis/plot/$name.eps
+	[plot/dep.plot.$name]
 {
 	if [ ! -e analysis/plot/"$name".eps ] ; then
 		echo >&2 "Warning: 'analysis/plot/$name.eps' does not exist"
@@ -68,6 +67,15 @@ plot/$name.pdf:
 	fi
 	
 	./cpimg analysis/plot/"$name".eps plot/"$name".pdf
+}
+
+>plot/dep.plot.$name:
+	PLOT_NONOPTIONAL
+{
+	if grep -qE '^\s*0' PLOT_NONOPTIONAL ; then
+		printf '%s ' '-o'
+	fi
+	echo analysis/plot/"$name".eps
 }
 
 #
@@ -81,4 +89,3 @@ $name.bib   = -o ../kunegis/bibtex/;
 category-tabular.tex = -o tex/; 
 
 ../kunegis/bibtex/$name.bib;
-
