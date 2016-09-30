@@ -18,7 +18,7 @@ This directory compiles to a PDF file (konect-handbook.pdf) that
 contains the Handbook.  This PDF file is also committed to version
 control, so you only have to rebuild it if you change the text. 
 
-The Handbooks is also available on arXiv, but usually not the newest
+The Handbook is also available on arXiv, but usually not the newest
 version:
 
 http://arxiv.org/abs/1402.5500
