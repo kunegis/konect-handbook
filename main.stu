@@ -78,6 +78,9 @@ plot/$name.pdf:
 	echo analysis/plot/"$name".eps
 }
 
+# Determines whether to use external images or not 
+PLOT_NONOPTIONAL;
+
 #
 # External files -- all are optional and committed to version control 
 #
@@ -89,3 +92,4 @@ $name.bib   = -o ../kunegis/bibtex/;
 category-tabular.tex = -o tex/; 
 
 ../kunegis/bibtex/$name.bib;
+
