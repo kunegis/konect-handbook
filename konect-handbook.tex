@@ -2547,7 +2547,7 @@ the graph, i.e., random walks that have a certain probability $0 <
 to return to an initial node at each step, instead of taking an edge at
 random.  For any two nodes $u$ and $v$, the number
 \begin{align}
-  (1-\alpha)  (\mathbf I - \alpha \mathbf P^{\mathrm T})^{-1})_{uv}
+  \left[\alpha  (\mathbf I - (1-\alpha) \mathbf P^{\mathrm T})^{-1}\right]_{uv}
 \end{align}
 gives the asymptotic probability that a random walk with restart starting at node $u$
 stays at node $v$.  
