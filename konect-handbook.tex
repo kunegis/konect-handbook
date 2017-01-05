@@ -2520,6 +2520,11 @@ is the constant vector.  This is consistent with the fact that for a
 random walk on an undirected graph, the stationary distribution of nodes
 is proportional to the node degrees. 
 
+The alternative matrix $\mathbf A \mathbf D^{-1}$ can also be
+considered. \marginnote{\texttt{stoch2}} It is left-stochastic, and
+can be derived by considering random walks that tranverse edges in a
+backward direction. 
+
 The matrix $\mathbf P$ is the state transition matrix of a random walk
 on the graph, and thus its largest eigenvector is one if the graph is
 (strongly) connected.  
@@ -2536,10 +2541,16 @@ eigenvalues of the PageRank matrix give the PageRank values, and thus
 we see that (ignoring the teleportation term), the PageRank of nodes in
 an undirected network equals the degrees of the nodes. 
 
-The alternative matrix $\mathbf A \mathbf D^{-1}$ can also be
-considered. \marginnote{\texttt{stoch2}} It is left-stochastic, and
-can be derived by considering random walks that tranverse edges in a
-backward direction. 
+The matrix $\mathbf P$ is also related to random walks with restarts on
+the graph, i.e., random walks that have a certain probability $0 <
+\alpha < 1$
+to return to an initial node at each step, instead of taking an edge at
+random.  For any two nodes $u$ and $v$, the number
+\begin{align}
+  (1-\alpha)  (\mathbf I - \alpha \mathbf P^{\mathrm T})^{-1})_{uv}
+\end{align}
+gives the asymptotic probability that a random walk with restart starting at node $u$
+stays at node $v$.  
 
 \subsubsection{Stochastic Laplacian Matrix ($\mathbf S$)}
 A further variant of the Laplacian exists, based on the stochastic
@@ -2624,10 +2635,10 @@ the diagonal matrix of corresponding eigenvalues.
 Note that while left and right eigenvectors differ, their eigenvalues
 are identical. 
 
-\subsubsection{Skew Decomposition}
+\subsubsection{Skew Adjacency Matrix ($\mathbf Y$)}
 While an asymmetric matrix $\mathbf A$ may be transformed to $\mathbf A
 + \mathbf A^{\mathrm T}$ to give a symmetric matrix, we can also use
-$\mathbf A - \mathbf A^{\mathrm T}$ to get a skew-symmetric matrix.  A
+$\mathbf Y = \mathbf A - \mathbf A^{\mathrm T}$ to get a skew-symmetric matrix.  A
 skew symmetric matrix $\mathbf X$ is a matrix such that $\mathbf X =
 -\mathbf X^{\mathrm T}$.
 
@@ -2637,7 +2648,7 @@ be complex numbers.  The eigenvectors and eigenvalues however follow a
 specific pattern, that we can exploit to represent such a decomposition
 using only real numbers:
 \begin{align}
-  \mathbf A - \mathbf A^{\mathrm T} &= \mathbf Q \mathbf L \mathbf Q^{\mathrm T}
+  \mathbf Y &= \mathbf A - \mathbf A^{\mathrm T} = \mathbf Q \mathbf L \mathbf Q^{\mathrm T}
 \end{align}
 such that
 \begin{align}
@@ -2656,25 +2667,25 @@ where $\mathbf U$, $\mathbf V$ and $\mathbf D$ are real matrices.  In
 fact, this decomposition can be equivalently written as
 \begin{align}
   \marginnote{\texttt{skew}}
-  \mathbf A - \mathbf A^{\mathrm T} &=
+  \mathbf Y = \mathbf A - \mathbf A^{\mathrm T} &=
   \mathbf U \mathbf D \mathbf V^{\mathrm T} - \mathbf V \mathbf D \mathbf U^{\mathrm T}.
 \end{align}
 This decompositioni is equivalent to that given by Constantine and Gower
-\cite{b869}.  It shows that the skew-symmetric matrix $\mathbf A -
-\mathbf A^{\mathrm T}$ has eigenvalues that are purely imaginary, come
+\cite{b869}.  It shows that the skew-symmetric matrix $\mathbf Y$ has
+eigenvalues that are purely imaginary, come  
 in pairs $\{\pm \lambda\}$ that are the negative of each other (or
 equivalently, the complex conjugate), and their corresponding
 eigenvectors are also complex conjugates of each other.
 
 Note also that the number of columns of both $\mathbf U$ and $\mathbf V$
 is at most $\lfloor n \rfloor$, and thus, if $n$ is odd, the
-skew-symmetric matrix $\mathbf A - \mathbf A^{\mathrm T}$ has the
+skew-symmetric matrix $\mathbf Y$ has the
 eigenvalue zero, which is the complex conjugate of itself.  Also, the
 expression $\mathbf U \mathbf D \mathbf V^{\mathrm T}$ is \emph{not} the
 singular value decomposition of $\mathbf A$, even if the form of the
 decomposition is the same. 
 
-\subsubsection{Hermitian Adjacency Matrix}
+\subsubsection{Hermitian Adjacency Matrix ($\mathbf H$)}
 In certain contexts, for instance when constructing the Hamiltonian of a
 system, it is necessary to specify Hermitian matrices, i.e.,
 diagonalizable matrices that have only real eigenvalues.  To take into
@@ -3386,6 +3397,7 @@ measures. \\
   $\mathbf P$ & stochastic adjacency matrix \\
   $\mathbf S$ & stochastic Laplacian matrix \\
   $\mathbf U, \mathbf V$ & eigenvector matrices \\
+  $\mathbf Y$ & skew-symmetric adjacency matrix \\
   $\mathbf Z$ & normalized Laplacian matrix 
 \end{tabular}
 
