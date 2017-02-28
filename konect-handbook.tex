@@ -880,6 +880,8 @@ defined as
 Note that in some disciplines the Laplacian matrix may be defined as
 $\mathbf A - \mathbf D$, making it negative-semidefinite. 
 
+%% TODO:  merge the rest of this section into the Graph Matrix chapter.  
+
 Other matrices used in KONECT include the
 normalized Laplacian matrix, the stochastic adjacency matrix and the
 signless Laplacian. 
@@ -2582,6 +2584,18 @@ thus equals
 This matrix is positive-semidefinite, and its smallest eigenvalue is
 zero if and only if the graph is bipartite.  Thus, $\mathbf K$ is used
 in measures of bipartivity. 
+
+\subsubsection{Alternative Signed Laplacian}
+The Laplacian matrix $\mathbf L = \mathbf D - \mathbf A$ as defined
+earlier is based on the the degree matrix $\mathbf D$, whose diagonal
+elements equal the sum of absolute weights of all edges incident to each
+node.  
+Taking the absolute value in that definition is justified for
+many applications related to signed graphs, and results in a positive-semidefinite matrix, whose
+smallest eigenvalue is zero if and only if there is at least one
+balanced component in the signed network.  Alternatively, using the sum
+of edge weights instead results in a different matrix, which may have
+negative eigenvalues.  This matrix appears in certain contexts.~\cite{b875}
 
 \subsection{Directed Graphs}
 In directed graphs, the adjacency matrix $\mathbf A$ is itself
