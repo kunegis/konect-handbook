@@ -1,6 +1,15 @@
+
+* B:  Incidence matrix 
+
+* G:  line matrix, has same eigenvalues as A
+     G = B'B with L = (1/2) BB'
+
+* spectrum of A is the same as spectrum of G
+
+* spectrum of P = D_A^-1 A is the same as spectrum D_G^-1 D
+
 * use longtable for all tables, so as to include the tables in their
   respective subsection. 
-* acknowledgments 
 * glossary:  link to the relevant sections 
 * definition of the weight function for a node pair:  add a case for DYNAMIC 
 * include a table of content 
