@@ -244,7 +244,7 @@ formats are summarized in Table~\ref{tab:format}.
 \end{table}
 
 The edge weight and multiplicity types of networks are represented by
-one of the following six types. 
+one of the following eight types. 
 The types of edge weights and multiplicities are summarized in
 Table~\ref{tab:weights}. 
 \begin{itemize}
@@ -272,6 +272,10 @@ Table~\ref{tab:weights}.
   allowed. Positive and negative edges are represented by positive and
   negative edge weights. Many networks of this type have only the
   weights $\pm 1$, but in the general case we allow any nonzero weight.
+\item \textbf{Networks with multiple signed edges} ($\stackrel{+}{=}$) 
+  \marginnote{\texttt{multisigned}}
+  allow multiple edges between two nodes, which may have the same values
+  as edges in a signed network.
 \item \textbf{Rating networks} ($*$) 
   \marginnote{\texttt{weighted}}
   have arbitrary real edge weights.  They
