@@ -4,7 +4,9 @@
 %
 % https://creativecommons.org/licenses/by-sa/4.0/
 %
-% Author:  Jérôme Kunegis <kunegis@gmail.com> 
+% AUTHORS
+%	Jérôme KUNEGIS <kunegis@gmail.com> 
+%	Daniel DÜNKER <dduenker@uni-koblenz.de>
 %
 
 \documentclass{article}
@@ -26,6 +28,8 @@
 \usepackage{array}
 \usepackage{wasysym} % for \newmoon
 \usepackage{tikz}
+\usepackage{natbib}
+\usepackage[nottoc]{tocbibind}
 
 \newcommand{\wPlot}{0.45\textwidth}
 \newcommand{\wFull}{0.95\textwidth}
@@ -35,18 +39,6 @@
 \newcommand{\wFour}{0.24\textwidth}
 
 \input{colors}
-
-%% \definecolor{InternalLinkColor}{rgb}{0.0, 0.35, 0.0}
-%% \definecolor{ExternalLinkColor}{rgb}{0.0, 0.0, 0.69}
-%% \hypersetup{ 
-%%     colorlinks=true, 
-%%     pdftitle={Handbook of Network Analysis - KONECT}, 
-%%     pdfauthor={Jérôme Kunegis}, 
-%%     citecolor=InternalLinkColor, 
-%%     urlcolor=ExternalLinkColor, 
-%%     linkcolor=InternalLinkColor,
-%%     linktoc=page
-%% } 
 
 \begin{document}
 
@@ -141,7 +133,7 @@ KONECT project are available at Github, including this Handbook.\footnote{\href{
 KONECT started out in December 2008 at the Technical University of
 Berlin's DAI Laboratory, as evaluation for Jérôme Kunegis's
 ICML 2009 paper \emph{Learning Spectral Graph Transformations for Link
-  Prediction}~\cite{kunegis:spectral-transformation}, codenamed
+  Prediction} \citep{kunegis:spectral-transformation}, codenamed
 \emph{Spectral Transformation}.  It then consisted of a collection of
 network dataset, and spectral link prediction methods.  Later, more
 datasets were added and the codebase was called the \emph{Graph Store}.
@@ -154,7 +146,7 @@ Koblenz--Landau, under
 Code for dataset extraction and the Matlab Toolbox was first published
 on the KONECT website.  A short overview paper of the KONECT system was
 published in 2013 at the International World Wide Web Conference (WWW),
-as part of the Web Observatory Workshop~\cite{kunegis:konect}.  In 2015
+as part of the Web Observatory Workshop \citep{kunegis:konect}.  In 2015
 and 2016, various parts of KONECT were placed on GitHub under the GNU
 General Public License version 3.
 
@@ -619,7 +611,7 @@ with the most common conventions, and the need to use an unambigous
 choice of letters and symbols. 
 
 Graphs will be denoted as $G=(V,E)$, in which $V$ is the set of
-vertices, and $E$ is the set of edges~\cite{b116}. Without loss of
+vertices, and $E$ is the set of edges \citep{b116}. Without loss of
 generality, we assume that the vertices $V$ are consecutive natural
 numbers, i.e.,
 \begin{align}
@@ -660,7 +652,7 @@ chosen in KONECT such that the left nodes are \emph{active} and the
 right nodes are \emph{passive}.  For instance, a rating graph with users
 and items will always have users on the left since they are active in
 the sense that it is they who give the ratings.  
-Such a distinction is sensible in most networks~\cite{b732}.
+Such a distinction is sensible in most networks \citep{b732}.
 The number of left and
 right nodes will be denoted $n_1 = |V_1|$ and $n_2 = |V_2|$. 
 
@@ -680,11 +672,11 @@ networks, the weights are not taken into account when computing the
 degree. 
 
 In a signed network, each edge is assigned a signed weight such as $+1$
-or $-1$ \cite{b647}.  In such networks, we define $w$ to be the signed weight
+or $-1$ \citep{b647}.  In such networks, we define $w$ to be the signed weight
 function.  In the general case, we allow arbitrary nonzero real numbers,
 representing degrees of positive and negative edges.  Signed
-relationships have been considered in both phychology \cite{b862} and
-anthropology \cite{b323}.  
+relationships have been considered in both phychology \citep{b862} and
+anthropology \citep{b323}.  
 
 In rating networks, we define $r$ to be
 the rating function, returning the rating value when given an edge.  Note
@@ -772,7 +764,7 @@ the sum of the absolute weights of incident edges
 \end{align}
 The weight of a node coincides with the degree of a node in unweighted
 networks and networks with multiple edges. 
-The weight of a node may also be called its strength~\cite{b792}. 
+The weight of a node may also be called its strength \citep{b792}. 
 % TODO update reference to journal paper 
 
 For directed graphs, we can distinguish the outdegree weight and the
@@ -821,7 +813,7 @@ and positively weighted networks, it leads to signed networks.
 \subsection{Characteristic Matrices}
 A very useful representation of graph is using matrices. In fact, a
 subfield of graph theory, \emph{algebraic graph theory}, is devoted to
-this representation~\cite{b118}.  When a graph is represented as a
+this representation \citep{b118}.  When a graph is represented as a
 matrix, operations on graphs can often be expressed as simple algebraic
 expressions.  For instance, the number of common friends of
 two people in a social network can be expressed as the square of a
@@ -1050,7 +1042,7 @@ indegree, and both are equal to $m/n$.
 The fill of a network is the proportion of edges to the total
 number of possible edges. 
 The fill is used as a basic parameter in the Erdős--Rényi random graph
-model~\cite{b569}, where it denotes the probability that an edge is present between
+model \citep{b569}, where it denotes the probability that an edge is present between
 two randomly chosen nodes, and is usually called $p$, which is the
 notation we also use in KONECT. 
 \begin{align}
@@ -1084,12 +1076,12 @@ The maximum degree can be divided by the average degree to normalize it.
 
 In a directed network, the reciprocity equals the proportion of edges
 for which an edge in the opposite direction exists, i.e., that are
-reciprocated \cite{b866}.  
+reciprocated \citep{b866}.  
 \begin{align}
   \marginnote{\texttt{reciprocity}}
   y = \frac 1 m  | \{ (u,v) \in E \mid (v,u) \in E \} | 
 \end{align}
-The reciprocity has also been noted $r$ \cite{b867}. 
+The reciprocity has also been noted $r$ \citep{b867}. 
 The reciprocity can give an idea of the type of network.  For instance,
 citation networks only contain only few pairs of papers that mutually
 cite each other.  On the other hand, an email network will contain many
@@ -1288,11 +1280,11 @@ wedges can be defined as
 \end{align}
 where $d(u)$ is the degree of node $u$. 
 Wedges have many different names:  2-stars, 2-paths,
-hairpins~\cite{b853} and cherries.   
+hairpins \citep{b853} and cherries.   
 
 Three-stars are defined analogously to two-stars, and their count
 denoted $z$.  Three-stars are also called \emph{claws} and
-\emph{tripins}~\cite{b853}.   
+\emph{tripins} \citep{b853}.   
 \begin{align}
   \marginnote{\texttt{threestars}}
   z = \sum_{u \in V} {d(u) \choose 3} = \sum_{u \in V} \frac 1 6 d(u)
@@ -1378,12 +1370,12 @@ The power law exponent is a number that characterizes the degrees of the
 nodes in the network.  In many circumstances, networks are modeled to
 follow a degree distribution power law, i.e., the number of nodes with
 degree $n$ is taken to be proportional to the power $n^{-\gamma}$, for a
-constant $\gamma$ larger than one~\cite{b439}.  This constant $\gamma$
+constant $\gamma$ larger than one \citep{b439}.  This constant $\gamma$
 is called the power law exponent.  Given a network, its degree
 distribution can be used to estimate a value $\gamma$.  There are
 multiple ways of estimating $\gamma$, and thus a network does not have a
 single definite value of it. In KONECT, we estimate $\gamma$ using the
-robust method given in \cite[Eq.~5]{b408}
+robust method given in \citep[Eq.~5]{b408}
 \begin{align}
   \marginnote{\texttt{power}} \gamma &= 1 + n \left( \sum_{u\in V} \ln
   \frac {d(u)} {d_{\min}} \right) ^{-1},
@@ -1392,7 +1384,7 @@ in which $d_{\min}$ is the minimal degree.
 
 The Gini coefficient is a measure of inequality from economics,
 typically applied to distributions of wealth or income.  In KONECT, we
-apply it to the degree distribution, as described in
+apply it to the degree distribution, as described by
 \cite{kunegis:power-law}.  The Gini coefficient can either be defined in
 terms of the Lorenz curve, a type of plot that visualizes the inequality
 of a distribution, or using the following expression.  Let $d_1 \leq d_2
@@ -1409,7 +1401,7 @@ of a single node.
 The relative edge distribution entropy is a measure of the equality of
 the degree distribution, and equals one when all degrees are equal, and
 attains the limit value of zero when all edges attach to a single node
-\cite{kunegis:power-law}.  It is defined as
+\citep{kunegis:power-law}.  It is defined as
 \begin{align}
   \marginnote{\texttt{dentropyn}} H_{\mathrm{er}} &= \frac 1 {\ln n}
   \sum_{u \in V} - \frac{d(u)}{2m} \ln \frac{d(u)}{2m}.
@@ -1419,7 +1411,7 @@ Another statistic for \marginnote{\texttt{own}} measuring the inequality
 in the degree distribution is associated with the Lorenz curve (see
 Section~\ref{sec:plot:degree}), and is given by the intersection point
 of the Lorenz curve with the antidiagonal given by $y = 1 - x$
-\cite{kunegis:power-law}.  By construction, this point equals $(1-P, P)$
+\citep{kunegis:power-law}.  By construction, this point equals $(1-P, P)$
 for some $0<P<1$, where the value $P$ corresponds exactly to the number
 ``25\%'' in the statement ``25\% of all users account for 75\% of all
 friendship links on Facebook''.  By construction, we can expect $P$ to
@@ -1429,7 +1421,7 @@ The analysis of degrees can be generalized to pairs of nodes:  What is
 the distribution of degrees for pairs of connected edges?  In some
 networks, high-degree nodes are connected to other high-degree nodes,
 while low-degree nodes are connected to low-degree nodes.  This property
-is called assortativity \cite{b854}.  Inversely, in a network with dissortativity,
+is called assortativity \citep{b854}.  Inversely, in a network with dissortativity,
 high-degree nodes are typically connected to low-degree and vice versa.
 \marginnote{\texttt{assortativity}}
 The amount of assortativity can be measured by the Pearson correlation
@@ -1464,7 +1456,7 @@ networks with it.
 
 The local clustering coefficient $c(u)$ of a node $u$ is defined as the
 probability that two randomly chosen (but distinct) neighbors of $u$ are
-connected~\cite{b228}.
+connected \citep{b228}.
 \begin{align}
   c(u) &= \left\{ \begin{array}{ll} \frac { \{ v, w \in V \mid u \leftrightarrow v
       \leftrightarrow w \leftrightarrow u \} } { \{ v, w \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}
@@ -1474,7 +1466,7 @@ connected~\cite{b228}.
 
 The global clustering of a network can be computed in two ways.  The
 first way defines it as the probability that two incident edges are
-completed by a third edge to form a triangle~\cite{b736}. This is also
+completed by a third edge to form a triangle \citep{b736}. This is also
 called the transitivity ratio, or simply the transitivity.
 \begin{align}
   \marginnote{\texttt{clusco}} c &= \frac {|\{ u, v, w \in V \mid u \leftrightarrow
@@ -1493,7 +1485,7 @@ however not a problem in practice.
 The second variant variant of the clustering coefficient uses the
 average of the local clustering coefficients. This second variant was
 historically the first to be defined.  In was defined in
-1998~\cite{b228} and precedes the first variant by four years.
+1998 \citep{b228} and precedes the first variant by four years.
 \begin{align}
   \marginnote{\texttt{clusco2}} c_2 &= \frac 1 {|V|} \sum_{u \in V} c(u)
 \end{align}
@@ -1503,7 +1495,7 @@ cliques of size at least three.  This variant of the global clustering
 coefficient is defined for all graphs, except for the empty graph, i.e.,
 the graph with zero nodes.  A slightly different definition of the
 second variant computes the average only over nodes with a degree of at
-least two, as seen for instance in~\cite{b845}.
+least two, as seen for instance in \citep{b845}.
 
 Because of the arbitrary decision to define $c(u)$ as zero when the
 degree of $c$ is zero or one, we recommend to use the first variant of
@@ -1513,7 +1505,7 @@ $c$.
 
 For signed graphs, we may define the clustering coefficient to take into
 account the sign of edges.  The signed clustering coefficient is based
-on balance theory~\cite{kunegis:slashdot-zoo}.  In a signed network,
+on balance theory \citep{kunegis:slashdot-zoo}.  In a signed network,
 edges can be positive or negative.  For instance in a signed social
 network, positive edges represent friendship, while negative edges
 represent enmity.  In such networks, balance theory stipulates than
@@ -1597,7 +1589,7 @@ from that node to any other node, defining a measure of
 \end{align}
 
 The diameter $\delta$ of a graph equals the longest shortest path in the
-network \cite{b779}.  It can be equivalently defined as the largest eccentricity of
+network \citep{b779}.  It can be equivalently defined as the largest eccentricity of
 all nodes.
 \begin{align}
   \marginnote{\texttt{diam}} \delta &= \max_{u \in V} \epsilon(u) =
@@ -1620,8 +1612,6 @@ smallest eccentricity
 
 The diameter is bounded from below by the radius, and from above by
 twice the radius.  
-%% The radius is bounded from above by the diameter, and from below by half
-%% the diameter, i.e.,
 \begin{align*}
   r \leq \delta \leq 2r
 \end{align*}
@@ -1644,7 +1634,8 @@ node and itself:
   \sum_{u \in V} \sum_{v\in V} d(u,v)
 \end{align}
 The mean path length defined in this way is undefined when a graph is
-disconnected.
+disconnected.  Also, the average inverse distance has been used, or
+equivalently, the inverse of the harmonic mean of distances \citep{b877}. 
 
 \marginnote{\texttt{mediandist}}
 Likewise, the median path length $\delta_{\mathrm M}$ is the median
@@ -1663,7 +1654,7 @@ reach 90\% of all other nodes.
 
 Algebraic statistics are based on a network's characteristic matrices.
 They are motivated by the broader field of spectral graph theory, which
-characterizes graphs using the spectra of these matrices~\cite{b285}.
+characterizes graphs using the spectra of these matrices \citep{b285}.
 
 In the following we will denote by $\lambda_k[\mathbf X]$ the
 $k$\textsuperscript{th} dominant eigenvalue of the matrix $\mathbf X$.
@@ -1686,7 +1677,7 @@ The spectral norm can be understood as an alternative measure of the
 size of a network.
 
 The algebraic connectivity equals the second smallest nonzero eigenvalue
-of $\mathbf L$~\cite{b652}
+of $\mathbf L$ \citep{b652}
 \begin{align}
   \marginnote{\texttt{alcon}} a &= \lambda_2[\mathbf L].
 \end{align}
@@ -1709,12 +1700,12 @@ of negatively weighted edges.
 
 \subsection{Bipartivity Statistics}
 Some unipartite networks are almost bipartite.  Almost-bipartite
-networks include networks of sexual contact~\cite{b719} and ratings in
-online dating sites~\cite{b311,kunegis:split-complex-dating}.  Other,
+networks include networks of sexual contact \citep{b719} and ratings in
+online dating sites \citep{b311,kunegis:split-complex-dating}.  Other,
 more subtle cases, involve online social networks.  For instance, the
 follower graph of the microblogging service Twitter is by construction
 unipartite, but has been observed to reflect, to a large extent, the
-usage of Twitter as a news service~\cite{b545}. This is reflected in the
+usage of Twitter as a news service \citep{b545}. This is reflected in the
 fact that it is possible to indentify two kinds of users: Those who
 primarily get followed and those who primarily follow.  Thus, the
 Twitter follower graph is almost bipartite.  Other social networks do
@@ -1731,7 +1722,7 @@ are trivially zero for bipartite networks.  For non-bipartite networks,
 they are larger than zero.
 
 A first measure of bipartivity consists in counting the minimum number
-of \emph{frustrated edges}~\cite{b531}. Given a bipartition of vertices
+of \emph{frustrated edges} \citep{b531}. Given a bipartition of vertices
 $V=V_1\cup V_2$, a frustrated edge is an edge connecting two nodes in
 $V_1$ or two nodes in $V_2$.  Let $f$ be the minimal number of
 frustrated edges in any bipartition of $V$, or, put differently, the
@@ -1821,7 +1812,7 @@ actually negative.  We call this the \emph{negativity} of the network.
   \marginnote{\texttt{negativity}}
   \zeta &= \frac { | \{ e \in E \mid w(e) < 0 \} | } {m}
 \end{align}
-The negativity is denoted $q$ in \cite{b868}. 
+The negativity is denoted $q$ in \citep{b868}. 
 
 In directed signed networks, we can additionally compute the dyadic
 conflict, i.e., the propostion of node pairs connected by two oppositely
@@ -1853,7 +1844,7 @@ The term \emph{preferential attachment} refers to the observation that
 in networks that grow over time, the probability that an edge is added
 to a node with $d$ neighbors is proportional to $d$.  This linear
 relationship lies at the heart of Barabási and Albert's
-\emph{scale-free} network model \cite{b439}, and has been used in a vast
+\emph{scale-free} network model \citep{b439}, and has been used in a vast
 number of subsequent work to model networks, online and offline. The
 scale-free network model results in a distribution of degrees, i.e.,
 number of neighbors of individual nodes, that follows a power law with
@@ -1866,35 +1857,35 @@ attached to a vertex $u$ is propertional to its degree $d(u)$.  An
 extension of this basic model uses a probability that is a power of the
 degree, i.e., $d(u)^\beta$.  The exponent $\beta$ is a positive number,
 and can be measured empirically from a dataset
-\cite{kunegis:preferential-attachment}.  The value of $\beta$ then
+\citep{kunegis:preferential-attachment}.  The value of $\beta$ then
 determines the type of preferential attachment:
 \begin{enumerate}
 \item \textbf{Constant case $\beta=0$}.  
 This case is equivalent to a constant probability of attachment, 
 and thus this graph growth model results in networks in which each edge
 is equally likely and independent from other edges.  This is the
-Erdős--Rényi model of random graphs \cite{b569}. 
+Erdős--Rényi model of random graphs \citep{b569}. 
 
 \item \textbf{Sublinear case $0 < \beta < 1$}. 
 In this case, the preferential attachment function is sublinear.  This
 model gives rise to a stretched exponential degree distribution
-\cite{b764}, whose exact 
-expression is complex and given in \cite[Eq. 94]{b773}. 
+\citep{b764}, whose exact 
+expression is complex and given in \citep[Eq. 94]{b773}. 
 
 \item \textbf{Linear case $\beta=1$}.
 This is the scale-free network model of Barabási and Albert
-\cite{b439}, in which attachment is proportional to the degree. This gives a
+\citep{b439}, in which attachment is proportional to the degree. This gives a
 power law degree distribution.  
 
 \item \textbf{Superlinear case $\beta > 1$}.
 In this case, a single node will acquire 100\% of all edges
-asymptotically \cite{b765}. Networks with this behavior will however display
+asymptotically \citep{b765}. Networks with this behavior will however display
 power law degree distributions in the pre-asymptotic regime
-\cite{b769}. 
+\citep{b769}. 
 \end{enumerate}
 
 The following minimization problem gives an estimate for the exponent
-$\beta$ \cite{kunegis:preferential-attachment}.
+$\beta$ \citep{kunegis:preferential-attachment}.
 \begin{align}
   \marginnote{\texttt{prefatt}}
   \min_{\alpha,\beta} \sum_{u\in V} \left( \alpha + \beta \ln[1 + d_1(u)]
@@ -1934,7 +1925,7 @@ eigenvectors of certain matrices.  For instance, the PageRank vector
 the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$. 
 
 The local clustering coefficients give the clustering coefficient
-distribution \marginnote{\texttt{cluscod}} \cite{b865}. 
+distribution \marginnote{\texttt{cluscod}} \citep{b865}. 
 
 \section{Plots}
 \label{sec:plots}
@@ -1957,7 +1948,7 @@ features if the graph visible.  Usually, this only makes sense for small
 graphs.\footnote{See
   \href{https://networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment/}{networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment}
   for an explanation.}
-In KONECT, we use the Fruchterman--Reingold algorithm~\cite{b870}.  An
+In KONECT, we use the Fruchterman--Reingold algorithm \citep{b870}.  An
 example is shown in Figure~\ref{fig:fruchterman-reingold}.
 
 \begin{figure}
@@ -1966,7 +1957,7 @@ example is shown in Figure~\ref{fig:fruchterman-reingold}.
   \caption{
     \label{fig:fruchterman-reingold}
     A layout of a highschool social network (\href{http://konect.uni-koblenz.de/networks/moreno_highschool}{\textsf{MH}}), using the
-    Fruchterman--Reingold algorithm~\cite{b870}. 
+    Fruchterman--Reingold algorithm \citep{b870}. 
   }
 \end{figure}
 
@@ -2015,7 +2006,7 @@ The distribution of degree values $d(u)$ over all vertices $u$
 characterizes the network as a whole, and is often used to visualize a
 network. In particular, a power law is often assumed, stating that the
 number of nodes with $n$ neighbors is proportional to $n^{-\gamma}$, for
-a constant $\gamma$~\cite{b439}. This assumption can be inspected
+a constant $\gamma$ \citep{b439}. This assumption can be inspected
 visually by plotting the degree distribution on a doubly logarithmic
 scale, on which a power law renders as a straight line.  KONECT supports
 two different plots: The degree distribution, and the cumulative degree
@@ -2048,7 +2039,7 @@ statements of the form ``X\% of nodes with smallest degree account for
 Y\% of edges''.  The set of values $(X,Y)$ thus defined is the Lorenz
 curve. In a network the Lorenz curve is a straight diagonal line when
 all nodes have the same degree, and curved
-otherwise~\cite{kunegis:power-law}.  The area between the Lorenz curve
+otherwise \citep{kunegis:power-law}.  The area between the Lorenz curve
 and the diagonal is half the Gini coefficient (see above).
 
 \begin{figure}
@@ -2221,7 +2212,9 @@ Figure~\ref{fig:complex} shows two examples of such plots.
 Distance statistics can be visualized in the distance distribution plot.
 The distance distribution plot shows, for each integer $k$, the number
 of node pairs at distance $k$ from each other, divided by the total
-number of node pairs.  The distance distribution plot can be used to
+number of node pairs.  The distance distribution plot is also called the
+\emph{hop plot}.  
+The distance distribution plot can be used to
 read off the diameter, the median path length, and the 90-percentile
 effective diameter (see Section~\ref{sec:distance-statistics}).  For
 temporal networks, the distance distribution plot can be shown over
@@ -2268,7 +2261,7 @@ edges remain visible. The graph drawings in KONECT are spectral graph
 drawings, i.e., they are based on the eigenvectors of characteric graph
 matrices.  In particular, KONECT included graph drawings based on the
 adjacency matrix $\mathbf A$, the normalized adjacency matrix $\mathbf
-N$ and the Laplacian matrix $\mathbf L$ \cite{b405}. Let $\mathbf x$ and $\mathbf y$
+N$ and the Laplacian matrix $\mathbf L$ \citep{b405}. Let $\mathbf x$ and $\mathbf y$
 be the two chosen eigenvector of each matrix, then the coordinate of the
 node $u\in V$ is given by $\mathbf x_u$ and $\mathbf y_u$.
 
@@ -2389,7 +2382,7 @@ When the graph is unsigned, the smallest eigenvalue is zero and its
 multiplicity equals the number of connected components in the graph. 
 
 The second-smallest eigenvalue is called the algebraic connectivity of
-the graph, and is denoted $a = \lambda_2[\mathbf L]$~\cite{b652}.  If the graph is
+the graph, and is denoted $a = \lambda_2[\mathbf L]$ \citep{b652}.  If the graph is
 unconnected, that value is zero, i.e., an unconnected graph has an
 algebraic connectivity of zero. 
 
@@ -2398,7 +2391,7 @@ zero is a constant vector, i.e., a vector with all entries equal. The
 eigenvector corresponding the the second-smallest eigenvalue is called
 the Fiedler vector, and can be used to cluster nodes in the
 graph. Together with further eigenvectors, it can be used to draw
-graphs~\cite{kunegis:signed-kernels}. 
+graphs \citep{kunegis:signed-kernels}. 
 
 When the graph is signed, i.e., when the grpah admits edges with
 negative weights, then the smallest eigenvalue of $\mathbf L$ is called
@@ -2427,7 +2420,7 @@ The eigenvalues $\lambda_i$ of $\mathbf N$ can be used to characterize
 the graph, in analogy with those of the nonnormalized adjacency
 matrix.
 The spectrum of $\mathbf N$ is also called the weighted spectral
-distribution \cite{b864}.
+distribution \citep{b864}.
 All eigenvalues of $\mathbf N$ are contained in the range
 $[-1,+1]$.  When the graph is unsigned, the largest eigenvalue is one.
 In addition, the eigenvalue one has multiplicity one if the graph is
@@ -2599,7 +2592,7 @@ many applications related to signed graphs, and results in a positive-semidefini
 smallest eigenvalue is zero if and only if there is at least one
 balanced component in the signed network.  Alternatively, using the sum
 of edge weights instead results in a different matrix, which may have
-negative eigenvalues.  This matrix appears in certain contexts.~\cite{b875}
+negative eigenvalues.  This matrix appears in certain contexts. \citep{b875}
 
 \subsection{Directed Graphs}
 In directed graphs, the adjacency matrix $\mathbf A$ is itself
@@ -2689,7 +2682,7 @@ fact, this decomposition can be equivalently written as
   \mathbf U \mathbf D \mathbf V^{\mathrm T} - \mathbf V \mathbf D \mathbf U^{\mathrm T}.
 \end{align}
 This decompositioni is equivalent to that given by Constantine and Gower
-\cite{b869}.  It shows that the skew-symmetric matrix $\mathbf Y$ has
+\citep{b869}.  It shows that the skew-symmetric matrix $\mathbf Y$ has
 eigenvalues that are purely imaginary, come  
 in pairs $\{\pm \lambda\}$ that are the negative of each other (or
 equivalently, the complex conjugate), and their corresponding
@@ -3171,7 +3164,7 @@ Frame Programme under grant agreement n\textsuperscript{o}~257859,
 \href{http://robust-project.eu/}{ROBUST} and 287975,
 \href{http://www.socialsensor.eu/}{SocialSensor}. 
 
-\bibliographystyle{alpha}
+\bibliographystyle{agsm}
 \bibliography{kunegis,ref}
 
 \appendix
@@ -3224,7 +3217,7 @@ to reflect best practices and to avoid confusion.
   \item[Curve]
     A curve fitting method used for link prediction, when using the link
     prediction method described
-    in~\cite{kunegis:spectral-transformation} (learning spectral
+    in \citep{kunegis:spectral-transformation} (learning spectral
     transformations).  
   \item[Cycle] 
     A cyclic sequence of connected edges, not containing any edge twice.

@@ -1,6 +1,7 @@
 #! /bin/sh
 #
-# Determine the dependencies of a *.tex file. 
+# Determine the dependencies of a *.tex Tex/Latex source file.  Used by
+# Jérôme Kunegis for compiling papers. 
 #
 # INVOCATION 
 # 	$0 FILENAME
@@ -13,7 +14,7 @@
 #				without the dot; defaults to "pdf"
 #
 # ABOUT
-#	(c) 2015, 2016 Written by Jérôme Kunegis <kunegis@uni-koblenz.de>
+#	(c) 2015, 2016 Written by Jérôme Kunegis <kunegis@gmail.com>
 #
 
 file="$1"
@@ -51,17 +52,23 @@ sed -e 's,$,.bib,'
 # Plots
 #
 
-<"$file" sed -re '/^\s*%/d;/^.*\\includegraphics/!d;s,^.*\\includegraphics[^{]*\{([^}]+)\}.*$,\1,' |
-while read name ; do
+<"$file" sed -E -e '/^\s*%/d;/^.*\\includegraphics/!d;s,^.*\\includegraphics[^{]*\{([^}]+)\}.*$,\1,' |
+while IFS= read name ; do
+
+	# Empty name
 	if [ -z "$name" ] ; then
 		continue
 	fi
 
+	# Add extension only if there is not already one
 	if echo "$name" | grep -qvE '\.pdf$' ; then
 		if echo "$name" | grep -qvE '\.png$' ; then
-			name="$name.$graphicsext"
+			if echo "$name" | grep -qvE '\.eps$' ; then
+				name="$name.$graphicsext"
+			fi
 		fi
 	fi
+
 	echo "$name"
 done
 
@@ -69,8 +76,8 @@ done
 # Other included .tex files
 #
 
-<"$file" sed -re '/\\input.*\{/!d;s,^.*\{,,;s,\}.*$,,' |
-while read -r name ; do
+<"$file" sed -E -e '/\\input.*\{/!d;s,^.*\{,,;s,\}.*$,,' |
+while IFS= read -r name ; do
 	if [ -z "$name" ] ; then
 		continue
 	fi
@@ -84,7 +91,7 @@ done
 # CLS files
 #
 
-<"$file" sed -re '/\\documentclass\{/!d;s,^.*\\documentclass\{(.*)\}.*$,\1,;/article/d' |
-while read -r name ; do
+<"$file" sed -E -e '/\\documentclass\{/!d;s,^.*\\documentclass\{(.*)\}.*$,\1,;/article/d' |
+while IFS= read -r name ; do
 	echo "$name.cls"
 done

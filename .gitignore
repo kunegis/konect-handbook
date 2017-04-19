@@ -7,4 +7,6 @@ analysis
 *.log
 *.out
 konect-toolbox
+bibtex
+stu-utils
 arxiv.tar.gz

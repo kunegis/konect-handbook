@@ -9,7 +9,8 @@
 #
 # SEE ALSO
 # 
-# This code is based on the file "mkimg" in svn/kunegis/papers/phd/. 
+# This code is based on the file "mkimg" from Jérôme Kunegis' PhD
+# thesis.  
 #
 # TO DO
 #
@@ -17,7 +18,7 @@
 #
 # ABOUT 
 #
-#     Written by Jerome Kunegis.
+#     Written by Jérôme Kunegis.
 #
 
 set -e

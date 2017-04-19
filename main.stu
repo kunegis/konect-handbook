@@ -14,15 +14,16 @@
 
 >MATLABPATH:
 {
-    printf "$PWD:$PWD/../matlab/" 
+	printf "$PWD:$PWD/../matlab/" 
 }
 
 konect-handbook.pdf:  [FILES]
 {
-	pdflatex -file-line-error -halt-on-error -interaction batchmode konect-handbook.tex
+	rm -f *.aux *.bbl *.blg *.log *.out
+	pdflatex -file-line-error -halt-on-error konect-handbook.tex
 	bibtex konect-handbook
-	pdflatex -file-line-error -halt-on-error -interaction batchmode konect-handbook.tex
-	pdflatex -file-line-error -halt-on-error -interaction batchmode konect-handbook.tex
+	pdflatex -file-line-error -halt-on-error konect-handbook.tex
+	pdflatex -file-line-error -halt-on-error konect-handbook.tex
 }
 
 >colors.tex:  <konect-toolbox/m/konect_data_category.m mkcolors
@@ -63,6 +64,7 @@ plot/$name.pdf:
 {
 	if [ ! -e analysis/plot/"$name".eps ] ; then
 		echo >&2 "Warning: 'analysis/plot/$name.eps' does not exist"
+		touch -- plot/"$name".pdf
 		exit 0
 	fi
 	
@@ -82,14 +84,17 @@ plot/$name.pdf:
 PLOT_NONOPTIONAL;
 
 #
-# External files -- all are optional and committed to version control 
+# External files 
 #
 
-texdep      = -o ../kunegis/papers/;
-cpimg       = -o ../kunegis/papers/;
-$name.bib   = -o ../kunegis/bibtex/;
+texdep      = stu-utils/;
+cpimg       = stu-utils/;
 
 category-tabular.tex = -o tex/; 
 
-../kunegis/bibtex/$name.bib;
+bibtex/$name.bib; 
 
+>$name.bib:  <bibtex/$name.bib
+{
+	sed -E -e '/^\s+url/d'
+}
