@@ -1423,11 +1423,18 @@ networks, high-degree nodes are connected to other high-degree nodes,
 while low-degree nodes are connected to low-degree nodes.  This property
 is called assortativity \citep{b854}.  Inversely, in a network with dissortativity,
 high-degree nodes are typically connected to low-degree and vice versa.
-\marginnote{\texttt{assortativity}}
 The amount of assortativity can be measured by the Pearson correlation
-$\rho$ between the degree of connected nodes.  The assortativity is
+$\rho$ between the degree of connected nodes.  
+\begin{align}
+  \marginnote{\texttt{\small assortativity}} \rho &= \frac
+  {\sum_{\{u,v\} \in E} (d(u) - d)(d(v) - d)}
+  {\sum_{\{u,v\} \in E} (d(u) - d)^2}
+\end{align}
+
+The assortativity is
 undefined whenever the Pearson correlation is undefined, for instance,
-if all nodes have the same degree, i.e., when the graph is regular. 
+if all nodes have the same degree (i.e., when the graph is regular), and
+when the graph does not contain any edges. 
 
 \subsection{Clustering Statistics}
 \label{sec:statistic:clustering}
