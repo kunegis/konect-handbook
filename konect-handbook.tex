@@ -171,7 +171,7 @@ describes KONECT's file formats in Section~\ref{sec:format}.
 Throughout the handbook, we will use margin notes to give the internal
 names of various parameters. 
 
-\section{Taxonomy of Networks}
+\section{Networks}
 \label{sec:taxonomy}
 Datasets in KONECT represent networks, i.e., a set of nodes connected by
 links. Networks can be classified by their format
@@ -603,14 +603,16 @@ network is skewed because all song nodes have degree one, the diameter
 cannot be computed since the network is disconnected, and each connected
 component trivially has a diameter of two or less.
 
-\section{Definitions}
+\section{Graph Theory}
 \label{sec:definitions}
 The areas of graph theory and network analysis are young, and
-many concepts within them do not have a single established notation.  The
+many concepts within them notoriously lack a single established notation.  The
 notation chosen for KONECT represents a compromise between familiarity
 with the most common conventions, and the need to use an unambigous
-choice of letters and symbols. 
+choice of letters and symbols.  This section gives an overview of the
+basic definitions used within KONECT, including in the rest of this handbook. 
 
+\subsection{Graphs}
 Graphs will be denoted as $G=(V,E)$, in which $V$ is the set of
 vertices, and $E$ is the set of edges \citep{b116}. Without loss of
 generality, we assume that the vertices $V$ are consecutive natural
@@ -811,9 +813,9 @@ network to $G$ is then defined as
 This construction is possible for all types of networks. For unweighted
 and positively weighted networks, it leads to signed networks. 
 
-\subsection{Characteristic Matrices}
+\subsection{Algebraic Graph Theory}
 A very useful representation of graph is using matrices. In fact, a
-subfield of graph theory, \emph{algebraic graph theory}, is devoted to
+subfield of graph theory, algebraic graph theory, is devoted to
 this representation \citep{b118}.  When a graph is represented as a
 matrix, operations on graphs can often be expressed as simple algebraic
 expressions.  For instance, the number of common friends of
@@ -925,7 +927,7 @@ graphs.  In these cases, we will write
 \end{align*}
 to denote the characteristic matrices of the graph $G$. 
 
-\section{Statistics}
+\section{Network Statistics}
 \label{sec:statistics}
 A network statistic is a numerical value that characterizes a network.
 Examples of network statistics are the number of nodes and the number of
@@ -1396,7 +1398,7 @@ in which $d_{\min}$ is the minimal degree.
 The Gini coefficient is a measure of inequality from economics,
 typically applied to distributions of wealth or income.  In KONECT, we
 apply it to the degree distribution, as described in
-\cite{kunegis:power-law}.  The Gini coefficient can either be defined in
+\citep{kunegis:power-law}.  The Gini coefficient can either be defined in
 terms of the Lorenz curve, a type of plot that visualizes the inequality
 of a distribution, or using the following expression.  Let $d_1 \leq d_2
 \leq \dotsb \leq d_{n}$ be the sorted list of degrees in the
@@ -1925,8 +1927,7 @@ This gives the average factor by which the actual new number of edges
 differs from the predicted value, computed logarithmically. 
 The value of $\epsilon$ is larger or equal to one by construction. 
 
-
-\section{Features}
+\section{Node Features}
 \label{sec:features}
 A feature is a numerical characteristic of a node, such as the degree
 and the eccentricity.  Features have multiple uses, such as to measure
@@ -1946,9 +1947,8 @@ the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$.
 The local clustering coefficients give the clustering coefficient
 distribution \marginnote{\texttt{cluscod}} \citep{b865}. 
 
-\section{Plots}
+\section{Network Plots}
 \label{sec:plots}
-
 Plots are drawn to visualize a certain aspect of a dataset. These plots
 can be used to compare several network visually, or to illustrate the
 definition of a certain numerical statistic.
@@ -2307,106 +2307,23 @@ are shown in Figure~\ref{fig:map.ax}.
   }
 \end{figure}
 
-\section{Algebraic Graph Theory}
+\section{Graph Decompositions}
 \label{sec:matrix}
 In order to analyse graphs, algebraic graph theory is a common
 approach.  In algebraic graph theory, a graph with $n$ vertices is
 represented by an $n\times n$ matrix called the adjacency matrix, from
 which other matrices can be derived.  The defined matrices can then be
-analysed to reveal properties of the graph. 
+decomposed to reveal properties of the graph. 
 In this section, we review characteristic graph matrices, their
-decompositions, and their uses. 
+decompositions, and their uses.  Since most decompositions are based on
+a specific matrix, this section also serves as a survey of
+characteristic graph matrices.  
 
-Matrix decompositions are implemented in the KONECT Toolbox by the
+Graph decompositions are implemented in the KONECT Toolbox by the
 \texttt{konect\_decomposition()} function.  Each decomposition has a
 name, which is given in the margin in the following. 
 
-\subsection{Linear Algebra}
-Linear algebra is the branch of mathematics that is concerned with
-matrices and vectors.  Matrices and vectors can be used to represent
-many different kinds of objects and structures.  In this thesis, we will
-use matrices to represent networks.  Therefore, we introduce basic
-notions of linear algebra here.  Note that we only give the necessary
-definitions needed in this thesis.  Most definitions can be stated in
-more general ways. 
-This section is not a general introduction to linear algebra.  Instead,
-it is meant as a reminder of the basic notions of linear algebra needed
-in this thesis for 
-readers that already have a basic grasp of linear algebra.  
-
-A vector $\mathbf x \in \mathbb R^n$ of size $n$ consists of $n$ real numbers.  We will
-write $\mathbf x_i$ to denote the $i$\textsuperscript{th} component of
-$\mathbf x$ for $i \in \{1, \ldots, n\}$.  
-Vectors will have bold lowercase names such as $\mathbf u$, $\mathbf v$,
-etc. 
-The norm of a vector $\mathbf x \in \mathbb R^n$ is defined as 
-\begin{align}
-\left\| \mathbf x \right \| = \sqrt{\sum_{i=1}^n \mathbf x_i^2}. 
-\end{align}
-If $\left\| \mathbf x \right \| = 1$, then $\mathbf x$
-is said to be a unit vector. 
-The dot product of two vectors $\mathbf x, \mathbf y \in \mathbb R^n$ is
-defined as 
-\begin{align}
-\mathbf x \cdot \mathbf y &=
-\sum_{i=1}^n \mathbf x_i \mathbf y_i. 
-\end{align}
-If $\mathbf x \cdot \mathbf y =
-0$, then $\mathbf x$ and $\mathbf y$ are said to be orthogonal. 
-
-A matrix $\mathbf X \in \mathbb R^{m\times n}$ of size $m \times n$ consists of $mn$
-real numbers arranged using indexes $i\in \{1, \ldots, m\}$ and $j\in
-\{1, \ldots, n\}$.  
-The component in the $i$\textsuperscript{th} row and $j$\textsuperscript{th}
-column of $\mathbf X$ is written $\mathbf X_{ij}$. 
-Matrices will have bold uppercase names such as $\mathbf A$, $\mathbf
-B$, etc. 
-A matrix is square if $m=n$. 
-The Frobenius norm of a matrix $\mathbf X \in \mathbb R^{m \times n}$ is
-defined by
-\begin{align}
-\left\| \mathbf X \right \|_{\mathrm F} &= 
-\sqrt{ \sum_{i=1}^m \sum_{j=1}^n \mathbf X_{ij}^2 }. 
-\label{eq:frobenius-norm}
-\end{align}
-The transpose $\mathbf X^{\mathrm T}$ of a square matrix $\mathbf X$ is defined
-by 
-\begin{align}
-(\mathbf X^{\mathrm T})_{ij} = \mathbf X_{ji}. 
-  \label{eq:matrix-transpose}
-\end{align}
-A matrix $\mathbf X$ is symmetric if $\mathbf X = \mathbf X^{\mathrm
-  T}$. Symmetric matrices are necessarily square. 
-A matrix $\mathbf X$ is diagonal if $\mathbf X_{ij}=0$ whenever $i \neq
-j$. 
-The $i$\textsuperscript{th} row of $\mathbf X \in \mathbb R^{m \times n}$
-is a vector denoted $\mathbf X_{i\bullet}$. 
-The $j$\textsuperscript{th} column of $\mathbf X$ is a vector denoted
-$\mathbf X_{\bullet j}$. 
-The product of two matrices $\mathbf X\in \mathbb R^{m\times r}$ and
-$\mathbf Y\in \mathbb R^{r \times n}$ is defined as
-\begin{align}
-  (\mathbf X \mathbf Y)_{ij} &= \mathbf X_{i\bullet} \cdot \mathbf
-  Y_{\bullet j}. 
-\end{align}
-
-Some simple matrices have special notations. 
-The unit matrix $\mathbf I_{n \times n}$ is the diagonal matrix of size $n\times n$
-defined by $(\mathbf I_{n \times n})_{ii}=1$ for all $i$. 
-The matrices $\mathbf 0_{m\times n}$ and $\mathbf 1_{m\times n}$ are the
-matrices of all zeroes and of all ones of size $m\times n$.
-We omit the indexes if they are clear from the context. 
-
-\paragraph{Examples}
-\begin{align*}
-  \left[ \begin{array}{c} -0.6 \\ 0.8 \end{array}\right]&\in\mathbb R^2 \textnormal{ is
-    a unit vector } \\
-  \left[ \begin{array}{ccc} 1 & -1 & 2 \\ -1 & 3 & 0 \\ 2 & 0 &
-      -2\end{array}\right] &\in \mathbb R^{3\times 3} \textnormal{ is a
-    symmetric matrix }
-\end{align*}
-
-\subsection{Characteristic Matrices of Undirected Graphs}
+\subsection{Decompositions of Undirected Graphs}
 These matrices and decompositions apply to undirected graphs.
 
 In KONECT, these decompositions can be applied to directed graphs, in
@@ -2701,9 +2618,10 @@ many applications related to signed graphs, and results in a positive-semidefini
 smallest eigenvalue is zero if and only if there is at least one
 balanced component in the signed network.  Alternatively, using the sum
 of edge weights instead results in a different matrix, which may have
-negative eigenvalues.  This matrix appears in certain contexts \citep{b875}. 
+negative eigenvalues.  This matrix appears in certain contexts; see
+e.g.\ the examples given by \cite{b875}. 
 
-\subsection{Characteristic Matrices of Directed Graphs}
+\subsection{Decompositions of Directed Graphs}
 In directed graphs, the adjacency matrix $\mathbf A$ is itself
 asymmetric, and there is no special half-adjacency matrix.  Since the
 adjacency matrix is symmetric, decompositions are more complex.  For
@@ -2768,7 +2686,7 @@ be complex numbers.  The eigenvectors and eigenvalues however follow a
 specific pattern, that we can exploit to represent such a decomposition
 using only real numbers:
 \begin{align}
-  \mathbf Y &= \mathbf A - \mathbf A^{\mathrm T} = \mathbf Q \mathbf L \mathbf Q^{\mathrm T}
+  \mathbf Y &= \mathbf A - \mathbf A^{\mathrm T} = \mathbf Q \mathbf R \mathbf Q^{\mathrm T}
 \end{align}
 such that
 \begin{align}
@@ -2778,7 +2696,7 @@ such that
       \mathbf U - i \mathbf V 
     \end{array}
     \right] \\
-  \mathbf L &= \left[ \begin{array}{cc}
+  \mathbf R &= \left[ \begin{array}{cc}
       i \mathbf D & \mathbf 0 \\
       \mathbf 0 & -i \mathbf D
     \end{array} \right]
@@ -2790,8 +2708,8 @@ fact, this decomposition can be equivalently written as
   \mathbf Y = \mathbf A - \mathbf A^{\mathrm T} &=
   \mathbf U \mathbf D \mathbf V^{\mathrm T} - \mathbf V \mathbf D \mathbf U^{\mathrm T}.
 \end{align}
-This decompositioni is equivalent to that given by Constantine and Gower
-\citeyearpar{b869}.  It shows that the skew-symmetric matrix $\mathbf Y$ has
+This decomposition is equivalent to that given by 
+\cite{b869}.  It shows that the skew-symmetric matrix $\mathbf Y$ has
 eigenvalues that are purely imaginary, come  
 in pairs $\{\pm i \lambda\}$ that are the negative of each other (or
 equivalently, the complex conjugate), and their corresponding
@@ -2840,20 +2758,17 @@ from which the following special cases can be recovered:
   \mathbf H_{\pi/2} &= \mathbf Y.
 \end{align}
 These matrices appear in the modeling of quantum walks, as used for
-instance by Tödtli and colleagues \citeyearpar{toedtli:ctqw}.  
+instance by \cite{toedtli:ctqw}.  
 
-\section{KONECT Toolbox}
+\section{The KONECT Toolbox}
 \label{sec:toolbox}
-
-The KONECT 
+The KONECT
 Toolbox\footnote{\href{https://github.com/kunegis/konect-toolbox}{https://github.com/kunegis/konect-toolbox}}
-for Matlab
-is a set of functions for the Matlab programming
+for Matlab is a set of functions for the Matlab programming
 language\footnote{\href{http://www.mathworks.com/products/matlab/}{www.mathworks.com/products/matlab}}
 containing implementations of statistics, plots and other network
-analysis methods.  The KONECT Toolbox is used to generate the
-numerical statistics and plots in this handbook as well as on the KONECT
-website.
+analysis methods.  The KONECT Toolbox is used to generate the numerical
+statistics and plots in this handbook as well as on the KONECT website.
 
 \paragraph{Installation}
 The KONECT Toolbox is provided as a directory containing *.m files.  The
