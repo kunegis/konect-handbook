@@ -30,6 +30,7 @@
 \usepackage{tikz}
 \usepackage{natbib}
 \usepackage[nottoc]{tocbibind}
+\usepackage{wrapfig}
 
 \newcommand{\wPlot}{0.45\textwidth}
 \newcommand{\wFull}{0.95\textwidth}
@@ -1138,8 +1139,18 @@ set of vertices in a directed graph such that any node is reachable from
 any other node using a path following only directed edges in the forward
 direction.   We always have $N_{\mathrm s} \leq N$. 
 
-\subsection{Count Statistics}
+\subsection{Subgraph Count Statistics}
 \label{sec:count-statistics}
+\begin{wrapfigure}{r}{0.40\textwidth}
+  \centering
+  \includegraphics[width=0.28\textwidth]{img/Cherry_Stella444.jpg}
+  \caption{
+    A 2-star is a graph consisting of three nodes, two of which are
+    connected.  2-stars are occasionally called \emph{cherries} due to
+    their resemblance to the fruit.
+    \label{fig:cherries}
+  }
+\end{wrapfigure}
 The fundamental building block of a network are the edges.  Thus, the
 number of edges is a basic statistic of any network.  To understand the
 structure of a network, it is however not enough to analyse edges
@@ -1280,7 +1291,7 @@ wedges can be defined as
 \end{align}
 where $d(u)$ is the degree of node $u$. 
 Wedges have many different names:  2-stars, 2-paths,
-hairpins \citep{b853} and cherries.   
+hairpins \citep[e.g.][]{b853} and cherries.   
 
 Three-stars are defined analogously to two-stars, and their count
 denoted $z$.  Three-stars are also called \emph{claws} and
@@ -3283,6 +3294,11 @@ these results has received funding from the European Community's Seventh
 Frame Programme under grant agreement n\textsuperscript{o}~257859,
 \href{http://robust-project.eu/}{ROBUST} and 287975,
 \href{http://www.socialsensor.eu/}{SocialSensor}. 
+
+%% TODO Image credits 
+The picture of a pair of cherries in Figure~\ref{fig:cherries} was
+created by the authors of Wikimedia Commons and is released under the
+Creative Commons CC-SA~3.0 license.\footnote{\url{https://commons.wikimedia.org/wiki/File:Cherry_Stella444.jpg}}
 
 \bibliographystyle{agsm}
 \bibliography{kunegis,ref}

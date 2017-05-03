@@ -72,12 +72,8 @@ while IFS= read name ; do
 	fi
 
 	# Add extension only if there is not already one
-	if echo "$name" | grep -qvE '\.pdf$' ; then
-		if echo "$name" | grep -qvE '\.png$' ; then
-			if echo "$name" | grep -qvE '\.eps$' ; then
-				name="$name.$graphicsext"
-			fi
-		fi
+	if echo "$name" | grep -qvE '\.(pdf|png|eps|jpg)$' ; then
+		name="$name.$graphicsext"
 	fi
 
 	echo "$name"
