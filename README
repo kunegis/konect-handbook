@@ -1,10 +1,9 @@
             ================================
             The Handbook of Network Analysis
-
-                (by the KONECT project)
             ================================
 
-This is the Handbook of Network Analysis, a part of the KONECT project:
+This is the Handbook of Network Analysis, a part of the KONECT project,
+by Jérôme Kunegis at the University of Namur, Belgium. 
 
 http://konect.uni-koblenz.de/
 
@@ -63,4 +62,4 @@ General Public License for more details.
 The GPLv3 is found in the file 'COPYING' in this directory. 
 
 If you find errors or omissions, please write to Jérôme Kunegis
-<kunegis@gmail.com>.
+<jerome.kunegis@unamur.be>.
