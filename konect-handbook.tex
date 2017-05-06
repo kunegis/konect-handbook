@@ -1993,7 +1993,7 @@ features if the graph visible.  Usually, this only makes sense for small
 graphs.\footnote{See
   \href{https://networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment/}{networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment}
   for an explanation.}
-In KONECT, we use the Fruchterman--Reingold algorithm \citep{b870}.  An
+In KONECT, we use the algorithm of \cite{b870}.  An
 example is shown in Figure~\ref{fig:fruchterman-reingold}.
 
 \begin{figure}
@@ -2001,8 +2001,12 @@ example is shown in Figure~\ref{fig:fruchterman-reingold}.
   \includegraphics[width=\wPlot]{plot/layout.a.moreno_highschool}
   \caption{
     \label{fig:fruchterman-reingold}
-    A layout of a highschool social network (\href{http://konect.uni-koblenz.de/networks/moreno_highschool}{\textsf{MH}}), using the
-    Fruchterman--Reingold algorithm \citep{b870}. 
+    The layout of the highschool social network given by \cite{konect:coleman}
+    (\href{http://konect.uni-koblenz.de/networks/moreno_highschool}{\textsf{MH}}),
+    generated using the algorithm of \cite{b870}.  This network has 70 vertices,
+    and for such small networks, drawing a graph leads to sensible
+    plot.  For large graphs, graph drawing usually lead to
+    ``hairball''-like plots and are thus less useful.
   }
 \end{figure}
 
@@ -3253,7 +3257,7 @@ created by the authors of Wikimedia Commons and is released under the
 Creative Commons CC-SA~3.0 license.\footnote{\url{https://commons.wikimedia.org/wiki/File:Cherry_Stella444.jpg}}
 
 \bibliographystyle{agsm}
-\bibliography{kunegis,ref}
+\bibliography{kunegis,ref,konect}
 
 \appendix
 

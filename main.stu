@@ -98,3 +98,6 @@ bibtex/$name.bib;
 {
 	sed -E -e '/^\s+url/d'
 }
+
+konect.bib = -o konect-extr/;
+konect-extr/konect.bib;
