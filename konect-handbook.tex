@@ -1839,7 +1839,12 @@ underlying $G$.  Since the largest eigenvalue always has a larger
 absolute value than the smallest eigenvalue (due to the
 Perron--Frobenius theorem, and from the nonnegativity of $\mathbf A[\bar
   G]$), it follows that this measure of non-bipartivity is always in the
-interval $[0,1)$, with zero denoting a bipartite network.
+interval $[0,1)$, with zero denoting a bipartite network.  The value one
+is excluded in non-empty loopless graphs.  This can be seen by
+considering the trace of the graph's adjacency matrix, which equals the
+sum of its diagonal values (and therefore equals the number of loops),
+and at the same time equals the sum of eigenvalues of the adjacency
+matrix. 
 
 Another spectral measure of non-bipartivity is based on considering the
 smallest eigenvalue of the matrix $\mathbf N[\bar G]$.  This eigenvalue
