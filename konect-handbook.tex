@@ -66,15 +66,16 @@
 This is the handbook for the KONECT project, a scientific project to
 archive network datasets, compute systematic network theoretic
 statistics about them, visualize their properties, and provide
-corresponding data to researchers in all related fields of research, by
+corresponding data and free software tools to researchers in all related
+fields of research related to network analysis and graph mining, by
 Jérôme Kunegis at the Namur Center for Complex Systems (naXys) at the
 University of Namur, Belgium.  The name \emph{KONECT} stands for
-\emph{Koblenz Network Collection}, as large parts of the KONECT
-project were initially initiated as part of the PhD thesis of Jérôme
-Kunegis at the University of Koblenz--Landau in Germany in 2011.  This
-handbook documents all methods, definitions and conventions used in the
-project, and serves as a general handbook of network mining, with an
-emphasis on spectral graph theoretical methods.
+\emph{Koblenz Network Collection}, as large parts of the KONECT project
+were initially initiated as part of the PhD thesis of Jérôme Kunegis at
+the University of Koblenz--Landau in Germany in 2011.  This handbook
+documents all methods, definitions and conventions used in the project,
+and serves as a general handbook of network mining, with an emphasis on
+spectral graph theoretical methods.
 
 \thispagestyle{empty}
 \newpage
@@ -183,19 +184,44 @@ Science and Technologies (WeST) at the University of
 Koblenz--Landau.
 
 \paragraph{Structure of this Handbook}
-This handbook first 
-describes the different network types covered by KONECT in
-Section~\ref{sec:taxonomy}, 
-gives important mathematical definitions in
-Section~\ref{sec:definitions},  
-lists the numerical network statistics in Section~\ref{sec:statistics},
-lists node features in Section~\ref{sec:features},
-lists the plot types in Section~\ref{sec:plots}, 
-reviews graph characteristic matrices and their decompositions in
-Section~\ref{sec:matrix},  
-documents the KONECT Toolbox in
-Section~\ref{sec:toolbox} and
-describes KONECT's file formats in Section~\ref{sec:format}. 
+This handbook serves both as a compendium of mathematical definitions
+used in the KONECT project, as well as documentation of the software
+used in KONECT. 
+\begin{itemize}
+\item Section \ref{sec:taxonomy} ``Networks'' gives the basic
+  definition of a network as used in KONECT -- as networks exists in
+  many different variants such as directed, bipartite, signed, etc., the
+  exact definitions are often overlooked, but can be crucial for
+  understanding individual relations. The taxonomy of networks given in
+  this section serves for the rest of the project. 
+\item Section \ref{sec:definitions} ``Graph Theory'' gives the
+  graph-theoretical definitions underlying all topics of network analysis.  Again,
+  the devil is in the details and the graph theory literature is often
+  split between multiple incompatible definitions for commonly used
+  terms.  This sections presents the terminology and definitions as used
+  in KONECT, which represents a compromise that has been proven useful
+  in practice. 
+\item Section \ref{sec:statistics} ``Network Statistics'' is devoted to
+  network statistics, i.e., numerical measures that characterize a
+  network as a whole.  These are central to network analysis, and most
+  common network statistics are covered. 
+\item Section \ref{sec:features} ``Node Features'' covers node features,
+  i.e., numerical measures that characterize individual nodes in a
+  network.  These are often used as measures of centrality or
+  importance, etc. 
+\item Section \ref{sec:plots} ``Network Plots'' reviews common ways to
+  visualize properties of a network.  Some of those, such as the degree
+  distribution, are ubiquitous in the literature. 
+\item Section \ref{sec:matrix} ``Graph Decompositions'' reviews
+  characteristic matrices used to analyse graphs, with a focus on their
+  decompositions.  These are crucial in various types of analyses,
+  include pairwise node measures such as distances and similarities, as
+  well as node-based measures such as centralities. 
+\item Section \ref{sec:toolbox} ``The KONECT Toolbox'' describes the GNU
+  Octave and Matlab toolbox that is part of the KONECT project. 
+\item Section \ref{sec:format} ``File Formats'' finally documents the
+  file formats used by KONECT. 
+\end{itemize}
 \marginnote{
   \textlangle{}\texttt{name}\textrangle
 }
@@ -688,7 +714,7 @@ and items will always have users on the left since they are active in
 the sense that it is they who give the ratings.  
 Such a distinction is sensible in most networks \citep{b732}.
 The number of left and
-right nodes will be denoted $n_1 = |V_1|$ and $n_2 = |V_2|$. 
+right nodes are denoted $n_1 = |V_1|$ and $n_2 = |V_2|$. 
 
 Networks with multiple edges will be written as $G=(V,E)$, where $E$ is
 a multiset.  The degree of nodes in such networks takes into account
@@ -698,7 +724,7 @@ contain the edge $\{u,v\}$ multiple times.  Mathematically, we
 may write $\{u,v\}_1$, $\{u,v\}_2$, etc.  Note that we will be lax with
 this notation.  In expressions valid for all types of networks, we will
 use sums such as $\sum_{\{u,v\}\in E}$ and understand that the sum
-is over all edges. 
+is over all edges, taking into account multiplicities. 
 
 In positively weighted networks, we define $w$ as the
 weight function, returning the edge weight when given an edge. In such
