@@ -46,8 +46,8 @@
 \title{
   \includegraphics[width=3cm]{konect-logo} \\
   \vspace{1cm}
-  {\Huge Handbook of Network Analysis} \\
-  KONECT project
+         {\Huge Handbook of Network Analysis} \\
+         KONECT project
 }
 
 \author{
@@ -66,7 +66,7 @@
 This is the handbook for the KONECT project, a scientific project to
 archive network datasets, compute systematic network theoretic
 statistics about them, visualize their properties, and provide
-corresponding data and free software tools to researchers in all related
+corresponding data and Free Software tools to researchers in all related
 fields of research related to network analysis and graph mining, by
 Jérôme Kunegis at the Namur Center for Complex Systems (naXys) at the
 University of Namur, Belgium.  The name \emph{KONECT} stands for
@@ -664,7 +664,7 @@ component trivially has a diameter of two or less.
 \label{sec:definitions}
 The areas of graph theory and network analysis are young, and
 many concepts within them notoriously lack a single established notation.  The
-notation chosen for KONECT represents a compromise between familiarity
+notation chosen in KONECT represents a compromise between familiarity
 with the most common conventions, and the need to use an unambigous
 choice of letters and symbols.  This section gives an overview of the
 basic definitions used within KONECT, including in the rest of this handbook. 
@@ -673,18 +673,20 @@ basic definitions used within KONECT, including in the rest of this handbook.
 Graphs will be denoted as $G=(V,E)$, in which $V$ is the set of
 vertices, and $E$ is the set of edges \citep{b116}. Without loss of
 generality, we assume that the vertices $V$ are consecutive natural
-numbers, i.e.,
+numbers starting at one, i.e.,
 \begin{align}
   V &= \{ 1, 2, 3, \dotsc, |V| \}.
 \end{align}
 Edges $e\in E$ will be denoted as sets of two vertices, i.e.,
 $e=\{u,v\}$.  We say that two vertices are adjacent if they are
-connected by an edge; this will be written as $u \leftrightarrow v$. 
+connected by an edge; this will be written as $u \leftrightarrow v$, and is equivalent to $\{u,v\}\in E$. 
 For directed networks, $u \rightarrow v$ will denote the existence of a
 directed edge from $u$ to $v$, and $u \rightleftarrows v$ will denote
 that two directed edges of opposite orientation exist between $u$ and $v$.
 We say that an
-edge is incident to a vertex if the edge touches the vertex.
+edge is incident to a vertex if the edge touches the vertex. Strictly
+speaking, an edge $e$ is incident to node $u$ when $u\in e$, but this
+notation may confusing and we avoid it. 
 
 We also allow loops, i.e., edges of the form $\{u,u\}=\{u\}$.  Loops
 appear for instance in email networks, where it is possible to send an
@@ -695,33 +697,48 @@ networks that allow loops are annotated in KONECT with the
 
 Most of the time, we work with only one given graph, and therefore it is
 unambigous with node and edge set are meant by $V$ and $E$.  When
-ambiguity is possible, we will however use the notation
+ambiguity is possible, we will use the notation
 $V[G]$ and $E[G]$ to denote the vertex and edge sets of a graph $G$.
-This notation may occasionally be extended to other graph
+This notation using brackets may occasionally be extended to other graph
 characteristics. 
 
 In directed networks, edges are pairs instead of sets, i.e.,
-$e=(u,v)$.  In directed networks, edges are sometimes called
-\emph{arcs}; in KONECT, we use the term \emph{edge} for them. 
+$e=(u,v)$.  In this case, we have $(u,v)\neq(v,u)$ whenever $u \neq v$, 
+as both edges connecting two nodes can exist independently of each
+other. 
+In directed networks, edges are sometimes called
+\emph{arcs}, in which case the term \emph{edge} os often reserved for
+undirected edges; in KONECT, we use the term \emph{edge} or \emph{directed
+  edge} for them, and the term \emph{edge} does not imply
+undirectedness.  Note that the term \emph{directed} may apply to both an
+individual edge as well as to a whole graph, but in KONECT, graphs never
+contain both directed and undirected edges. 
 
 In bipartite graphs, we can partition the set of nodes $V$ into two
 disjoint sets $V_1$ and $V_2$, which we will call the left and right
 set respectively.  Although the assignment of a bipartite network's two
 node types to left and right sides is mathematically arbitrary, it is
 chosen in KONECT such that the left nodes are \emph{active} and the
-right nodes are \emph{passive}.  For instance, a rating graph with users
+right nodes are \emph{passive}, as such a distinction can often be made,
+and may provide useful hints to the users of a dataset.  For instance, a rating graph with users
 and items will always have users on the left since they are active in
-the sense that it is they who give the ratings.  
-Such a distinction is sensible in most networks \citep{b732}.
+the sense that it is they who give the ratings. 
+Such a distinction is sensible in most networks \citep{b732}, as certain
+patterns can be observed.  The degree distribution, for instance, is
+usually more regular for the \emph{passive} than for the \emph{active} nodes.
 The number of left and
-right nodes are denoted $n_1 = |V_1|$ and $n_2 = |V_2|$. 
+right nodes are denoted $n_1 = |V_1|$ and $n_2 = |V_2|$.  As a general
+rule, a certain number of quantities used in graph theory can be applied
+to the left and to the right node left separately, in which case we will
+use the indexes of one and two consistently. 
 
-Networks with multiple edges will be written as $G=(V,E)$, where $E$ is
+Networks with multiple edges are written as $G=(V,E)$ just as other networks, with $E$ being
 a multiset.  The degree of nodes in such networks takes into account
-multiple edges. Thus, the degree does not equal the number of adjacent
+multiple edges.  Thus, the degree does not equal the number of adjacent
 nodes but the number of incident edges.  When $E$ is a multiset, it can
 contain the edge $\{u,v\}$ multiple times.  Mathematically, we 
-may write $\{u,v\}_1$, $\{u,v\}_2$, etc.  Note that we will be lax with
+may write $\{u,v\}_1$, $\{u,v\}_2$, etc.\ to distinguish multiple such
+edges.   Note however that we will be lax with
 this notation.  In expressions valid for all types of networks, we will
 use sums such as $\sum_{\{u,v\}\in E}$ and understand that the sum
 is over all edges, taking into account multiplicities. 
@@ -1141,7 +1158,7 @@ reciprocated \citep{b866}.
   \marginnote{\texttt{reciprocity}}
   y = \frac 1 m  | \{ (u,v) \in E \mid (v,u) \in E \} | 
 \end{align}
-The reciprocity has also been noted $r$ \citep{b867}. 
+The reciprocity has also been noted $r$ \citep[e.g.][]{b867}. 
 The reciprocity can give an idea of the type of network.  For instance,
 citation networks only contain only few pairs of papers that mutually
 cite each other.  On the other hand, an email network will contain many
@@ -1183,7 +1200,7 @@ network
 \end{align}
 
 We also use an inverted variant of the relative size of the largest
-connected component, which makes it easier to plot the values of a
+connected component, which makes it easier to plot the values on a
 logarithmic scale.
 \begin{align}
   \marginnote{\texttt{cocorelinv}}
@@ -3173,7 +3190,9 @@ In the following, we describe KONECT's text format.  Each network
         \item \texttt{\#lowmultiplicity}:  Set in networks with multiple
           edges in which the actual maximal edge multiplicity is very
           low.  Used to be able to use the maximal multiplicity as a
-          sanity check.  Indicates a dataset error. 
+          sanity check.  Indicates a dataset error, as edge
+          multiplicities usually have a power law-like distribution, and
+          thus very high edge multiplicities are usually present. 
         \item \texttt{\#missingorientation}: This tag is used for
           undirected networks which are based on an underlying
           directed network.  For instance, in a citation network, we
@@ -3191,7 +3210,10 @@ In the following, we describe KONECT's text format.  Each network
           present, loops are not allowed, and the presence of loops
           will be considered an error by analysis code.
         \item \texttt{\#nonreciprocal}:  For directed networks only.
-          The network does not contain reciprocal edges.  
+          The network does not contain reciprocal edges.  This is only
+          used when the network is non-reciprocal, but does contain
+          directed cycles.  If the network is acyclic,
+          \texttt{\#acyclic} is used. 
 	\item \texttt{\#regenerate}: The network can be regenerated
           periodically and may be updated when a more recent dataset
           becomes available.
@@ -3345,8 +3367,7 @@ to reflect best practices and to avoid confusion.
   \item[Curve]
     A curve fitting method used for link prediction, when using the link
     prediction method described
-    in \citep{kunegis:spectral-transformation} (learning spectral
-    transformations).  
+    in \citep{kunegis:spectral-transformation}.
   \item[Cycle] 
     A cyclic sequence of connected edges, not containing any edge twice.
     A cycle contrasts with a tour, in which a single vertex can appear
