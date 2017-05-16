@@ -75,7 +75,8 @@ were initially initiated as part of the PhD thesis of Jérôme Kunegis at
 the University of Koblenz--Landau in Germany in 2011.  This handbook
 documents all methods, definitions and conventions used in the project,
 and serves as a general handbook of network mining, with an emphasis on
-spectral graph theoretical methods.
+spectral graph theoretical methods, i.e., such methods that are based on
+the use of specific characteristic matrices of graphs. 
 
 \thispagestyle{empty}
 \newpage
@@ -3172,8 +3173,11 @@ In the following, we describe KONECT's text format.  Each network
           stand for any earlier time; these timestamps should not be
           considered when performing time-based methods and plots. 
         \item \texttt{\#incomplete}: The network is incomplete, i.e.,
-          not all edges or nodes are included.  This implies that for
-          instance its degree distribution is not meaningful.
+          not all edges or nodes are included.  This implies that
+          strictly speaking, certain statistics or plots like 
+          the degree distribution are not meaningful, since they may
+          depend on which parts are missing.  In practice, many datasets
+          fall into this category, and they are not always excluded. 
         \item \texttt{\#join}:  The network is actually the join of more
           fundamental networks.  For instance, a co-authorship network
           is a join of the authorship network with itself.  Networks
