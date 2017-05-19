@@ -80,7 +80,8 @@ plot/$name.pdf:
 	echo analysis/plot/"$name".eps
 }
 
-# Determines whether to use external images or not 
+# Determines whether to use external images or not.  Contains '1' or
+# '0'. 
 PLOT_NONOPTIONAL;
 
 #
