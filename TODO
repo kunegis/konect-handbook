@@ -1,4 +1,3 @@
-
 * B:  Incidence matrix 
 
 * G:  line matrix, has same eigenvalues as A
@@ -15,4 +14,328 @@
 * include a table of content 
 * write a longer definition of assortativity and include it on the website 
 
-* add material from the wiki page in archiv/wiki/KONECT
+== Multirelational datasets ==
+Multirelational datasets aggregate multiple relationships into one file
+
+* Data:  estrella:/export/kunegis/konect/multi/multi.*
+
+Format:
+
+% FORMAT WEIGHTS
+FROM_ID TO_ID RELATIONSHIP_TYPE_ID WEIGHT
+
+== List of decompositions ==
+This is the list of matrix decompositions computed in [[KONECT]].
+In brackets, we give the decomposition name as used in the function decomposition_compute.m of [[KONECT]], and as stored in variables named "decomposition".
+
+=== Diagonal decompositions ===
+These decomposition are of the form
+: '''A''' = '''U''' '''Σ''' '''V'''<sup>T</sup>
+where '''Σ''' is diagonal.  If '''U''' = '''V''' then the decomposition is called symmetric.  If '''U''' and '''V''' are orthogonal then the decomposition is the eigenvalue decomposition of a normal matrix.  For decompositions of the form '''A''' = '''U''' '''Σ''' '''U'''<sup>−1</sup>, '''V''' = ('''U'''<sup>−1</sup>)<sup>T</sup> is stored separately.
+
+'''Decompositions that apply to all networks:'''
+* '''A''' [sym] Symmetric adjacency matrix
+** For bipartite networks, this is equivalent to the singular value decomposition of the biadjacency matrix '''B'''
+** Equivalent to the complex symmetric variant ''i'' ('''A''' + '''A'''<sup>T</sup>) up to a factor ''i''
+** Sum of eigenvalues equals the number of loops in the graphs
+** The dominant eigenvector is nonnegative due to the Perron–Frobenius theorem, and represents the eigenvector centrality
+* '''N''' = '''D'''<sup>−1/2</sup> '''A''' '''D'''<sup>−1/2</sup> = '''I''' − '''Z''' [sym-n] Eigenvalue decomposition of the normalized adjacency matrix
+** For bipartite networks, this is equivalent to the singular value decomposition of the normalized biadjacency matrix '''M'''
+** This is equivalent to the normalized Laplacian up to a shift:  '''Z''' = '''I''' − '''N'''
+** Eigenvalues are in the range [−1,+1].  +1 is an eigenvalue when the graph is conflict-free.  −1 is an eigenvalue when the graph is bipartite and conflict-free.
+** The dominant eigenvector (of eigenvalue +1) has entries proportional to the square root of the degree of nodes.
+* '''L''' = '''D''' − '''A''' [lap] Laplacian
+** Gives the algebraic connectivity, the Fiedler vector, and in the signed case also the algebraic conflict
+** Always positive-semidefinite
+** The dominant eigenvector is constant (when there is no conflict)
+* '''Z''' = '''I''' − '''N''' = '''D'''<sup>−1/2</sup> '''L''' '''D'''<sup>−1/2</sup> [lap-n] Normalized Laplacian
+** Equivalent to '''N''', but when decomposing it, only the smallest eigenvalues are computed.
+* [lapc] Laplacian with normalized rows
+** Equivalent to [lap], but each row of U is normalized multiplicatively to norm 1.
+* '''P''' = '''D'''<sup>−1</sup>'''A''' = '''D'''<sup>1/2</sup> '''N''' '''D'''<sup>−1/2</sup> [stoch2] Right stochastic variant
+** In directed networks this is PageRank without teleportation
+** a.k.a. the random walk probability matrix
+** Note:  for symmetric matrices, stoch1 and stoch2 are equivalent, and therefore we only compute stoch2 in that case.
+** Note the terminology:  This matrix is right stochastic, but left-normalized.
+** Used for the personalized PageRank.
+** Although it is asymmetric, all eigenvalues are real.  In fact '''P''' has the same eigenvalues as '''N'''.
+** The eigenvectors are different depending on whether they are right or left eigenvectors.  When the graph is symmetric, they are either a constant vector, or proportional to the degree vector.
+** [Directed Graph Embedding, Chen et al] is an example of spectral clustering using the STOCH2 decomposition
+** [Eigenvector-like measures of centrality for asymmetric relations Phillip Bonacich∗ , Paulette Lloyd] describes spectral centrality measures based on the decomposition STOCH2 and others.
+* '''S''' = '''I''' − '''P''' = '''I''' − '''D'''<sup>−1</sup>'''A''' = '''I''' − '''D'''<sup>1/2</sup> '''N''' '''D'''<sup>−1/2</sup> = '''D'''<sup>1/2</sup> '''Z''' '''D'''<sup>−1/2</sup> – asymmetric normalized Laplacian
+* '''K''' = '''D''' + '''A''' [lapq] Signless Laplacian, also called '''Q'''
+* [lapqu] Signless Laplacian of the underlying unweighted graph
+** Is positive-semidefinite
+** The smallest eigenvalue is the [anticonflict] measure of non-bipartivity.  It is zero exactly when the graph is bipartite.
+
+'''Decompositions that only apply to directed networks:'''
+
+These were researched in ''[[Directed Decomposition]]''.
+
+* '''A''' [svd]  Singular value decomposition
+** Ignores association between inlinks and outlinks
+** Equivalent to the SVD of '''A'''
+** Corresponds to HITS
+** Corresponds to the eigenvalue decomposition of the graph's bipartite double cover
+*  '''N''' [svd-n]  Normalized singular value decomposition
+** Equivalent to the SVD of '''D'''₁<sup>−1/2</sup> '''A''' '''D'''₂<sup>−1/2</sup>
+* '''A''' + α '''A'''<sup>T</sup> – [back] (name?)
+* '''A''' [diag] Nonorthogonal eigenvalue decomposition of the asymmetric adjacency matrix
+** Works for almost all matrices, since almost all matrices are diagonalizable. (Apparently Matlab doesn't produce an error even when the matrix is not diagonalizable.)
+** Eigenvalues are real or complex conjugate pairs
+** Eigenvectors are complex
+** Eigenvectors are ''not'' orthogonal
+** [Eigenvector-like measures of centrality for asymmetric relations Phillip Bonacich∗ , Paulette Lloyd] describes spectral centrality measures based on the decomposition ASYM and others.
+* '''D'''<sup>−1/2</sup>'''AD'''<sup>−1/2</sup> – [diag-n]
+** Eigenvalues are real or complex conjugate pairs.  All eigenvalues have absolute value not larger than 1.  It's not clear when 1 is an eigenvalue.
+** '''I''' − '''D'''<sup>−1/2</sup>'''AD'''<sup>−1/2</sup> can interpreted as a Laplacian matrix that is directed and asymmetric (as opposed to [lapd] which applies to directed graphs but is symmetric)
+* '''AD'''<sup>−1</sup> – [stoch1] Left stochastic
+** Inverted PageRank without teleportation
+* '''A'''<sub>S</sub> = '''A''' − '''A'''<sup>T</sup> – [skew] Skew adjacency matrix
+** Eigenvalues are purely imaginary and come in pair of ±''i''λ (even when thegraph is not bipartite; compare with '''A''' + '''A'''<sup>T</sup> which has symmetric real eigenvalues ±λ only when the network is bipartite)
+** The multiplication rule for additive data is hard to interpret
+** Equivalent to the variant ''i'' ('''A''' − '''A'''<sup>T</sup>) up to a factor ''i''
+* '''N'''<sub>S</sub> = '''N''' − '''N'''<sup>T</sup> – [skewn] Normalized skew adjacency matrix
+* '''A'''<sub>H</sub> = ''e''<sup>''i'' π/4</sup> ('''A''' − i '''A'''<sup>T</sup>) = 2<sup>−1/2</sup> [('''A''' + '''A'''<sup>T</sup>) + ''i'' ('''A''' − '''A'''<sup>T</sup>)] – [herm] Hermitian adjacency matrix
+** [604.3.3] Used for the Semantic Web
+** [689] defined using the rotation form (multiplication by e^-i*pi/4)
+** [691] defined as A + A' + iA - iA'
+** This matrix is Hermitian (and thus has real eigenvalues)
+** Equivalent to the skew-Hermitian variant 2<sup>−1/2</sup> [('''A''' − '''A'''<sup>T</sup>) + ''i'' ('''A''' + '''A'''<sup>T</sup>)] up to a factor ''i''
+** Some references use its conjugate
+* '''N'''<sub>H</sub> = (1/2) ''e''<sup>−''i'' π/4</sup> ('''N''' + i '''N'''<sup>T</sup>) = (1/2) [('''N''' + '''N'''<sup>T</sup>) + ''i'' ('''N''' − '''N'''<sup>T</sup>)] – [hermn] Normalized Hermitian adjacency matrix
+* '''L'''<sub>d</sub> = diag('''p''') - (diag('''p''') '''P''' + '''P'''<sup>T</sup> diag('''p''')) / 2 with '''p''' = dominant eigenvector of '''D'''<sup>−1</sup>'''A''' – [lapd] Directed Laplacian
+** [264] Defined by F. Chung
+** [193] also mentions it
+** The matrix is symmetric
+* '''Z'''<sub>d</sub> [lapd-n] The normalized directed Laplacian [264]
+* <s>[lapdiag] '''D''' − '''A''', where D is defined as the total degree</s>
+** This doesn't really make sense after all…
+* '''L'''<sub>H</sub> = '''D'''<sub>H</sub> − ''e''<sup>−''i'' π/4</sup> ('''A''' + i '''A'''<sup>T</sup>) [lapherm] – Hermitian Laplacian
+** Is Hermitian and thus its eigenvalues are real.  Like the nromal Laplacian, all eigenvalues are ≥0.
+** <s>Conjecture:  The eigenvalue is present only when the network is symmetric (?)</s>  This is wrong.
+* '''L'''<sub>H2</sub> = '''D'''<sub>1</sub> − '''A''' + '''D'''<sub>2</sub> &minus; '''A'''<sup>T</sup> + ''i'' ('''D'''<sub>2</sub> − '''A''' − ('''D'''<sub>1</sub> − '''A'''<sup>T</sup>)) [lapherm2] Variant elaborated by Marcel Blattner and Beat Tödtli
+** Has negative values in the general case
+* '''L'''<sub>S</sub> = '''D''' − ''i'''''A''' + ''i'''''A'''<sup>T</sup> [lapskew]
+* '''Q'''<sub>ε</sub> = ''e''<sup>''i''ε</sup>'''A''' + ''e''<sup>−''i''ε</sup>'''A'''<sup>T</sup> [quantum] – with 0 ≤ ε ≤ π/2
+** Generalizes the symmetric, skew-symmetric and Hermitian adjacency matrices in the following way:
+*** '''Q'''<sub>0</sub> = '''A''' + '''A'''<sup>T</sup>
+*** '''Q'''<sub>π/4</sub> = '''A'''<sub>H</sub>
+*** '''Q'''<sub>π/2</sub> = ''i'''''A'''<sub>S</sub>
+** This matrix is Hermitian
+** The name "quantum" arose during a brainstorming about quantum random walks.  It is not really fitting.
+* '''M''' = (1+ε)'''A'''+(1+ε)<sup>−1</sup>'''A'''<sup>T</sup> [mskew] – effectively a combination of BACK and DIAG
+* ''i''('''A''' − '''A'''<sup>T</sup>) [skewi] imaginary skew
+** corresponds to [skew] up to a factor ''i'', but this variant does not use the special skew structure, and corresponds to [quantum] with ε = π/2.
+* [hermi] – Equivalent to [herm], the complex part of the resulting matrix is used as link prediction scores.  This is probably wrong though.
+* [stochbip] – SALSA
+** The dominant left and right eigenvectors are proportional to in- and outdegree.
+
+=== DEDICOM ===
+DEDICOM (Decomposition into Directed Components) refers to decompositions of the form
+
+: '''A''' = '''U''' '''X''' '''U'''<sup>T</sup>
+
+where '''U''' is an n-by-r matrix and '''X''' a full r-by-r matrix.  Without loss of generality, we can take '''U''' to be orthogonal, since if it is not, we can use its thin QR decomposition '''U''' = '''Q''' '''R''' and write '''A''' = '''Q''' ('''R''' '''X''' '''R'''<sup>T</sup>) '''Q'''<sup>T</sup>.  For the same reason, it is unnecessary to consider variants with both '''U''' and '''V'''.
+
+See [687] for a recent overview of methods.
+
+* '''A''' = '''U''' ('''Σ''' '''V'''<sup>T</sup> '''U''') '''U'''<sup>T</sup>, where '''U''' '''Σ''' '''V'''<sup>T</sup> = svds('''A''') – [dedicom1u,dedicom1v] the "inverse polar" trick / the "polaR" trick
+** [679] An approximation to DEDICOM
+** There are two variants, which are the transpose of each other
+* [dedicom2, dedicom2s] – DEDICOM, closed form approximate least squares solution
+** [679], page 17
+** there are two variants: owe with Sigma^2, one with Sigma
+* <s>[685] Takane's solution to DEDICOM (superseded by [684])</s>
+* [684] [dedicom3] An iterative approximation to DEDICOM (builds on [685])
+* [dedicom3-0] – the same without the α parameter.  Converges faster but may find a local optimum
+* [679] [dedicom4] iterative solution to DEDICOM (find code or write)
+** disabled because I couldn't get it to work
+* [678] two-dimensional ASALSAN
+
+* <s>GIPSCAL is a special case of DEDICOM, and does not have to be considered [chino n (1990) A generalized inner product model for the analysis of asymmetry. Gehaviormetrika 27: 25-46]</s>
+* [682] a DEDICOM approximation (generalization of [Kiers 1990, Psychometrika] to additional constraints)
+* [takane] Code given to Jérôme by Yoshio Takane
+* Tridiagonal decomposition A = U T U', where U is orthogonal and T is tridiagonal. [tridiag]
+** Can be both symmetric and asymmetric.
+** Can be compute very fast with the Lanczos algorithm.
+
+=== Fully dense decompositions ===
+Implementations of these decompositions only exist with full rank.  They don't scale to large networks.
+* Schur decomposition – [schur] reduce to cycle-free form
+** '''A''' = '''U''' '''R''' '''U'''<sup>T</sup> with '''U''' orthogonal and '''R''' triangular
+** this is the preferred method in [136]
+** schur() in Matlab only takes dense matrix and computes a full decomposition
+* [139] orthogonal Hessenberg decomposition :  A = U H U', where U is orthogonal and H is Hessenberg
+** OTHES in EISPACK.
+** hess() in matlab, but only dense.
+* Jordan decomposition:
+** U F U<sup>−1</sup>
+** is not stable, i.e. not robust against multiple eigenvalues
+** exists in Matlab only in the symbolic toolbox (due to instability a version for floats would not work)
+* Companion decomposition [136:19], a.k.a. Frobenius normal form
+** A = YCY' where C is a companion matrix
+
+== List of Measures ==
+What is called a "measure" in KONECT is a measure of link prediction accuracy.
+
+* [ap] The average precision.  Measured over the whole test set.  The best value is 1; the worst value depends on the ratio of true and false elements in the test set (for equally many, it is <math>1-\ln 2</math>.  When a proportion <math>p</math> of pairs in the test set is true, then the average precision of a random guess is <math>p</math>.
+* [map] The mean average precision.  This is the average precision measured for each node separately, and then averaged over all nodes.  The value is between 0 and 1. This is very slow to compute.
+* [auc] The area under the curve.  This is the area under the ROC curve.  The value is between 0 and 1. The area under the curve of a random is always <math>\frac 12</math>, regardless of the test set true/false ratio.  This is very similar to the average precision, but can be used when the relative size of the true/false test sets is different from run to run.
+* [mauc] The mean area under the curve.  This is the area under the curve computed for each node, and then averaged over all nodes. This is very slow to compute.
+* [corr] The Pearson correlation.  This is probably the fastest to compute, but is not justified by any model.
+* [kendall] The Kendall correlation.  Very slow to compute and not justified by any model.
+* [spear] The Spearman correlation. Very slow to compute and not justified by any model.
+
+Recommendations:  If you do machine learning, use [auc].  If you evaluate a recommender system, use [mauc]. If [mauc] is too slow, use [auc] instead.
+
+==File name schema==
+
+===Format===
+
+The file naming format depends on how many relations are included in a dataset. If only one relation is present a simplified naming schema can be used as shown in the following.
+
+====Multiple relations====
+
+* out.* file: out.$NETWORK[_$PKG]_$REL
+** $NETWORK is the name of the network.
+** $REL is the name of the relation
+** $PKG equals $REL. If the file is part of the "all"-package, $PKG has the value "all". The String "_$PKG" is only present if the file is located within the "extr/" folder.
+
+* ent.* file: ent.$NETWORK[_$PKG]_$PKG.$ENTITY.$ATTRIBUTE
+** $NETWORK is the name of the network.
+** $PKG may be the name of the relation or "all" if the file is part of the "all"-package. The optional String "_$PKG" is only present if the file is located within the "extr/" folder.
+
+
+{| border="1" cellpadding="2"
+|-
+! extr/, dat/ !! uni/ (1) !! uni/ (2) !! $NETWORK-all.tar !! $NETWORK-$REL.tar
+|-
+| out.$NETWORK_$PKG_$REL || out.$NETWORK_$REL || out.$NETWORK || out.$NETWORK_all || out.$NETWORK_$REL
+|-
+| ent.$NETWORK_$PKG_$PKG.$ENT.$ATTR  ||  ent.$NETWORK_$REL.$ENT.$ATTR || ent.$NETWORK.$ENT.$ATTR  ||  ent.$NETWORK_all.$ENT.$ATTR  ||    ent.$NETWORK_$PKG.$ENT.$ATTR
+|-
+|}
+
+====Single relation====
+
+If a dataset contains only a single network the filename suffix is allowed to consist only of the network name instead of having the form "$NETWORK_$RELATION[_$RELATION]".
+However, entity filenames still need to contain the entity name and attribute name. In this case, the filenames have to be match the following format:
+
+* {out,meta}.* file: {out,meta}.$NETWORK
+* ent.* file: ent.$NETWORK.$ENTITY.$ATTRIBUTE
+
+
+{| border="1" cellpadding="2"
+|-
+! extr/, dat/ !! uni/ (1) !! uni/ (2) !! $NETWORK.tar
+|-
+| out.$NETWORK || out.$NETWORK || out.$NETWORK || out.$NETWORK
+|-
+| ent.$NETWORK.$ENT.$ATTR  ||  ent.$NETWORK.$ENT.$ATTR || ent.$NETWORK.$ENT.$ATTR  ||  ent.$NETWORK.$ENT.$ATTR
+|-
+|}
+
+Note: For datasets containing only a single relation there is no need for an _all-package.
+
+===Example (multiple relations)===
+
+[[File:KONECTSampleRelation.png|200px|thumb|left|Example network.]]
+
+{| border="1" cellpadding="2"
+|-
+! extr/, dat/ !! uni/ !! network-all.tar !! network-R1.tar !! network-R2.tar
+|-
+| out.network_R1_R1 || out.network_R1 || ||out.network_R1 ||
+|-
+| out.network_R2_R2 ||out.network_R2 || || ||out.network_R2
+|-
+| out.network_all_R1 || ||out.network_R1 || ||
+|-
+| out.network_all_R2 || ||out.network_R2 || ||
+|-
+| ent.network_R1_R1.E1.A1 ||ent.network_R1.E1.A1 || ||ent.network_R1.E1.A1 ||
+|-
+| ent.network_R1_R1.E2.A5 ||ent.network_R1.E2.A5 || ||ent.network_R1.E2.A5 ||
+|-
+| ent.network_R2_R2.E2.A5 ||ent.network_R2.E2.A5 || || ||ent.network_R2.E2.A5
+|-
+| ent.network_R2_R2.E3.A2|| ent.network_R2.E3.A2 || || ||ent.network_R2.E3.A2
+|-
+| ent.network_R2_R2.E3.A3 || ent.network_R2.E3.A3 || || ||ent.network_R2.E3.A3
+|-
+| ent.network_R2_R2.E3.A4|| ent.network_R2.E3.A4 || || ||ent.network_R2.E3.A4
+|-
+| ent.network_all_all.E1.A1|| ||ent.network_all.E1.A1|| ||
+|-
+| ent.network_all_all.E2.A5 ||  ||ent.network_all.E2.A5 || ||
+|-
+| ent.network_all_all.E3.A2 || ||ent.network_all.E3.A2 || ||
+|-
+| ent.network_all_all.E3.A3 || ||ent.network_all.E3.A3 || ||
+|-
+| ent.network_all_all.E3.A4 || ||ent.network_all.E3.A4 || ||
+|}
+
+==Format==
+Datasets are represented as one file per relationship and one file per entity.  Unirelational datasets consists of one relationship file.  Semantic datasets consist of any number of files.
+
+All files are readable by Matlab using the option <code>-ascii</code>, and contain header lines beginning with ''%''.
+
+All files are in UTF-8.
+
+=== Relationships ===
+Filenames:  out.* (unirelational)
+
+The format is documented in the Handbook.
+
+=== Semantic Relationships ===
+
+Filename:  rel.*
+
+ % ent.NAME_A ent.NAME_B [WEIGHT_TYPE.NAME] dat.NAME*
+
+WEIGHT_TYPE can be:
+* weight – unspecified type
+* double, float, int, short, byte – the corresponding Java™ type
+
+Data can be integers, floating point numbers or strings.  Only numbers with well-defined differences are stored as numbers (e.g. zip codes are stored as strings).
+
+===Entities===
+Filename: ent.NETWORK_RELATION[_RELATION]_ENTITY_ATTRIBUTE
+* NETWORK is the network name.
+* RELATION is the name of the relation connecting one or two entity types. The RELATION string is present twice for files in extr/ and only once for files in {uni/,dat/}.
+* ENTITY is the name of the entity.
+* ATTRIBUTE is the name of the attribute.
+
+All entity attributes are stored column-oriented and each attribute is stored in a own file.
+
+Header:
+
+ % ⟨empty⟩
+  [% COUNT]
+
+COUNT represents the biggest ID and may be omitted.
+
+Format:
+ [DATA]
+
+The ID of the entity equals their line number and matches the corresponding ID from the out.NETWORK-RELATION file. The ent file only contains entities that are present in the out file. An empty line indicates that there is no data available for this specific entity.
+There is no need to quote or escape characters as there is always only one attribute per line.
+
+=== Pre-extraction format ===
+Files named reli.* and outi.* contain string IDs instead of numerical IDs.
+
+=== Metadata ===
+Metadata file are named "meta.$NETWORK".  The file format is documented in the Handbook.
+
+=== RDF ===
+: '''List of onotologies'''
+::Friendships: http://xmlns.com/foaf/spec/ (FOAF)
+::Communities: http://sioc-project.org/ontology
+::Email: http://www.semanticdesktop.org/ontologies/nmo/ (Nepomuk Message Ontology)
+::Activity Streams: http://xmlns.notu.be/aair/
+
+Some data is not represented in RDF:
+* the timestamps for friendships
+
