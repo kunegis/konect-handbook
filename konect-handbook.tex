@@ -210,14 +210,14 @@ used in KONECT.
   i.e., numerical measures that characterize individual nodes in a
   network.  These are often used as measures of centrality or
   importance, etc. 
-\item Section \ref{sec:plots} ``Network Plots'' reviews common ways to
-  visualize properties of a network.  Some of those, such as the degree
-  distribution, are ubiquitous in the literature. 
-\item Section \ref{sec:matrix} ``Graph Decompositions'' reviews
+\item Section \ref{sec:matrix} ``Graph Matrices and Decompositions'' reviews
   characteristic matrices used to analyse graphs, with a focus on their
   decompositions.  These are crucial in various types of analyses,
   include pairwise node measures such as distances and similarities, as
   well as node-based measures such as centralities. 
+\item Section \ref{sec:plots} ``Network Plots'' reviews common ways to
+  visualize properties of a network.  Some of those, such as the degree
+  distribution, are ubiquitous in the literature. 
 \item Section \ref{sec:toolbox} ``The KONECT Toolbox'' describes the GNU
   Octave and Matlab toolbox that is part of the KONECT project. 
 \item Section \ref{sec:format} ``File Formats'' finally documents the
@@ -2028,371 +2028,7 @@ the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$.
 The local clustering coefficients give the clustering coefficient
 distribution \marginnote{\texttt{cluscod}} \citep{b865}. 
 
-\section{Network Plots}
-\label{sec:plots}
-Plots are drawn to visualize a certain aspect of a dataset. These plots
-can be used to compare several network visually, or to illustrate the
-definition of a certain numerical statistic.
-
-As a running example, we show the plots for the Wikipedia elections
-network
-(\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).  Plots
-for all networks (in which computation was feasible) are shown on the
-KONECT
-website\footnote{\href{http://konect.uni-koblenz.de/plots/}{konect.uni-koblenz.de/plots}}. The
-KONECT Toolbox contains Matlab code for generating these plot types.
-
-\subsection{Layout}
-Layout plots show the nodes and edges of a graph in a way that makes
-features if the graph visible.  Usually, this only makes sense for small
-graphs.\footnote{See
-  \href{https://networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment/}{networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment}
-  for an explanation.}
-In KONECT, we use the algorithm of \cite{b870}.  An
-example is shown in Figure~\ref{fig:fruchterman-reingold}.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=\wPlot]{plot/layout.a.moreno_highschool}
-  \caption{
-    \label{fig:fruchterman-reingold}
-    The layout of the highschool social network given by \cite{konect:coleman}
-    (\href{http://konect.uni-koblenz.de/networks/moreno_highschool}{\textsf{MH}}),
-    generated using the algorithm of \cite{b870}.  This network has 70 vertices,
-    and for such small networks, drawing a graph leads to sensible
-    plot.  For large graphs, graph drawing usually lead to
-    ``hairball''-like plots and are thus less useful.
-  }
-\end{figure}
-
-\subsection{Temporal Distribution}
-The temporal distributions shows the distribution of edge creation
-times.  It is only defined for networks with known edge creation times.
-The X axis is the time, and the Y axis is the number of edges added
-during each time interval.
-
-\begin{figure}
-  \centering 
-  \includegraphics[width=\wPlot]{plot/time_histogram.elec}
-  \caption{ 
-    The temporal distribution of edges for the Wikipedia
-    elections network.  
-  }
-\end{figure}
-
-\subsection{Edge Weight and Multiplicity Distribution}
-The edge weight and multiplicity distribution plots show the
-distribution of edge weights and of edge multiplicities, respectively.
-They are not generated for unweighted networks.  The X axis shows values
-of the edge weights or multiplicities, and the Y axis shows frequencies.
-Edge multiplicity distributions are plotted on doubly logarithmic
-scales.
-
-\begin{figure}
-  \centering 
-  \subfigure[Edge weight distribution]{
-    \includegraphics[width=\wPlot]{plot/weights.b.movielens-1m}}
-  \subfigure[Edge multiplicity distribution]{
-    \includegraphics[width=\wPlot]{plot/weights.c.edit-dewiki}}
-  \caption{ 
-    \label{fig:weight}
-    The distribution of (a)~edge weights for the MovieLens
-    rating network
-    (\href{http://konect.uni-koblenz.de/networks/movielens-1m}{\textsf{M2}})
-    and (b)~edge multiplicities for the German Wikipedia edit network
-    (\href{http://konect.uni-koblenz.de/networks/edit-dewiki}{\textsf{de}}).
-  }
-\end{figure}
-
-\subsection{Degree Distribution} 
-\label{sec:plot:degree}
-The distribution of degree values $d(u)$ over all vertices $u$
-characterizes the network as a whole, and is often used to visualize a
-network. In particular, a power law is often assumed, stating that the
-number of nodes with $n$ neighbors is proportional to $n^{-\gamma}$, for
-a constant $\gamma$ \citep{b439}. This assumption can be inspected
-visually by plotting the degree distribution on a doubly logarithmic
-scale, on which a power law renders as a straight line.  KONECT supports
-two different plots: The degree distribution, and the cumulative degree
-distribution. The degree distribution shows the number of nodes with
-degree $n$, in function of $n$.  The cumulative degree distribution
-shows the probability that the degree of a node picked at random is
-larger than $n$, in function of $n$. Both plots use a doubly logarithmic
-scale.
-
-Another visualization of the degree distribution supported by KONECT is
-in the form of the Lorenz curve, a type of plot to measure inequality
-originally used in economics (not shown).
-
-\begin{figure}
-  \centering 
-  \subfigure[Degree distribution]{
-    \includegraphics[width=\wPlot]{plot/degree.a.elec}}
-  \subfigure[Cumulative degree distribution]{
-    \includegraphics[width=\wPlot]{plot/bidd.a.elec}}
-  \caption{ 
-    \label{fig:degree}
-    The degree distribution and cumulative degree distribution
-    for the Wikipedia election network
-    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
-  }
-\end{figure}
-
-The Lorenz curve is a tool originally from economics that visualizes
-statements of the form ``X\% of nodes with smallest degree account for
-Y\% of edges''.  The set of values $(X,Y)$ thus defined is the Lorenz
-curve. In a network the Lorenz curve is a straight diagonal line when
-all nodes have the same degree, and curved
-otherwise \citep{kunegis:power-law}.  The area between the Lorenz curve
-and the diagonal is half the Gini coefficient (see above).
-
-\begin{figure}
-  \centering 
-  \includegraphics[width=\wPlot]{plot/lorenz.a.elec}
-  \caption{ 
-    The Lorenz curve for the Wikipedia election network
-    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
-    \label{fig:lorenz}
-  }
-\end{figure}
-
-\subsection{Out/indegree Comparison}
-The out/indegree comparison plots show the joint distribution of
-outdegrees and indegrees of all nodes of directed graphs.  The plot
-shows, for one directed network, each node as a point, which the
-outdegree on the X axis and the indegree on the Y axis.  
-
-An example is shown in Figure~\ref{fig:outin} for the Wikipedia
-elections network. 
-
-\begin{figure}
-  \centering
-  \includegraphics[width=\wPlot]{plot/outin.b.elec}
-  \caption{
-    \label{fig:outin}
-    The out/indegree comparison plot of the Wikipedia election network 
-    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
-  }
-\end{figure}
-
-\subsection{Assortativity Plot}
-In some networks, nodes with high degree are more often connected with
-other nodes of high degree, while nodes of low degree are more often
-connected with other nodes of low degree.  This property is called
-assortativity, i.e., such networks are said to be assortativity.  On the
-other hand, some networks, are dissortative, i.e., in them nodes of high
-degree are more often connected to nodes of low degree and vice versa.
-In addition to the assortativity $\rho$ defined as the Pearson
-correlation coefficient between the degrees of connected nodes, the
-assortativity or dissortativity of networks may be analyse by plotting
-all nodes of a network by their degree and the average degree of their
-neighbors.  Thus, the assortativity plot of a network shows all nodes of
-a network with the degree on the X axis, and the average degree of their
-neighbors on the Y axis. 
-
-An example of the assortativity plot is shown for the Wikipedia
-elections network in Figure~\ref{fig:assortativity}. 
-
-\begin{figure}
-  \centering
-  \includegraphics[width=\wPlot]{plot/assortativity.a.elec}
-  \caption{
-    The assortativity plot of the Wikipedia election network 
-    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
-    \label{fig:assortativity}
-  }
-\end{figure}
-
-\subsection{Clustering Coefficient Distribution}
-In Section~\ref{sec:statistic:clustering}, we defined the clustering
-coefficient of a node in a graph as the propotion of that node's
-neighbors that are connected, and proceeded to define the clustering
-coefficient as the corresponding measure applied to the whole network.
-In some case however, we may be interested in the distribution of the
-clustering coefficient over the nodes in the network.  For instance, a
-network could have some very clustered parts, and some less clustered
-parts, while another network could have many nodes with a similar,
-average clustering coefficient.  Thus, we may want to consider the
-distribution of clustering coefficient.  This distribution can be
-plotted as a cumulated plot.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=\wPlot]{plot/cluscod.a.facebook-wosn-links}
-  \caption{ The clustering coefficient distribution for Facebook link
-    network~(\href{http://konect.uni-koblenz.de/networks/facebook-wosn-links}{\textsf{Ol}}).
-  }
-\end{figure}
-
-\subsection{Spectral Plot}
-The eigenvalues of a network's characteristic matrices $\mathbf A$,
-$\mathbf N$ and $\mathbf L$ are often used to characterize the network
-as a whole.  KONECT supports computing and visualizing the spectrum
-(i.e., the set of eigenvalues) of a network in multiple ways.  Two types
-of plots are supported: Those showing the top-$k$ eigenvalues computed
-exactly, and those showing the overall distribution of eigenvalues,
-computed approximately. The eigenvalues of $\mathbf A$ are positive and
-negative reals, the eigenvalues of $\mathbf N$ are in the range
-$[-1,+1]$, and the eigenvalues of $\mathbf L$ are all nonnegative.  For
-$\mathbf A$ and $\mathbf N$, the largest absolute eigenvalues are used,
-while for $\mathbf L$ the smallest eigenvalues are used.  The number of
-eigenvalue shown $k$ depends on the network, and is chosen by KONECT
-such as to result in reasonable runtimes for the decomposition
-algorithms.
-
-\begin{figure}
-  \centering \subfigure[Top-$k$ eigenvalues of $\mathbf A$]{
-    \includegraphics[width=\wPlot]{plot/decomposition.b.sym.elec}}
-  \subfigure[Cumulative eigenvalue distribution of $\mathbf N$]{
-    \includegraphics[width=\wPlot]{plot/distr.f.sym-n.elec}}
-  \caption{ The top-$k$ eigenvalues of $\mathbf A$ and the cumulative
-    spectral distribution of $\mathbf N$ for the Wikipedia election
-    network
-    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
-    In the first plot~(a), positive eigenvalues are shown in green and
-    negative ones in red.
-    \label{fig:spectrum}
-  }
-\end{figure}
-
-Two plots are generated: the non-cumulative eigenvalue distribution, and
-the cumulative eigenvalue distribution.  For the non-cumulative
-distribution, the absolute $\lambda_i$ are shown in function of $i$ for
-$1 \leq i \leq k$.  The sign of eigenvalues (positive and negative) is
-shown by the color of the points (green and red).  For the cumulated
-eigenvalue plots, the range of all eigenvalues is computed, divided into
-49 bins (an odd number to avoid a bin limit at zero for the matrix
-$\mathbf N$), and then the number of eigenvalues in each bin is
-computed.  The result is plotted as a cumulated distribution plot, with
-boxes indicating the uncertainty of the computation, due to the fact
-that eigenvalues are not computed exactly, but only in bins.
-
-\subsection{Complex Eigenvalues Plot}
-The adjacency matrix of an undirected graph is symmetric and therefore
-its eigenvalues are real.  For directed graphs however, the adjacency
-matrix $\mathbf A$ is asymmetric, and in the general case its
-eigenvalues are complex.  We thus plot, for directed graphs, the top-$k$
-complex eigenvalues by absolute value of the adjacency matrix $\mathbf
-A$.
-
-Three properties can be read off the complex eigenvalues: whether a graph
-is nearly acyclic, whether a graph is nearly symmetric, and whether a
-graph is nearly bipartite.  If a  
-directed graph is acyclic, its adjacency matrix is nilpotent and
-therefore all its eigenvalues are zero. The complex eigenvalue plot can
-therefore serve as a test for networks that are nearly acyclic: the
-smaller the absolute value of the complex eigenvalues of a directed
-graph, the nearer it is to being acyclic.  When a directed network is
-symmetric, i.e., all directed edges come in pairs connecting two nodes
-in opposite direction, then the adjacency matrix $\mathbf A$ is
-symmetric and therefore all its eigenvalues are complex. Thus, a nearly
-symmetric directed network has complex eigenvalues that are near the
-real line.  
-Finally, the eigenvalues of a bipartite graph are symmetric around the
-imaginary axis.  In other words, if $a+bi$ is an eigenvalue, then so
-is $-a+bi$ when the graph is bipartite.  Thus, the amount of symmetric
-along the imaginary axis is an indicator for bipartivity. Note that
-bipartivity here takes into account edge directions:  There must be two
-groups such that all (or most) directed edges go from the first group to
-second. 
-Figure~\ref{fig:complex} shows two examples of such plots.
-
-\begin{figure}
-  \centering \subfigure[Wikipedia elections]{
-    \includegraphics[width=\wTwo]{plot/decomposition.complex.diag.elec}}
-  \subfigure[UC Irvine messages]{
-    \includegraphics[width=\wTwo]{plot/decomposition.complex.diag.opsahl-ucsocial}}
-  \caption{ The top-$k$ complex eigenvalues $\lambda_i$ of the
-    asymmetric adjacency matrix $\mathbf A$ of the directed Wikipedia
-    election~(\href{http://konect.uni-koblenz.de/networks/elec}{EL}) and
-    UC Irvine
-    messages~(\href{http://konect.uni-koblenz.de/networks/opsahl-ucsocial}{UC})
-    networks.
-    \label{fig:complex}
-  }
-\end{figure}
-
-\subsection{Distance Distribution Plot}
-Distance statistics can be visualized in the distance distribution plot.
-The distance distribution plot shows, for each integer $k$, the number
-of node pairs at distance $k$ from each other, divided by the total
-number of node pairs.  The distance distribution plot is also called the
-\emph{hop plot}.  
-The distance distribution plot can be used to
-read off the diameter, the median path length, and the 90-percentile
-effective diameter (see Section~\ref{sec:distance-statistics}).  For
-temporal networks, the distance distribution plot can be shown over
-time.
-
-The non-temporal distance distribution plot shows the cumulated distance
-distribution function between all node pairs $(u,v)$ in the network,
-including pairs of the form $(u,u)$, whose distance is zero.
-
-The temporal distance distribution plot shows the same data in function
-of time, with time on the X axis, and each colored curve representing
-one distance value.
-
-\begin{figure}
-  \centering \subfigure[Distance distribution plot]{
-    \includegraphics[width=\wPlot]{plot/hopdistr.a.elec}}
-  \subfigure[Temporal distance distribution plot]{
-    \includegraphics[width=\wPlot]{plot/hopdistr_time.full.c.elec}}
-  \caption{ The distance distribution plot and temporal distance
-    distribution plot of the Wikipedia election network
-    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
-    \label{fig:hopdistr}
-  }
-\end{figure}
-
-\subsection{Graph Drawings}
-A graph drawing is a representation of a graph, showing its vertices and
-egdes laid out in two (or three) dimensions in order for the graph
-structure to become visible.  Graph drawings are easy to produce when a
-graph is small, and become harder to generate and less useful when a
-graph is larger.
-
-Given a graph, a graph drawing can be specified by the placement of its
-vertices in the plane.  To determine such a placement is a non-trivial
-problem, for which many algortihms exist, depending on the required
-properties of the drawing. For instance, each vertex should be placed
-near to its neighbors, vertices should not be drawn to near to each
-other, and edges should, if possible, not cross each other.  It is clear
-that it is impossible to fulfill all these requirements at once, and
-thus no best graph drawing exists.
-
-In KONECT, we show drawings of small graphs only, such that vertices and
-edges remain visible. The graph drawings in KONECT are spectral graph
-drawings, i.e., they are based on the eigenvectors of characteric graph
-matrices.  In particular, KONECT included graph drawings based on the
-adjacency matrix $\mathbf A$, the normalized adjacency matrix $\mathbf
-N$ and the Laplacian matrix $\mathbf L$ \citep{b405}. Let $\mathbf x$ and $\mathbf y$
-be the two chosen eigenvector of each matrix, then the coordinate of the
-node $u\in V$ is given by $\mathbf x_u$ and $\mathbf y_u$.
-
-For the adjacency matrix $\mathbf A$ and the normalized adjacency matrix
-$\mathbf N$, we use the two eigenvector with largest absolute eigevalue.
-For the Laplacian matrix $\mathbf L$, we use the two eigenvectors with
-smallest nonzero eigenvalue.  Examples for the Zachary karate club
-social network
-(\href{http://konect.uni-koblenz.de/networks/ucidata-zachary}{\textsf{ZA}})
-are shown in Figure~\ref{fig:map.ax}.
-
-\begin{figure}
-  \centering \subfigure[Adjacency matrix~$\mathbf A$]{
-    \includegraphics[width=\wFour]{plot/map.ax.sym.ucidata-zachary}}
-  \subfigure[Normalized adjacency matrix~$\mathbf N$]{
-    \includegraphics[width=\wFour]{plot/map.ax.sym-n.ucidata-zachary}}
-  \subfigure[Laplacian $\mathbf L$]{
-    \includegraphics[width=\wFour]{plot/map.ax.lap.ucidata-zachary}}
-  \caption{ Drawings of the Zachary karate club social network
-    (\href{http://konect.uni-koblenz.de/networks/ucidata-zachary}{\textsf{ZA}})
-    using (a)~the adjacency matrix~$\mathbf A$, (b)~the normalized
-    adjacency matrix~$\mathbf N$, (c)~the Laplacian matrix~$\mathbf L$.
-    \label{fig:map.ax}
-  }
-\end{figure}
-
-\section{Graph Decompositions}
+\section{Graph Matrices and Decompositions}
 \label{sec:matrix}
 In order to analyse graphs, algebraic graph theory is a common
 approach.  In algebraic graph theory, a graph with $n$ vertices is
@@ -2847,6 +2483,370 @@ from which the following special cases can be recovered:
 \end{align}
 These matrices appear in the modeling of quantum walks, as used for
 instance by \cite{toedtli:ctqw}.  
+
+\section{Network Plots}
+\label{sec:plots}
+Plots are drawn to visualize a certain aspect of a dataset. These plots
+can be used to compare several network visually, or to illustrate the
+definition of a certain numerical statistic.
+
+As a running example, we show the plots for the Wikipedia elections
+network
+(\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).  Plots
+for all networks (in which computation was feasible) are shown on the
+KONECT
+website\footnote{\href{http://konect.uni-koblenz.de/plots/}{konect.uni-koblenz.de/plots}}. The
+KONECT Toolbox contains Matlab code for generating these plot types.
+
+\subsection{Layout}
+Layout plots show the nodes and edges of a graph in a way that makes
+features if the graph visible.  Usually, this only makes sense for small
+graphs.\footnote{See
+  \href{https://networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment/}{networkscience.wordpress.com/2016/06/22/no-hairball-the-graph-drawing-experiment}
+  for an explanation.}
+In KONECT, we use the algorithm of \cite{b870}.  An
+example is shown in Figure~\ref{fig:fruchterman-reingold}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\wPlot]{plot/layout.a.moreno_highschool}
+  \caption{
+    \label{fig:fruchterman-reingold}
+    The layout of the highschool social network given by \cite{konect:coleman}
+    (\href{http://konect.uni-koblenz.de/networks/moreno_highschool}{\textsf{MH}}),
+    generated using the algorithm of \cite{b870}.  This network has 70 vertices,
+    and for such small networks, drawing a graph leads to sensible
+    plot.  For large graphs, graph drawing usually lead to
+    ``hairball''-like plots and are thus less useful.
+  }
+\end{figure}
+
+\subsection{Temporal Distribution}
+The temporal distributions shows the distribution of edge creation
+times.  It is only defined for networks with known edge creation times.
+The X axis is the time, and the Y axis is the number of edges added
+during each time interval.
+
+\begin{figure}
+  \centering 
+  \includegraphics[width=\wPlot]{plot/time_histogram.elec}
+  \caption{ 
+    The temporal distribution of edges for the Wikipedia
+    elections network.  
+  }
+\end{figure}
+
+\subsection{Edge Weight and Multiplicity Distribution}
+The edge weight and multiplicity distribution plots show the
+distribution of edge weights and of edge multiplicities, respectively.
+They are not generated for unweighted networks.  The X axis shows values
+of the edge weights or multiplicities, and the Y axis shows frequencies.
+Edge multiplicity distributions are plotted on doubly logarithmic
+scales.
+
+\begin{figure}
+  \centering 
+  \subfigure[Edge weight distribution]{
+    \includegraphics[width=\wPlot]{plot/weights.b.movielens-1m}}
+  \subfigure[Edge multiplicity distribution]{
+    \includegraphics[width=\wPlot]{plot/weights.c.edit-dewiki}}
+  \caption{ 
+    \label{fig:weight}
+    The distribution of (a)~edge weights for the MovieLens
+    rating network
+    (\href{http://konect.uni-koblenz.de/networks/movielens-1m}{\textsf{M2}})
+    and (b)~edge multiplicities for the German Wikipedia edit network
+    (\href{http://konect.uni-koblenz.de/networks/edit-dewiki}{\textsf{de}}).
+  }
+\end{figure}
+
+\subsection{Degree Distribution} 
+\label{sec:plot:degree}
+The distribution of degree values $d(u)$ over all vertices $u$
+characterizes the network as a whole, and is often used to visualize a
+network. In particular, a power law is often assumed, stating that the
+number of nodes with $n$ neighbors is proportional to $n^{-\gamma}$, for
+a constant $\gamma$ \citep{b439}. This assumption can be inspected
+visually by plotting the degree distribution on a doubly logarithmic
+scale, on which a power law renders as a straight line.  KONECT supports
+two different plots: The degree distribution, and the cumulative degree
+distribution. The degree distribution shows the number of nodes with
+degree $n$, in function of $n$.  The cumulative degree distribution
+shows the probability that the degree of a node picked at random is
+larger than $n$, in function of $n$. Both plots use a doubly logarithmic
+scale.
+
+Another visualization of the degree distribution supported by KONECT is
+in the form of the Lorenz curve, a type of plot to measure inequality
+originally used in economics (not shown).
+
+\begin{figure}
+  \centering 
+  \subfigure[Degree distribution]{
+    \includegraphics[width=\wPlot]{plot/degree.a.elec}}
+  \subfigure[Cumulative degree distribution]{
+    \includegraphics[width=\wPlot]{plot/bidd.a.elec}}
+  \caption{ 
+    \label{fig:degree}
+    The degree distribution and cumulative degree distribution
+    for the Wikipedia election network
+    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
+  }
+\end{figure}
+
+The Lorenz curve is a tool originally from economics that visualizes
+statements of the form ``X\% of nodes with smallest degree account for
+Y\% of edges''.  The set of values $(X,Y)$ thus defined is the Lorenz
+curve. In a network the Lorenz curve is a straight diagonal line when
+all nodes have the same degree, and curved
+otherwise \citep{kunegis:power-law}.  The area between the Lorenz curve
+and the diagonal is half the Gini coefficient (see above).
+
+\begin{figure}
+  \centering 
+  \includegraphics[width=\wPlot]{plot/lorenz.a.elec}
+  \caption{ 
+    The Lorenz curve for the Wikipedia election network
+    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
+    \label{fig:lorenz}
+  }
+\end{figure}
+
+\subsection{Out/indegree Comparison}
+The out/indegree comparison plots show the joint distribution of
+outdegrees and indegrees of all nodes of directed graphs.  The plot
+shows, for one directed network, each node as a point, which the
+outdegree on the X axis and the indegree on the Y axis.  
+
+An example is shown in Figure~\ref{fig:outin} for the Wikipedia
+elections network. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\wPlot]{plot/outin.b.elec}
+  \caption{
+    \label{fig:outin}
+    The out/indegree comparison plot of the Wikipedia election network 
+    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
+  }
+\end{figure}
+
+\subsection{Assortativity Plot}
+In some networks, nodes with high degree are more often connected with
+other nodes of high degree, while nodes of low degree are more often
+connected with other nodes of low degree.  This property is called
+assortativity, i.e., such networks are said to be assortativity.  On the
+other hand, some networks, are dissortative, i.e., in them nodes of high
+degree are more often connected to nodes of low degree and vice versa.
+In addition to the assortativity $\rho$ defined as the Pearson
+correlation coefficient between the degrees of connected nodes, the
+assortativity or dissortativity of networks may be analyse by plotting
+all nodes of a network by their degree and the average degree of their
+neighbors.  Thus, the assortativity plot of a network shows all nodes of
+a network with the degree on the X axis, and the average degree of their
+neighbors on the Y axis. 
+
+An example of the assortativity plot is shown for the Wikipedia
+elections network in Figure~\ref{fig:assortativity}. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\wPlot]{plot/assortativity.a.elec}
+  \caption{
+    The assortativity plot of the Wikipedia election network 
+    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
+    \label{fig:assortativity}
+  }
+\end{figure}
+
+\subsection{Clustering Coefficient Distribution}
+In Section~\ref{sec:statistic:clustering}, we defined the clustering
+coefficient of a node in a graph as the propotion of that node's
+neighbors that are connected, and proceeded to define the clustering
+coefficient as the corresponding measure applied to the whole network.
+In some case however, we may be interested in the distribution of the
+clustering coefficient over the nodes in the network.  For instance, a
+network could have some very clustered parts, and some less clustered
+parts, while another network could have many nodes with a similar,
+average clustering coefficient.  Thus, we may want to consider the
+distribution of clustering coefficient.  This distribution can be
+plotted as a cumulated plot.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\wPlot]{plot/cluscod.a.facebook-wosn-links}
+  \caption{ The clustering coefficient distribution for Facebook link
+    network~(\href{http://konect.uni-koblenz.de/networks/facebook-wosn-links}{\textsf{Ol}}).
+  }
+\end{figure}
+
+\subsection{Spectral Plot}
+The eigenvalues of a network's characteristic matrices $\mathbf A$,
+$\mathbf N$ and $\mathbf L$ are often used to characterize the network
+as a whole.  KONECT supports computing and visualizing the spectrum
+(i.e., the set of eigenvalues) of a network in multiple ways.  Two types
+of plots are supported: Those showing the top-$k$ eigenvalues computed
+exactly, and those showing the overall distribution of eigenvalues,
+computed approximately. The eigenvalues of $\mathbf A$ are positive and
+negative reals, the eigenvalues of $\mathbf N$ are in the range
+$[-1,+1]$, and the eigenvalues of $\mathbf L$ are all nonnegative.  For
+$\mathbf A$ and $\mathbf N$, the largest absolute eigenvalues are used,
+while for $\mathbf L$ the smallest eigenvalues are used.  The number of
+eigenvalue shown $k$ depends on the network, and is chosen by KONECT
+such as to result in reasonable runtimes for the decomposition
+algorithms.
+
+\begin{figure}
+  \centering \subfigure[Top-$k$ eigenvalues of $\mathbf A$]{
+    \includegraphics[width=\wPlot]{plot/decomposition.b.sym.elec}}
+  \subfigure[Cumulative eigenvalue distribution of $\mathbf N$]{
+    \includegraphics[width=\wPlot]{plot/distr.f.sym-n.elec}}
+  \caption{ The top-$k$ eigenvalues of $\mathbf A$ and the cumulative
+    spectral distribution of $\mathbf N$ for the Wikipedia election
+    network
+    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
+    In the first plot~(a), positive eigenvalues are shown in green and
+    negative ones in red.
+    \label{fig:spectrum}
+  }
+\end{figure}
+
+Two plots are generated: the non-cumulative eigenvalue distribution, and
+the cumulative eigenvalue distribution.  For the non-cumulative
+distribution, the absolute $\lambda_i$ are shown in function of $i$ for
+$1 \leq i \leq k$.  The sign of eigenvalues (positive and negative) is
+shown by the color of the points (green and red).  For the cumulated
+eigenvalue plots, the range of all eigenvalues is computed, divided into
+49 bins (an odd number to avoid a bin limit at zero for the matrix
+$\mathbf N$), and then the number of eigenvalues in each bin is
+computed.  The result is plotted as a cumulated distribution plot, with
+boxes indicating the uncertainty of the computation, due to the fact
+that eigenvalues are not computed exactly, but only in bins.
+
+\subsection{Complex Eigenvalues Plot}
+The adjacency matrix of an undirected graph is symmetric and therefore
+its eigenvalues are real.  For directed graphs however, the adjacency
+matrix $\mathbf A$ is asymmetric, and in the general case its
+eigenvalues are complex.  We thus plot, for directed graphs, the top-$k$
+complex eigenvalues by absolute value of the adjacency matrix $\mathbf
+A$.
+
+Three properties can be read off the complex eigenvalues: whether a graph
+is nearly acyclic, whether a graph is nearly symmetric, and whether a
+graph is nearly bipartite.  If a  
+directed graph is acyclic, its adjacency matrix is nilpotent and
+therefore all its eigenvalues are zero. The complex eigenvalue plot can
+therefore serve as a test for networks that are nearly acyclic: the
+smaller the absolute value of the complex eigenvalues of a directed
+graph, the nearer it is to being acyclic.  When a directed network is
+symmetric, i.e., all directed edges come in pairs connecting two nodes
+in opposite direction, then the adjacency matrix $\mathbf A$ is
+symmetric and therefore all its eigenvalues are complex. Thus, a nearly
+symmetric directed network has complex eigenvalues that are near the
+real line.  
+Finally, the eigenvalues of a bipartite graph are symmetric around the
+imaginary axis.  In other words, if $a+bi$ is an eigenvalue, then so
+is $-a+bi$ when the graph is bipartite.  Thus, the amount of symmetric
+along the imaginary axis is an indicator for bipartivity. Note that
+bipartivity here takes into account edge directions:  There must be two
+groups such that all (or most) directed edges go from the first group to
+second. 
+Figure~\ref{fig:complex} shows two examples of such plots.
+
+\begin{figure}
+  \centering \subfigure[Wikipedia elections]{
+    \includegraphics[width=\wTwo]{plot/decomposition.complex.diag.elec}}
+  \subfigure[UC Irvine messages]{
+    \includegraphics[width=\wTwo]{plot/decomposition.complex.diag.opsahl-ucsocial}}
+  \caption{ The top-$k$ complex eigenvalues $\lambda_i$ of the
+    asymmetric adjacency matrix $\mathbf A$ of the directed Wikipedia
+    election~(\href{http://konect.uni-koblenz.de/networks/elec}{EL}) and
+    UC Irvine
+    messages~(\href{http://konect.uni-koblenz.de/networks/opsahl-ucsocial}{UC})
+    networks.
+    \label{fig:complex}
+  }
+\end{figure}
+
+\subsection{Distance Distribution Plot}
+Distance statistics can be visualized in the distance distribution plot.
+The distance distribution plot shows, for each integer $k$, the number
+of node pairs at distance $k$ from each other, divided by the total
+number of node pairs.  The distance distribution plot is also called the
+\emph{hop plot}.  
+The distance distribution plot can be used to
+read off the diameter, the median path length, and the 90-percentile
+effective diameter (see Section~\ref{sec:distance-statistics}).  For
+temporal networks, the distance distribution plot can be shown over
+time.
+
+The non-temporal distance distribution plot shows the cumulated distance
+distribution function between all node pairs $(u,v)$ in the network,
+including pairs of the form $(u,u)$, whose distance is zero.
+
+The temporal distance distribution plot shows the same data in function
+of time, with time on the X axis, and each colored curve representing
+one distance value.
+
+\begin{figure}
+  \centering \subfigure[Distance distribution plot]{
+    \includegraphics[width=\wPlot]{plot/hopdistr.a.elec}}
+  \subfigure[Temporal distance distribution plot]{
+    \includegraphics[width=\wPlot]{plot/hopdistr_time.full.c.elec}}
+  \caption{ The distance distribution plot and temporal distance
+    distribution plot of the Wikipedia election network
+    (\href{http://konect.uni-koblenz.de/networks/elec}{\textsf{EL}}).
+    \label{fig:hopdistr}
+  }
+\end{figure}
+
+\subsection{Graph Drawings}
+A graph drawing is a representation of a graph, showing its vertices and
+egdes laid out in two (or three) dimensions in order for the graph
+structure to become visible.  Graph drawings are easy to produce when a
+graph is small, and become harder to generate and less useful when a
+graph is larger.
+
+Given a graph, a graph drawing can be specified by the placement of its
+vertices in the plane.  To determine such a placement is a non-trivial
+problem, for which many algortihms exist, depending on the required
+properties of the drawing. For instance, each vertex should be placed
+near to its neighbors, vertices should not be drawn to near to each
+other, and edges should, if possible, not cross each other.  It is clear
+that it is impossible to fulfill all these requirements at once, and
+thus no best graph drawing exists.
+
+In KONECT, we show drawings of small graphs only, such that vertices and
+edges remain visible. The graph drawings in KONECT are spectral graph
+drawings, i.e., they are based on the eigenvectors of characteric graph
+matrices.  In particular, KONECT included graph drawings based on the
+adjacency matrix $\mathbf A$, the normalized adjacency matrix $\mathbf
+N$ and the Laplacian matrix $\mathbf L$ \citep{b405}. Let $\mathbf x$ and $\mathbf y$
+be the two chosen eigenvector of each matrix, then the coordinate of the
+node $u\in V$ is given by $\mathbf x_u$ and $\mathbf y_u$.
+
+For the adjacency matrix $\mathbf A$ and the normalized adjacency matrix
+$\mathbf N$, we use the two eigenvector with largest absolute eigevalue.
+For the Laplacian matrix $\mathbf L$, we use the two eigenvectors with
+smallest nonzero eigenvalue.  Examples for the Zachary karate club
+social network
+(\href{http://konect.uni-koblenz.de/networks/ucidata-zachary}{\textsf{ZA}})
+are shown in Figure~\ref{fig:map.ax}.
+
+\begin{figure}
+  \centering \subfigure[Adjacency matrix~$\mathbf A$]{
+    \includegraphics[width=\wFour]{plot/map.ax.sym.ucidata-zachary}}
+  \subfigure[Normalized adjacency matrix~$\mathbf N$]{
+    \includegraphics[width=\wFour]{plot/map.ax.sym-n.ucidata-zachary}}
+  \subfigure[Laplacian $\mathbf L$]{
+    \includegraphics[width=\wFour]{plot/map.ax.lap.ucidata-zachary}}
+  \caption{ Drawings of the Zachary karate club social network
+    (\href{http://konect.uni-koblenz.de/networks/ucidata-zachary}{\textsf{ZA}})
+    using (a)~the adjacency matrix~$\mathbf A$, (b)~the normalized
+    adjacency matrix~$\mathbf N$, (c)~the Laplacian matrix~$\mathbf L$.
+    \label{fig:map.ax}
+  }
+\end{figure}
 
 \section{The KONECT Toolbox}
 \label{sec:toolbox}

@@ -1,33 +1,18 @@
-* B:  Incidence matrix 
-
+* B:  Incidence matrix    (use another name because B is already the biadjacency matrix for us) 
 * G:  line matrix, has same eigenvalues as A
      G = B'B with L = (1/2) BB'
-
-* spectrum of A is the same as spectrum of G
-
-* spectrum of P = D_A^-1 A is the same as spectrum D_G^-1 D
+     (use another notation because G is already the "Google matrix" for us)
+** spectrum of A is the same as spectrum of G
+** spectrum of P = D_A^-1 A is the same as spectrum D_G^-1 D
 
 * use longtable for all tables, so as to include the tables in their
   respective subsection. 
 * glossary:  link to the relevant sections 
 * definition of the weight function for a node pair:  add a case for DYNAMIC 
 * include a table of content 
-* write a longer definition of assortativity and include it on the website 
-
-== Multirelational datasets ==
-Multirelational datasets aggregate multiple relationships into one file
-
-* Data:  estrella:/export/kunegis/konect/multi/multi.*
-
-Format:
-
-% FORMAT WEIGHTS
-FROM_ID TO_ID RELATIONSHIP_TYPE_ID WEIGHT
+* write a longer definition of assortativity 
 
 == List of decompositions ==
-This is the list of matrix decompositions computed in [[KONECT]].
-In brackets, we give the decomposition name as used in the function decomposition_compute.m of [[KONECT]], and as stored in variables named "decomposition".
-
 === Diagonal decompositions ===
 These decomposition are of the form
 : '''A''' = '''U''' '''Σ''' '''V'''<sup>T</sup>
@@ -326,16 +311,9 @@ There is no need to quote or escape characters as there is always only one attri
 === Pre-extraction format ===
 Files named reli.* and outi.* contain string IDs instead of numerical IDs.
 
-=== Metadata ===
-Metadata file are named "meta.$NETWORK".  The file format is documented in the Handbook.
-
-=== RDF ===
-: '''List of onotologies'''
-::Friendships: http://xmlns.com/foaf/spec/ (FOAF)
-::Communities: http://sioc-project.org/ontology
-::Email: http://www.semanticdesktop.org/ontologies/nmo/ (Nepomuk Message Ontology)
-::Activity Streams: http://xmlns.notu.be/aair/
-
-Some data is not represented in RDF:
-* the timestamps for friendships
+== Other ==
+* Glossary of Mathematical Symbols:  use a single table that spans
+  multiple pages  (like in the PhD thesis) 
+* Glossary of Mathematical Symbols:  link to their definition and show
+  the internal name if there is one
 

@@ -63,7 +63,11 @@ done
 # Plots
 #
 
-<"$file" sed -E -e '/^\s*%/d;/^.*\\includegraphics/!d;s,^.*\\includegraphics[^{]*\{([^}]+)\}.*$,\1,' |
+<"$file" sed -E -e '
+/^\s*%/d
+s,^.*(\\includegraphics|\\begin\{overpic\})[^{]*\{([^}]+)\}.*$,\2,
+t;d
+' |
 while IFS= read name ; do
 
 	# Empty name
@@ -102,3 +106,4 @@ done
 while IFS= read -r name ; do
 	echo "$name.cls"
 done
+
