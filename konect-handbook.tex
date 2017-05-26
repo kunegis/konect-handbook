@@ -31,6 +31,7 @@
 \usepackage{natbib}
 \usepackage[nottoc]{tocbibind}
 \usepackage{wrapfig}
+\usepackage{longtable}
 
 \newcommand{\wPlot}{0.45\textwidth}
 \newcommand{\wFull}{0.95\textwidth}
@@ -843,7 +844,6 @@ the sum of the absolute weights of incident edges
 The weight of a node coincides with the degree of a node in unweighted
 networks and networks with multiple edges. 
 The weight of a node may also be called its strength \citep{b792}. 
-% TODO update reference to journal paper 
 
 For directed graphs, we can distinguish the outdegree weight and the
 indegree weight:
@@ -3347,6 +3347,11 @@ The picture of a pair of cherries in Figure~\ref{fig:cherries} was
 created by the authors of Wikimedia Commons and is released under the
 Creative Commons CC-SA~3.0 license.\footnote{\url{https://commons.wikimedia.org/wiki/File:Cherry_Stella444.jpg}}
 
+\let\oldbibliography\thebibliography
+\renewcommand{\thebibliography}[1]{%
+  \oldbibliography{#1}%
+  \setlength{\itemsep}{-0.75pt}%
+}
 \bibliographystyle{agsm}
 \bibliography{kunegis,ref,konect}
 
@@ -3513,7 +3518,19 @@ notation chosen in KONECT represents a reasonable balance between using establis
 notation when it exists, and having distinct symbols for different
 measures. \\
 
-\begin{tabular}{ll}
+\begin{longtable}{ll}
+  \toprule
+  \textbf{Symbol} & \textbf{Meaning} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{Symbol} & \textbf{Meaning} \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  \bottomrule
+  \endlastfoot
   $a$ & algebraic connectivity \\
   $b$ & non-bipartivity \\
   $c$ & global clustering coefficient \\
@@ -3539,10 +3556,8 @@ measures. \\
   $w(\ldots)$ & weight function \\
   $x$ & cross count \\
   $y$ & reciprocity \\
-  $z$ & claw count
-\end{tabular}
-
-\begin{tabular}{ll}
+  $z$ & claw count \\
+\midrule
   $\beta$  & preferential attachment exponent \\
   $\gamma$ & power law exponent \\
   $\delta$ & diameter \\
@@ -3554,10 +3569,8 @@ measures. \\
   $\rho$ & assortativity \\
   $\rho$ & spectral radius \\
   $\xi$ & algebraic conflict \\
-  $\sigma$ & singular value 
-\end{tabular}
-
-\begin{tabular}{ll}
+  $\sigma$ & singular value \\
+\midrule
   $C_k$ & $k$-cycle count \\
   $E$ & edge set \\
   $F$ & frustration \\
@@ -3571,10 +3584,8 @@ measures. \\
   $T$   & triadic conflict \\
   $T_k$ & $k$-tour count \\
   $V$   & vertex set \\
-  $W_k$ & $k$-walk count
-\end{tabular}
-
-\begin{tabular}{ll}
+  $W_k$ & $k$-walk count \\
+\midrule
   $\mathbf 0$ & zeroes matrix \\
   $\mathbf A$ & adjacency matrix \\
   $\mathbf B$ & biadjacency matrix \\
@@ -3591,18 +3602,14 @@ measures. \\
   $\mathbf S$ & stochastic Laplacian matrix \\
   $\mathbf U, \mathbf V$ & eigenvector matrices \\
   $\mathbf Y$ & skew-symmetric adjacency matrix \\
-  $\mathbf Z$ & normalized Laplacian matrix 
-\end{tabular}
-
-\begin{tabular}{ll}
+  $\mathbf Z$ & normalized Laplacian matrix \\
+\midrule
   $\mathbf \Lambda$ & eigenvalue matrix \\
-  $\mathbf \Sigma$ & singular value matrix 
-\end{tabular}
-
-\begin{tabular}{ll}
+  $\mathbf \Sigma$ & singular value matrix \\
+\midrule
   $\bar G$ & unweighted graph \\
   $\bar{\bar G}$ & graph with unique edges \\
   $|G|$ & unsigned graph 
-\end{tabular}
+\end{longtable}
 
 \end{document}
