@@ -896,6 +896,9 @@ matrix, operations on graphs can often be expressed as simple algebraic
 expressions.  For instance, the number of common friends of
 two people in a social network can be expressed as the square of a
 matrix. 
+This section gives brief definition of the most important graph
+matrices.  More properties of these matrices, as well as other such
+matrices are given in Section~\ref{sec:matrix}. 
 
 An unweighted graph $G=(V,E)$ can be represented by a $|V|$-by-$|V|$
 matrix containing the values 0 and 1, denoting whether a certain edges
@@ -951,14 +954,8 @@ defined as
 \begin{align}
   \mathbf L = \mathbf D - \mathbf A. 
 \end{align}
-Note that in some disciplines the Laplacian matrix may be defined as
-$\mathbf A - \mathbf D$, making it negative-semidefinite. 
 
 %% TODO:  merge the rest of this section into the Graph Matrix chapter.  
-
-Other matrices used in KONECT include the
-normalized Laplacian matrix, the stochastic adjacency matrix and the
-signless Laplacian. 
 
 The normalized Laplacian $\mathbf Z$ is a normalized version of the Laplacian matrix
 $\mathbf L$.  Just as the ordinary Laplacian, $\mathbf Z$ capture
@@ -2116,7 +2113,7 @@ The Laplacian matrix of an undirected graph is defined as
   \mathbf L &= \mathbf D - \mathbf A,
 \end{align*}
 i.e., the diagonal degree matrix from which we subtract the adjacency
-matrix. 
+matrix.  The Laplacian matrix is also called the Kirchhoff matrix. 
 
 We consider the eigenvalue decomposition of the Laplacian:
 \begin{align*}
@@ -3342,7 +3339,6 @@ Frame Programme under grant agreements n\textsuperscript{o}~257859,
   L'Internet de Demain pour développer les Entreprises, l'Économie et la
   Société} (ERDF/FEDER -- Wallonia/Wallonie). 
 
-%% TODO Image credits 
 The picture of a pair of cherries in Figure~\ref{fig:cherries} was
 created by the authors of Wikimedia Commons and is released under the
 Creative Commons CC-SA~3.0 license.\footnote{\url{https://commons.wikimedia.org/wiki/File:Cherry_Stella444.jpg}}
@@ -3350,7 +3346,7 @@ Creative Commons CC-SA~3.0 license.\footnote{\url{https://commons.wikimedia.org/
 \let\oldbibliography\thebibliography
 \renewcommand{\thebibliography}[1]{%
   \oldbibliography{#1}%
-  \setlength{\itemsep}{-0.75pt}%
+  \setlength{\itemsep}{-0.55pt}%
 }
 \bibliographystyle{agsm}
 \bibliography{kunegis,ref,konect}
