@@ -662,6 +662,86 @@ network is skewed because all song nodes have degree one, the diameter
 cannot be computed since the network is disconnected, and each connected
 component trivially has a diameter of two or less.
 
+\subsection{Tags}
+\label{sec:tags}
+The following tags can be given to networks.  They are declared in the
+\texttt{tags} field in the \texttt{meta.*} file for each network. 
+\begin{itemize}
+\item \texttt{\#acyclic}:  The network is acyclic.  Can only be
+  set for directed networks.  If this is not set, a directed
+  network must contain at least two pairs of reciprocal edges of
+  the form $(u,v)$ and $(v,u)$.  If the network does not contain
+  reciprocal edges, but has cycles, the tag
+  \texttt{\#nonreciprocal} is used.
+\item \texttt{\#aggregatetime}:  The small value of timestamps
+  stand for any earlier time; these timestamps should not be
+  considered when performing time-based methods and plots. 
+\item \texttt{\#incomplete}: The network is incomplete, i.e.,
+  not all edges or nodes are included.  This implies that
+  strictly speaking, certain statistics or plots like 
+  the degree distribution are not meaningful, since they may
+  depend on which parts are missing.  In practice, many datasets
+  fall into this category, and they are not always excluded. 
+\item \texttt{\#join}:  The network is actually the join of more
+  fundamental networks.  For instance, a co-authorship network
+  is a join of the authorship network with itself.  Networks
+  that have this tag may have skewed properties, such as skewed
+  degree distributions.
+\item \texttt{\#kcore}: The network contains only nodes with a
+  certain minimal degree $k$. In other words, the nodes with
+  degree less than a certain number $k$ were removed from the
+  dataset.  This changes a network drastically, and is called
+  the ``$k$-core'' of a network. This is sometimes done to get
+  a less sparse network in applications that do not perform well
+  on sparse networks. This tag implies the
+  \texttt{\#incomplete} tag.
+\item \texttt{\#lowmultiplicity}:  Set in networks with multiple
+  edges in which the actual maximal edge multiplicity is very
+  low.  Used to be able to use the maximal multiplicity as a
+  sanity check.  Indicates a dataset error, as edge
+  multiplicities usually have a power law-like distribution, and
+  thus very high edge multiplicities are usually present. 
+\item \texttt{\#missingmultiplicity}:  This tag is used when the
+  underlying network had inherent multiple edges, but these are
+  not present in the dataset.  For instance, any email network
+  that does not contain multiple edges is tagged with this. 
+\item \texttt{\#missingorientation}: This tag is used for
+  undirected networks which are based on an underlying
+  directed network.  For instance, in a citation network, we
+  may only know that the documents A and B are linked, but not
+  which one cites the other.  In such a case, the network in
+  KONECT is undirected, although the underlying network is
+  actually directed.
+\item \texttt{\#lcc}:  The dataset actually contains only the
+  largest connected component of the actual network.  Implies
+  \texttt{\#incomplete}.  This tag is not used when the network
+  is connected for other reasons. 
+\item \texttt{\#loop}: The network may contain loops, i.e.,
+  egdes connecting a vertex to itself.  This tag is only
+  allowed for unipartite networks.  When this tag is not
+  present, loops are not allowed, and the presence of loops
+  will be considered an error by analysis code.
+\item \texttt{\#nonreciprocal}:  For directed networks only.
+  The network does not contain reciprocal edges.  This is only
+  used when the network is non-reciprocal, but does contain
+  directed cycles.  If the network is acyclic,
+  \texttt{\#acyclic} is used. 
+\item \texttt{\#regenerate}: The network can be regenerated
+  periodically and may be updated when a more recent dataset
+  becomes available.
+\item \texttt{\#tournament}:  The graph is directed and for each
+  pair of nodes $\{u,v\}$, either the directed edge $u \rightarrow v$ or
+  the directed edge $v \rightarrow u$ exists, but not both.  It
+  is an error for a non-directed graph to have this tag.  If
+  \texttt{\#tournament} is defined, then
+  \texttt{\#nonreciprocal} must also be defined.  Also, the graph must
+  not contain loops, and thus
+  \texttt{\#loop} must not be defined. 
+\item \texttt{\#zeroweight}:  Must be set if it is allowed for edge
+  weights to be zero. Only used for networks with positive edge
+  weights and signed/multisigned networks. 
+\end{itemize}
+
 \section{Graph Theory}
 \label{sec:definitions}
 The areas of graph theory and network analysis are young, and
@@ -3174,8 +3254,8 @@ value.  The following metadata are used:
   YYYY[-MM[-DD]][/YYYY[-MM[-DD]]], e.g., ``2005-10-08/2006-11-03''
   or ``2007''.
 \item \texttt{tags}: (optional) A space-separated list of hashtags
-  describing the network.  The list of tags is given in the next
-  section. 
+  describing the network.  The list of tags is given in
+  Section~\ref{sec:tags}.  
 \item \texttt{n3-*}: (optional, deprecated) Metadata which is used for the
   generation of RDF files. The symbol \texttt{\{n\}} in the name
   of the meta key represents an order by unique, sequential
@@ -3232,85 +3312,6 @@ value.  The following metadata are used:
   \item[\texttt{\$l}]: edge ID
   \item[\texttt{\$timestamp}]: edge timestamp
   \end{itemize}
-\end{itemize}
-
-\subsection{Tags}
-The following tags can be given to networks.  They are declared in the
-\texttt{tags} field in the \texttt{meta.*} file for each network.
-\begin{itemize}
-\item \texttt{\#acyclic}:  The network is acyclic.  Can only be
-  set for directed networks.  If this is not set, a directed
-  network must contain at least two pairs of reciprocal edges of
-  the form $(u,v)$ and $(v,u)$.  If the network does not contain
-  reciprocal edges, but has cycles, the tag
-  \texttt{\#nonreciprocal} is used.
-\item \texttt{\#aggregatetime}:  The small value of timestamps
-  stand for any earlier time; these timestamps should not be
-  considered when performing time-based methods and plots. 
-\item \texttt{\#incomplete}: The network is incomplete, i.e.,
-  not all edges or nodes are included.  This implies that
-  strictly speaking, certain statistics or plots like 
-  the degree distribution are not meaningful, since they may
-  depend on which parts are missing.  In practice, many datasets
-  fall into this category, and they are not always excluded. 
-\item \texttt{\#join}:  The network is actually the join of more
-  fundamental networks.  For instance, a co-authorship network
-  is a join of the authorship network with itself.  Networks
-  that have this tag may have skewed properties, such as skewed
-  degree distributions.
-\item \texttt{\#kcore}: The network contains only nodes with a
-  certain minimal degree $k$. In other words, the nodes with
-  degree less than a certain number $k$ were removed from the
-  dataset.  This changes a network drastically, and is called
-  the ``$k$-core'' of a network. This is sometimes done to get
-  a less sparse network in applications that do not perform well
-  on sparse networks. This tag implies the
-  \texttt{\#incomplete} tag.
-\item \texttt{\#lowmultiplicity}:  Set in networks with multiple
-  edges in which the actual maximal edge multiplicity is very
-  low.  Used to be able to use the maximal multiplicity as a
-  sanity check.  Indicates a dataset error, as edge
-  multiplicities usually have a power law-like distribution, and
-  thus very high edge multiplicities are usually present. 
-\item \texttt{\#missingmultiplicity}:  This tag is used when the
-  underlying network had inherent multiple edges, but these are
-  not present in the dataset.  For instance, any email network
-  that does not contain multiple edges is tagged with this. 
-\item \texttt{\#missingorientation}: This tag is used for
-  undirected networks which are based on an underlying
-  directed network.  For instance, in a citation network, we
-  may only know that the documents A and B are linked, but not
-  which one cites the other.  In such a case, the network in
-  KONECT is undirected, although the underlying network is
-  actually directed.
-\item \texttt{\#lcc}:  The dataset actually contains only the
-  largest connected component of the actual network.  Implies
-  \texttt{\#incomplete}.  This tag is not used when the network
-  is connected for other reasons. 
-\item \texttt{\#loop}: The network may contain loops, i.e.,
-  egdes connecting a vertex to itself.  This tag is only
-  allowed for unipartite networks.  When this tag is not
-  present, loops are not allowed, and the presence of loops
-  will be considered an error by analysis code.
-\item \texttt{\#nonreciprocal}:  For directed networks only.
-  The network does not contain reciprocal edges.  This is only
-  used when the network is non-reciprocal, but does contain
-  directed cycles.  If the network is acyclic,
-  \texttt{\#acyclic} is used. 
-\item \texttt{\#regenerate}: The network can be regenerated
-  periodically and may be updated when a more recent dataset
-  becomes available.
-\item \texttt{\#tournament}:  The graph is directed and for each
-  pair of nodes $\{u,v\}$, either the directed edge $u \rightarrow v$ or
-  the directed edge $v \rightarrow u$ exists, but not both.  It
-  is an error for a non-directed graph to have this tag.  If
-  \texttt{\#tournament} is defined, then
-  \texttt{\#nonreciprocal} must also be defined.  Also, the graph must
-  not contain loops, and thus
-  \texttt{\#loop} must not be defined. 
-\item \texttt{\#zeroweight}:  Must be set if it is allowed for edge
-  weights to be zero. Only used for networks with positive edge
-  weights and signed/multisigned networks. 
 \end{itemize}
 
 \section*{Acknowledgments}
