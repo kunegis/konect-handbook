@@ -87,7 +87,10 @@ done
 # Other included .tex files
 #
 
-<"$file" sed -E -e '/\\input.*\{/!d;s,^.*\{,,;s,\}.*$,,' |
+<"$file" sed -E -e '
+s,^[^%]*\\input.*\{([^}]+)\}.*$,\1,;t;d
+#/\\input.*\{/!d;s,^.*\{,,;s,\}.*$,,
+' |
 while IFS= read -r name ; do
 	if [ -z "$name" ] ; then
 		continue
