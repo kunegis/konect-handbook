@@ -1529,7 +1529,12 @@ This remains true when the graph includes loops.
 The distribution of degree values $d(u)$ over all nodes $u$ is often
 taken to characterize a network.  Thus, a certain number of network
 statistics are based solely on this distribution, regardless of overall
-network structure.
+network structure.  
+The simplest network statistics that depend only on the degree
+distribution are the number of nodes $n$, the number of edges $m$ and
+the average degree $d=2m/n$, as described previously.  More elaborative
+statistics however reveal information about the detailed shape of the
+degree distribution. 
 
 The power law exponent is a number that characterizes the degrees of the
 nodes in the network.  In many circumstances, networks are modeled to
@@ -1581,6 +1586,14 @@ for some $0<P<1$, where the value $P$ corresponds exactly to the number
 ``25\%'' in the statement ``25\% of all users account for 75\% of all
 friendship links on Facebook''.  By construction, we can expect $P$ to
 be smaller when $G$ is large.
+
+Another statistic, which has been called the ``hubiness'' is given by
+the variance of the degree distribution \cite[e.g. by][]{b883,b884}.
+
+Statistics such as the power law exponent $\gamma$, the Gini coefficient
+$G$, the relative edge distribution entropy $H_{\mathrm{er}}$, as well
+as the ratio $P$ all correlate with each other, as they measure the
+inequality, skewness or ``hubiness'' of the degree distribution. 
 
 The analysis of degrees can be generalized to pairs of nodes:  What is
 the distribution of degrees for pairs of connected edges?  In some
@@ -3610,4 +3623,3 @@ measures. \\
 \end{longtable}
 
 \end{document}
-
