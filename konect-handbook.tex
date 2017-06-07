@@ -2113,10 +2113,22 @@ outdegree, notes \texttt{degreediff}).
 Certain features are spectral, i.e., they are defined as the
 eigenvectors of certain matrices.  For instance, the PageRank vector
 \marginnote{\texttt{pagerank}} is defined as the dominant eigenvector of
-the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$. 
+the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$, and the
+eigenvector centrality as the component in the dominant eigenvector of
+the adjacency matrix $\mathbf A$. 
 
 The local clustering coefficients give the clustering coefficient
 distribution \marginnote{\texttt{cluscod}} \citep{b865}. 
+
+Other node features include:
+\begin{itemize}
+\item Average degree of neighbors
+\item Betweenness centrality
+\item $k$-Core number:  largest $k$ such that a node is still part of
+  the graph's $k$-core.  The distribution of $k$-core values over all
+  nodes is then the $k$-core distribution, which can also be seen as the
+  size of the $k$-core for all $k \leq 0$. 
+\end{itemize}
 
 \section{Graph Matrices and Decompositions}
 \label{sec:matrix}
