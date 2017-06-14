@@ -3169,7 +3169,7 @@ XML-based ones), while other formats are optimized for efficient access
 (binary formats).  In KONECT, we thus use three file formats covering
 the three cases:
 \begin{itemize}
-\item TSV format: This format is text-based and uses tab- or space-separated 
+\item TSV format: This format is text-based and uses tab- (or space-) separated 
   values.  This is the main KONECT data format from which the two others
   are derived.  The format has the advantage that it can be read easily
   from many different programming languages and environments.
@@ -3185,10 +3185,10 @@ the three cases:
 In the following, we describe KONECT's TSV format.  Each network
 \texttt{\$NETWORK} is represented by the file \texttt{out.\$NETWORK}. 
 
-The edges stored as tab separated values (TSV).  The file is a text
+The edges stored as tab-separated values (TSV).  The file is a text
 file, and each line contains information about one edge.  Each line
 contains two, three or four numbers represented textually, and separated
-by any sequence of whitespace.  The preferred separator is a single tab.
+by any sequence of whitespace.  The preferred separator is a single tab (\texttt{\textbackslash{t}}).
 The first two columns are mandatory and contain the source and
 destination node ID of the edge.  The third column is optional and
 contains the edge weight.  When the network is dynamic, the third column
@@ -3199,7 +3199,8 @@ edges.  The fourth column is optional and contains the edge creation
 time, and is stored as UNIX time, i.e., the number of seconds since 1
 January 1970.  The fourth column is usually an integer, but may contain
 floating point numbers.  If the fourth column is present, the third
-column must also be given.  The beginning of the file contains
+column must also be given, and may be \emph{1} if it is otherwise not
+needed.  The beginning of the file contains  
 additional comment lines with the following information:
 \begin{verbatim}
    % FORMAT WEIGHTS 
