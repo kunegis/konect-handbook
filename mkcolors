@@ -1,6 +1,9 @@
-#! /bin/sed -rf
+#! /bin/sh
 
+sed -E -e '
 /^\s*colors\./!d
+s/^[[:space:]]*colors\.([^[:space:]]+)[[:space:]]*=[[:space:]]*\[[[:space:]]*([0-9.]+)[[:space:]]+([0-9.]+)[[:space:]]+([0-9.]+)[[:space:]]*\][[:space:]]*;[[:space:]]*$/\\definecolor{color\1}{rgb}{\2, \3, \4}/
+'
 
-s/^\s*colors\.(\S+)\s*=\s*\[\s*([0-9.]+)\s+([0-9.]+)\s+([0-9.]+)\s*\]\s*;\s*$/\\definecolor{color\1}{rgb}{\2, \3, \4}/
+
 

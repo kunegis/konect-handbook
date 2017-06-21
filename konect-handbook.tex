@@ -552,8 +552,12 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   that lexical cooccurrence networks are explicitly not included in the
   broader Cooccurrence category. 
 
-\item[Metabolic networks] model metabolic pathways. 
+\item[Metabolic networks] model metabolic pathways,
   \marginnote{\texttt{Metabolic}}
+  in which nodes a chemical substances and edges are often directed and
+  represents cheical interactions.  A subset are protein--protein
+  interaction networks (PPI), in which nodes are proteins, and which are
+  usually undirected. 
 
 \item[Miscellaneous networks] are any networks that do not fit into one
   \marginnote{\texttt{Misc}}
@@ -661,6 +665,12 @@ single genre is allowed, the degree distribution in such a song--genre
 network is skewed because all song nodes have degree one, the diameter
 cannot be computed since the network is disconnected, and each connected
 component trivially has a diameter of two or less.
+
+Certain other types of structures are equivalent to networks.  For
+instance, hypergraphs, in which each hyperedge may include any number of
+nodes, can be presented equivalently as bipartite graphs, up to certain
+small differences.  The same holds e.g.\ for partially-ordered sets and
+directed graphs.  In KONECT, we usually chose the ``network'' aspect. 
 
 \subsection{Tags}
 \label{sec:tags}
@@ -1185,7 +1195,9 @@ The average degree is defined as
 \end{align}
 The average degree is sometimes called the density.  We avoid the term
 \emph{density} in KONECT as it is sometimes used for the fill, which
-denotes the probability that an edge exists.  In bipartite networks, we
+denotes the probability that an edge exists.  The average degree is also
+called the expected degree.  
+In bipartite networks, we
 additionally define the left and right average degree
 \begin{align}
   d_1 &= \frac 1 {|V_1|} \sum_{u \in V_1} d(u) = \frac m {n_1} \\
@@ -3460,8 +3472,7 @@ to reflect best practices and to avoid confusion.
     The format of a network determines its general structure, and
     whether edges are directed.  There are three possible formats:
     unipartite and undirected; unipartite and directed; and bipartite.
-    Directed bipartite networks are not possible in KONECT.  Possible future
-    extensions would include hypergraphs (e.g., tripartite networks).  
+    Directed bipartite networks are not possible in KONECT.  
   \item[Half-adjacency matrix]
     The adjacency matrix $\mathbf A$ of an undirected graph contains two
     nonzero entries for each edge $\{i,j\}$:  $\mathbf A_{ij}$ and

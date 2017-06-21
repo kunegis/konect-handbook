@@ -54,7 +54,8 @@ sed -e 's,$,.bib,'
 
 <"$file" sed -E -e '
 s,^.*\\bibliographystyle\{(.+)\}.*$,\1.bst,
-t;d
+t
+d
 ' | while IFS= read -r filename ; do
 	[ -e "$filename" ] && echo "$filename"
 done
@@ -66,7 +67,8 @@ done
 <"$file" sed -E -e '
 /^\s*%/d
 s,^.*(\\includegraphics|\\begin\{overpic\})[^{]*\{([^}]+)\}.*$,\2,
-t;d
+t
+d
 ' |
 while IFS= read name ; do
 
@@ -88,7 +90,9 @@ done
 #
 
 <"$file" sed -E -e '
-s,^[^%]*\\input.*\{([^}]+)\}.*$,\1,;t;d
+s,^[^%]*\\input.*\{([^}]+)\}.*$,\1,
+t
+d
 #/\\input.*\{/!d;s,^.*\{,,;s,\}.*$,,
 ' |
 while IFS= read -r name ; do
