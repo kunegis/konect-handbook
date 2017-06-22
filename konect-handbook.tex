@@ -1097,11 +1097,14 @@ edges in a network, but also more complex measures such as the diameter and the
 clustering coefficient.  
 Statistics are the basis of most network analysis methods; they can be
 used to compare networks, classify networks, detect anomalies in
-networks and for many other tasks.  Network statistics are also used to map a network's structure
+networks and for many other tasks.  Network statistics are also used to
+map a network's structure 
 to a simple numerical space, in which many standard statistical
 methods can be applied.  Thus, network statistics are essential for the
 analysis of almost all network types. 
-All statistics described in KONECT are real numbers.  
+All statistics described in KONECT are real numbers.
+Graph statistics are also called graph invariants and grapg metrics.  In
+KONECT we use the term \emph{statistic} exclusively. 
 
 This section gives the definitions for the statistics supported by
 KONECT, and briefly reviews their uses.  
@@ -1621,7 +1624,6 @@ $\rho$ between the degree of connected nodes.
   {\sum_{\{u,v\} \in E} (d(u) - d)(d(v) - d)}
   {\sum_{\{u,v\} \in E} (d(u) - d)^2}
 \end{align}
-
 The assortativity is
 undefined whenever the Pearson correlation is undefined, for instance,
 if all nodes have the same degree (i.e., when the graph is regular), and
@@ -3512,6 +3514,10 @@ to reflect best practices and to avoid confusion.
     vertex multiple times.  It can be considered a walk that returns to
     it starting point, or a generalization of a cycle that allows to
     visit nodes multiple times.  
+  \item[Trail] A trail is a walk that does not visit any edge twice.
+    Compare to a path, which must not visit any node twice.  Every path
+    is a trail and a walk, and every trail is a walk, but not the other
+    way around. 
   \item[Transform] 
     A transform is an operation that applies to a graph and that gives
     another graph.  Examples are taking the largest connected component,
@@ -3648,4 +3654,4 @@ measures. \\
   $|G|$ & unsigned graph 
 \end{longtable}
 
-\end{document}
+ \end{document}
