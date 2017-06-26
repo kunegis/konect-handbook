@@ -80,6 +80,8 @@ plot/$name.pdf:
 	echo analysis/plot/"$name".eps
 }
 
+tex/$name.tex = analysis/tex/$name.tex;
+
 # Determines whether to use external images or not.  Contains '1' or
 # '0'. 
 PLOT_NONOPTIONAL;
@@ -90,8 +92,6 @@ PLOT_NONOPTIONAL;
 
 texdep      = stu-utils/;
 cpimg       = stu-utils/;
-
-category-tabular.tex = -o tex/; 
 
 bibtex/$name.bib; 
 
