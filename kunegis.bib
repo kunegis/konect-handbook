@@ -9,28 +9,29 @@
 % The 'kunegiscat' field is a custom field that represents the category of the
 % publication, and it can be: 
 %       						KUNEGISCAT				GROUP
-%   * Thesis 						(kunegiscat=thesisown) 			(group=thesis)		*
-%   * Journal article 					(kunegiscat=journal)			(group=article)		*
-%   * Chapter or similar				(kunegiscat=chapter)			(group=article)		*
-%   * Conference paper with talk, own talk 		(kunegiscat=conftalkown)		(group=conf)		*
-%   * Conference paper with talk, other talk		(kunegiscat=conftalkother)		(group=conf)		*
-%   * Conference paper with poster, own presentation	(kunegiscat=confposterown)		(group=conf,poster)	*
-%   * Conference paper with poster, other presentation	(kunegiscat=confposterother)		(group=conf,poster)	*
-%   * Conference paper with talk+poster, own            (kunegiscat=conftalkposterown)		(group=conf,poster)	*
-%   * Conference paper with talk+poster, other          (kunegiscat=conftalkposterother)	(group=conf,poster)	*
-%   * Workshop paper with talk, own talk		(kunegiscat=workshoptalkown) 		(group=workshop)	*
-%   * Workshop paper with talk, other talk		(kunegiscat=workshoptalkother) 		(group=workshop)	*
-%   * Workshop paper with talk+poster, own		(kunegiscat=workshoptalkposterown) 	(group=workshop,poster)	*
-%   * Workshop paper with talk+poster, other		(kunegiscat=workshoptalkposterother) 	(group=workshop,poster)	*
-%   * Abstract with talk, own				(kunegiscat=abstracttalkown)		(group=abstract)	*
-%   * Abstract with talk, other				(kunegiscat=abstracttalkother)		(group=abstract)	*
-%   * Abstract with poster, own 			(kunegiscat=abstractposterown)		(group=abstract,poster)	*
-%   * Abstract with poster, other 			(kunegiscat=abstractposterother)	(group=abstract,poster)	*
-%   * Abstract with demo, own                           (kunegiscat=abstractdemoown)		(group=abstract,demo)	*
-%   * Abstract with demo, other 			(kunegiscat=abstractdemoother)		(group=abstract,demo)	*
+%   * Thesis 						(kunegiscat=thesisown) 			(group=thesis)		
+%   * Journal article 					(kunegiscat=journal)			(group=article)		
+%   * Chapter or similar				(kunegiscat=chapter)			(group=article)		
+%   * Conference paper with talk, own talk 		(kunegiscat=conftalkown)		(group=conf)		
+%   * Conference paper with talk, other talk		(kunegiscat=conftalkother)		(group=conf)		
+%   * Conference paper with poster, own presentation	(kunegiscat=confposterown)		(group=conf,poster)	
+%   * Conference paper with poster, other presentation	(kunegiscat=confposterother)		(group=conf,poster)	
+%   * Conference paper with talk+poster, own            (kunegiscat=conftalkposterown)		(group=conf,poster)	
+%   * Conference paper with talk+poster, other          (kunegiscat=conftalkposterother)	(group=conf,poster)	
+%   * Workshop paper with talk, own talk		(kunegiscat=workshoptalkown) 		(group=workshop)	
+%   * Workshop paper with talk, other talk		(kunegiscat=workshoptalkother) 		(group=workshop)	
+%   * Workshop paper with talk+poster, own		(kunegiscat=workshoptalkposterown) 	(group=workshop,poster)	
+%   * Workshop paper with talk+poster, other		(kunegiscat=workshoptalkposterother) 	(group=workshop,poster)	
+%   * Abstract with talk, own				(kunegiscat=abstracttalkown)		(group=abstract)	
+%   * Abstract with talk, other				(kunegiscat=abstracttalkother)		(group=abstract)	
+%   * Abstract with poster, own 			(kunegiscat=abstractposterown)		(group=abstract,poster)	
+%   * Abstract with poster, other 			(kunegiscat=abstractposterother)	(group=abstract,poster)	
+%   * Abstract with demo, own                           (kunegiscat=abstractdemoown)		(group=abstract,demo)	
+%   * Abstract with demo, other 			(kunegiscat=abstractdemoother)		(group=abstract,demo)	
 %   * Other peer-reviewed 				(kunegiscat=peer)			(group=peer)	
 %   * Non-peer reviewed publication 			(kunegiscat=misc)			(group=other)
 %   * Preprint / in review				(kunegiscat=preprint)			(group=other)
+%   * Popularization					(kunegiscat=popularization)		(group=popularization)
 %
 % Standalone posters, demos and supervised work are not included here. 
 %
@@ -312,11 +313,20 @@
 	kunegiscat = {abstracttalkown}, 
 }
 
+@inproceedings{yoneki:time-aware-centrality,
+	title = {Time-Aware Centrality in Contact Network Analysis},
+	author = {Eiko Yoneki and Damien Fay and Jérôme Kunegis},
+	booktitle = {Proc. Eur. Conf. on Complex Syst.},
+	pages = {58},
+	year = {2011},
+	kunegiscat = {abstracttalkother},
+}
+
 @misc{kunegis:matrix-taxonomy,
 	title = {Taxonomy of $n\times n$ Matrices},
 	author = {Jérôme Kunegis},
 	year = {2012},
-	kunegiscat = {misc}, 
+	kunegiscat = {popularization}, 
 }
 
 @inproceedings{che-alhadi:live-tweet,
@@ -568,6 +578,13 @@
 	kunegiscat = {abstractposterother}, 
 }
 
+@misc{kunegis:english-vowels,
+	title = {Pronunciation of English Vowels},
+	author = {Jérôme Kunegis},
+	year = {2015},
+	kunegiscat = {popularization},
+}
+
 @article{samoilenko:language-hierarchy,
 	title = {Linguistic Neighbourhoods: Explaining Cultural Borders on {Wikipedia} through Multilingual Co-editing Activity}, 
 	author = {Anna Samoilenko and Fariba Karimi and Daniel Edler and Jérôme Kunegis and Markus Strohmaier},
@@ -614,6 +631,19 @@
 	year = {2016},
 	howpublished = {Int. Workshop on Data Min. in Netw.},
 	kunegiscat = {workshoptalkother}, 
+}
+
+@misc{kunegis:fluorine-compounds,
+	title = {Binary Fluorine Compounds},
+	author = {Jérôme Kunegis},
+	year = {2017},
+	kunegiscat = {popularization}, 
+}
+@misc{kunegis:german-vowels,
+	title = {How to Pronounce German Vowels},
+	author = {Jérôme Kunegis},
+	year = {2017},
+	kunegiscat = {popularization},
 }
 
 @article{kunegis:konect-handbook,
