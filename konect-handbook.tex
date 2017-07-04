@@ -747,6 +747,11 @@ The following tags can be given to networks.  They are declared in the
   \texttt{\#nonreciprocal} must also be defined.  Also, the graph must
   not contain loops, and thus
   \texttt{\#loop} must not be defined. 
+\item \texttt{\#trianglefree}:  The network is triangle-free, i.e., the
+  network does not contain any triangles.  Cannot only be used on
+  unipartite networks.  By default, it is an error for a unipartite
+  network to not contain triangles.  This tag allows a network to be
+  triangle-free. 
 \item \texttt{\#zeroweight}:  Must be set if it is allowed for edge
   weights to be zero. Only used for networks with positive edge
   weights and signed/multisigned networks. 
@@ -3282,9 +3287,13 @@ value.  The following metadata are used:
 \item \texttt{entity-names}: A comma-seperated list of
   entity names (e.g., ``user, movie'').  Unipartite networks give
   a single name; bipartite networks give two.
+  We usually follow the nomenclature given by the data sources in naming
+  these. 
 \item \texttt{relationship-names}: The name of the
   relationship represented by edges, as a substantive (e.g.,
   ``friendship'').
+  Again, we usually follow the nomenclature given by the data sources in naming
+  these. 
 \item \texttt{extr}: (optional, recommended) The name of the
   subdirectory of \texttt{konect-extr/extr/} that
   contains the extraction code for this dataset.

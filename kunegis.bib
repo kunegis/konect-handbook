@@ -13,7 +13,7 @@
 %   * Journal article 					(kunegiscat=journal)			(group=article)		
 %   * Chapter or similar				(kunegiscat=chapter)			(group=article)		
 %   * Conference paper with talk, own talk 		(kunegiscat=conftalkown)		(group=conf)		
-%   * Conference paper with talk, other talk		(kunegiscat=conftalkother)		(group=conf)		
+%   * Conference paper with talk, other talk		(kunegiscat=conftalkother)		(group=conf)
 %   * Conference paper with poster, own presentation	(kunegiscat=confposterown)		(group=conf,poster)	
 %   * Conference paper with poster, other presentation	(kunegiscat=confposterother)		(group=conf,poster)	
 %   * Conference paper with talk+poster, own            (kunegiscat=conftalkposterown)		(group=conf,poster)	
@@ -35,6 +35,7 @@
 % Not yet automatized in CV:
 %   * Invited talk					(kunegiscat=talkinvited)
 %   * Miscellenaeous talk				(kunegiscat=talkmisc)
+%   * Software						(kunegiscat=software)
 %
 % Standalone posters, demos and supervised work are not included here. 
 %
@@ -515,7 +516,7 @@
 	kunegiscat = {misc}, 
 }
 
-@misc{kunegis:power-of-many-datasets,
+@inproceedings{kunegis:power-of-many-datasets,
 	title = {Large Network Collections:  The Power of Many Datasets},
 	author = {Jérôme Kunegis}, 
 	booktitle = {Int.\ Workshop on Soc.\ Netw.\ Anal.},
@@ -653,14 +654,6 @@
 	kunegiscat = {workshoptalkother}, 
 }
 
-@inproceedings{samoilenko:neighbourhoods-ic2s2-2017,
-	title = {Linguistic Neighbourhoods: Explaining Cultural Borders on {Wikipedia} Through Multilingual Co-editing Activity},
-	author = {Anna Samoilenko and Fariba Karimi and Daniel Edler and Jérôme Kunegis and Markus Strohmaier},
-	booktitle = {Proc. Int. Conf. on Comput. Soc. Sci.},
-	year = {2017},
-	kunegiscat = {abstracttalkother},
-}
-
 @misc{kunegis:fluorine-compounds,
 	title = {Binary Fluorine Compounds},
 	author = {Jérôme Kunegis},
@@ -710,3 +703,27 @@
 	kunegiscat = {journal}, 
 }
 
+@misc{kunegis:stu,
+	title = {Stu -- Build Automation},
+	author = {Jérôme Kunegis},
+	year = {2017}, 
+	howpublished = {\url{https://github.com/kunegis/stu}},
+	kunegiscat = {software},
+}
+
+@inproceedings{samoilenko:neighbourhoods-ic2s2-2017,
+	title = {Linguistic Neighbourhoods: Explaining Cultural Borders on {Wikipedia} Through Multilingual Co-editing Activity},
+	author = {Anna Samoilenko and Fariba Karimi and Daniel Edler and Jérôme Kunegis and Markus Strohmaier},
+	booktitle = {Proc. Int. Conf. on Comput. Soc. Sci.},
+	year = {2017},
+	kunegiscat = {abstracttalkother},
+}
+
+@inproceedings{schelter:nzh-paper,
+	title = {`Dark Germany': Hidden Patterns of Participation in Online Far-Right Protests Against Refugee Housing},
+	author = {Sebastian Schelter and Jérôme Kunegis},
+	booktitle = {Proc. Int. Conf. on Soc. Inform.},
+	year = {2017},
+	_pages = {todo}, 
+	kunegiscat = {conftalkother},
+}
