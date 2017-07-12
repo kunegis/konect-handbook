@@ -2486,6 +2486,10 @@ are not equal.  They contain the left and right singular vectors are
 columns.  The matrix $\mathbf \Sigma$ is diagonal, and contains the
 singular values, which are all nonnegative. 
 
+This decomposition corresponds to the eigenvalue decomposition of the
+directed graph's bipartite double cover. 
+It also corresponds to HITS (Hyperlink-Induced Topic Search) \cite{b27}.
+
 \subsubsection{Normalized Adjacency Matrix}
 The adjacency matrix can be normalized for directed network, in the same
 way as for undirected networks.
@@ -2517,6 +2521,12 @@ the diagonal matrix of corresponding eigenvalues.
 
 Note that while left and right eigenvectors differ, their eigenvalues
 are identical. 
+
+\subsubsection{Eigenvectors (Normalized)}
+This corresponds to finding the eigenvectors of the asymmetric matrix
+$\mathbf N$. 
+\marginnote{\texttt{diag-n}}
+The same comments as for the non-normalized case apply. 
 
 \subsubsection{Skew Adjacency Matrix ($\mathbf Y$)}
 While an asymmetric matrix $\mathbf A$ may be transformed to $\mathbf A
@@ -2568,6 +2578,15 @@ expression $\mathbf U \mathbf D \mathbf V^{\mathrm T}$ is \emph{not} the
 singular value decomposition of $\mathbf A$, even if the form of the
 decomposition is the same. 
 
+\subsubsection{Normalized Skew Adjacency Matrix}
+This corresponds to the matrix
+\begin{align}
+  \marginnote{\texttt{skew}}
+  \mathbf N - \mathbf N^{\mathrm T} = 
+  \mathbf D_{\mathrm O}^{-1/2} \mathbf A \mathbf D_{\mathrm I}^{-1/2} - 
+  \mathbf D_{\mathrm I}^{-1/2} \mathbf A^{\mathrm T} \mathbf D_{\mathrm O}^{-1/2} 
+\end{align}
+
 \subsubsection{Hermitian Adjacency Matrix ($\mathbf H$)}
 In certain contexts, for instance when constructing the Hamiltonian of a
 system, it is necessary to specify Hermitian matrices, i.e.,
@@ -2604,6 +2623,19 @@ from which the following special cases can be recovered:
 \end{align}
 These matrices appear in the modeling of quantum walks, as used for
 instance by \cite{toedtli:ctqw}.  
+
+\subsubsection{Decomposition into Directed Components}
+DEDICOM (decomposition into directed components) refers to a class of
+matrix decompositions for directed networks of the form
+\begin{align}
+  \mathbf A = \mathbf U \mathbf X \mathbf U^{\mathrm T},
+\end{align}
+in which $\mathbf U$ is orthogonal and $\mathbf X$ is asymmetric, and
+thus non-diagonal.  These represent a family of decompositions for which
+there is no single best one, and in particular the problem of finding
+the best rank-$k$ such decompositions is not given by the truncation to
+rank $k$ of the solution to the full-rank problem.  An overview of
+algorithms is given in \citep{kunegis:directed-decomposition}. 
 
 \section{Network Plots}
 \label{sec:plots}
