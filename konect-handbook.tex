@@ -672,6 +672,40 @@ nodes, can be presented equivalently as bipartite graphs, up to certain
 small differences.  The same holds e.g.\ for partially-ordered sets and
 directed graphs.  In KONECT, we usually chose the ``network'' aspect. 
 
+\subsection{List of Groups}
+\label{sec:groups}
+Types of networks are separated into groups, as given in
+Table~\ref{tab:groups}. 
+
+\begin{table}
+  \centering
+  \caption{
+    \label{tab:groups}
+    The list of groups in KONECT.  Groups represent sets of networks
+    that have similar metadata, based on their format, weights and other
+    attributes. 
+  }
+  \makebox[\textwidth]{
+  \begin{tabular}{ c l }
+    \toprule
+    \textbf{Internal name} & \textbf{Definition} \\
+    \midrule
+    \texttt{SYM}		& Undirected, unipartite \\
+    \texttt{ASYM}		& Directed, unipartite \\
+    \texttt{BIP}		& Bipartite \\
+    \texttt{SQUARE}		& Unipartite \\
+    \texttt{NEGATIVE}		& Networks where edges can be interpreted to have negative edges \\
+    \texttt{NONUNWEIGHTED}	& Networks where edges can be interpreted to have a weight or multiplicity \\
+    \texttt{ASYMNEGATIVE}	& Directed networks where edges that can be negative \\
+    \texttt{SQUARENEGATIVE}	& Unipartite networks where edges can be negative \\
+    \texttt{TIME}		& Temporal networks \\
+    \texttt{TIME\_NEGATIVE}	& Temporal networks where edges can be negative \\
+    \texttt{MULTI}		& Networks with multiple edges \\
+    \bottomrule
+  \end{tabular}
+  }
+\end{table}
+
 \subsection{Tags}
 \label{sec:tags}
 The following tags can be given to networks.  They are declared in the
@@ -1263,6 +1297,14 @@ cite each other.  On the other hand, an email network will contain many
 pairs of people who have sent emails to each other.  Thus, citation
 networks typically have low reciprocity, and communnication networks
 have high reciprocity. 
+
+In a graph with multiple edges, we may consider the average
+multiplicity, i.e., the average number of edges connecting two nodes
+that are connected by at least one edge. 
+\begin{align}
+  \marginnote{\texttt{avgmult}}
+  \frac m {\bar{\bar m}} 
+\end{align}
 
 \subsection{Connectivity Statistics}
 Connectivity statistics measure to what extent a network is
@@ -3522,6 +3564,13 @@ to reflect best practices and to avoid confusion.
     whether edges are directed.  There are three possible formats:
     unipartite and undirected; unipartite and directed; and bipartite.
     Directed bipartite networks are not possible in KONECT.  
+  \item[Group]
+    A group of networks is a set of networks that have similar
+    attributes, as defined by their metadata such as format, weights,
+    timestamps, etc.  Examples are unipartite networks, network with
+    multiple edges, and signed temporal networks.  Each group has an
+    internal name in KONECT, which is in all-uppercase, with words
+    separated by underscore.  See Section~\ref{sec:groups}. 
   \item[Half-adjacency matrix]
     The adjacency matrix $\mathbf A$ of an undirected graph contains two
     nonzero entries for each edge $\{i,j\}$:  $\mathbf A_{ij}$ and
