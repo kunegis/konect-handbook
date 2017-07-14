@@ -8,7 +8,9 @@
 %
 % The 'kunegiscat' field is a custom field that represents the category of the
 % publication, and it can be: 
-%       						KUNEGISCAT				GROUP
+%
+%   Category   						KUNEGISCAT				GROUP
+%
 %   * Thesis 						(kunegiscat=thesisown) 			(group=thesis)		
 %   * Journal article 					(kunegiscat=journal)			(group=article)		
 %   * Chapter or similar				(kunegiscat=chapter)			(group=article)		
@@ -32,12 +34,12 @@
 %   * Non-peer reviewed publication 			(kunegiscat=misc)			(group=other)
 %   * Preprint / in review				(kunegiscat=preprint)			(group=other)
 %   * Popularization					(kunegiscat=popularization)		(group=popularization)
+%
 % Not yet automatized in CV, and not complete: 
+%
 %   * Invited talk					(kunegiscat=talkinvited)
 %   * Miscellenaeous talk				(kunegiscat=talkmisc)
 %   * Software						(kunegiscat=software)
-%
-% Standalone posters, demos and supervised work are not included here. 
 %
 % We don't include newlines in fields. 
 %
@@ -654,17 +656,18 @@
 	kunegiscat = {workshoptalkother}, 
 }
 
-@misc{kunegis:fluorine-compounds,
-	title = {Binary Fluorine Compounds},
-	author = {Jérôme Kunegis},
-	year = {2017},
-	kunegiscat = {popularization}, 
-}
 @misc{kunegis:german-vowels,
 	title = {How to Pronounce German Vowels},
 	author = {Jérôme Kunegis},
 	year = {2017},
 	kunegiscat = {popularization},
+}
+
+@misc{kunegis:fluorine-compounds,
+	title = {Binary Fluorine Compounds},
+	author = {Jérôme Kunegis},
+	year = {2017},
+	kunegiscat = {popularization}, 
 }
 
 @article{kunegis:konect-handbook,
@@ -725,5 +728,5 @@
 	booktitle = {Proc. Int. Conf. on Soc. Inform.},
 	year = {2017},
 	_pages = {todo}, 
-	kunegiscat = {conftalkother},
+	kunegiscat = {conftalkown},
 }
