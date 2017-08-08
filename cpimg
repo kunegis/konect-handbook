@@ -46,10 +46,10 @@ fi
 if echo "$src" | grep -qE '\.eps$' ; then
 
 	if echo "$dst" | grep -qE '\.pdf$' ; then
-		if [ "$(stat -c %s $src)" -lt $FILESIZE_THRESHOLD ] ; then
-  			epstopdf $src --outfile=$dst
+		if [ "$(stat -c %s $src)" -lt "$FILESIZE_THRESHOLD" ] ; then
+  			epstopdf "$src" --outfile="$dst"
 		else
-			convert $src -resize 100% $dst
+			convert "$src" -resize 100% "$dst"
 		fi
 	else
 		echo >&2 "*** Unknown destination file type for EPS source:  '$dst'"
@@ -60,12 +60,21 @@ elif echo "$src" | grep -qE '\.svg$' ; then
 
 	if echo "$dst" | grep -qE '\.pdf$' ; then
 		inkscape -z "$src" -A "$dst"
-		if [ "$(stat -c %s $dst)" -ge $FILESIZE_THRESHOLD ] ; then
-			cp $dst $TMPDIR/$$.pdf
-			convert $TMPDIR/$$.pdf -resize 100% $dst
+		if [ "$(stat -c %s $dst)" -ge "$FILESIZE_THRESHOLD" ] ; then
+			cp "$dst" "$TMPDIR"/"$$".pdf
+			convert "$TMPDIR"/"$$".pdf -resize 100% "$dst"
 		fi
 	else
 		echo >&2 "*** Unknown destination file type for SVG source:  '$dst'"
+		exit 1
+	fi
+
+elif echo "$src" | grep -qE '\.pdf$' ; then
+
+	if echo "$dst" | grep -qE '\.eps$' ; then
+		inkscape -z "$src" -E "$dst"
+	else
+		echo >&2 "*** Unknown destination file type for PDF source:  '$dst'"
 		exit 1
 	fi
 
