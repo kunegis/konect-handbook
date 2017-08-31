@@ -110,7 +110,7 @@ also provides a large number (210+) of network datasets of different
 types and different application areas. 
 
 KONECT, the \underline{Ko}blenz \underline{Ne}twork \underline
-Collec\underline tion, contains 214 network datasets as of October 2014.
+Collec\underline tion, contains over 1,000 network datasets as of 2017.
 In addition to these datasets, KONECT consists of Matlab code to
 generate statistics and plots about them, which are shown on the
 KONECT
@@ -144,7 +144,7 @@ online.\footnote{\href{http://konect.uni-koblenz.de/networks}{konect.uni-koblenz
   \label{fig:scatter.size.avgdegree}
 \end{figure}
 
-\paragraph{Software and Software Packages}
+\subsection{Software and Software Packages}
 The KONECT project consists of several components, whose interactions is
 summarized in Figure~\ref{fig:organization}.  Various parts of the
 KONECT project are available at Github, including this Handbook.\footnote{\href{https://github.com/kunegis/konect-analysis}{github.com/kunegis/konect-analysis}}\footnote{\href{https://github.com/kunegis/konect-toolbox}{github.com/kunegis/konect-toolbox}}\footnote{\href{https://github.com/kunegis/konect-handbook}{github.com/kunegis/konect-handbook}}\footnote{\href{https://github.com/kunegis/konect-extr}{github.com/kunegis/konect-extr}}\footnote{\href{https://github.com/kunegis/konect-www}{github.com/kunegis/konect-www}}
@@ -158,35 +158,69 @@ KONECT project are available at Github, including this Handbook.\footnote{\href{
   }
 \end{figure}
 
-\paragraph{History of KONECT}
-What later became known as the KONECT project started out in December
-2008 at the Technical University of  
-Berlin's DAI Laboratory, as evaluation for Jérôme Kunegis' ICML 2009
+\subsection{History of KONECT}
+The roots of KONECT lie in the research of Jérôme Kunegis at the
+Technical University of Berlin, within the DAI Laboratory.  The first
+networks were bipartite rating graphs, collected to support Jérôme
+Kunegis' work on collaborative filtering
+\citep{kunegis:negative-resistance,kunegis:adapting-ratings}.  The
+earliest networks include MovieLens, Jester, BookCrossing, and the Netflix Prize
+dataset. 
+
+What later became known as the KONECT project's collection of networks properly started out in December
+2008,
+as evaluation for Jérôme Kunegis' ICML 2009
 paper \emph{Learning Spectral Graph Transformations for Link Prediction}
 \citep{kunegis:spectral-transformation}, codenamed \emph{Spectral
   Transformation}.  It then consisted of a collection of network
-datasets and spectral link prediction methods.  Later, more datasets
-were added and the codebase was called the \emph{Graph Store}, and the
-project was used for the experiments of several papers in the area of
-collaborative filtering and recommender systems.  When Jérôme moved from
+datasets and spectral link prediction methods, i.e., code based on the
+decomposition of various characteristic graph matrices.  
+The first unipartite networks appeared at this time, one of the earliest
+begin the trust network of Advogato. 
+The first dataset crawled specifically for KONECT was the Slashdot Zoo,
+for which crawling began in 2008, with the corresponding paper published
+in 2009 \citep{kunegis:slashdot-zoo}. 
+
+Later, more datasets
+were added and the codebase was called the \emph{Graph Store}.  This was
+at a time when the word \emph{store} was in fashion, in part due to the
+emergence of \emph{app stores}. 
+In that phase, the project was used for the experiments of several papers in the area of
+collaborative filtering and recommender systems.  
+
+When Jérôme moved from
 TU Berlin to the University of Koblenz--Landau in Koblenz (Germany) the
 project was renamed \emph{Web Store}, in line with Koblenz' Institute
 for Web Science and Technologies (WeST).  The name \emph{KONECT --
-  Koblenz Network Collection} was adopted sometime in 2011.  The KONECT
-website was created in 2011 under
-\href{http://konect.uni-koblenz.de/}{\texttt{konect.uni-koblenz.de}}.
-Code for dataset extraction and the Matlab Toolbox was first published
-on the KONECT website.  A short overview paper of the KONECT system was
+  \underline{Ko}blenz \underline{Ne}twork
+  \underline{C}ollec\underline{t}ion} was adopted sometime in 2011.  The
+KONECT website was created in 2011 at \texttt{konect.uni-koblenz.de}.
+In this phase of the project, extraction of datasets and maintenance of
+KONECT website was performed in collaboration with Daniel Dünker and
+Holger Heinz. 
+
+Code for dataset extraction and the Matlab Toolbox were first published
+on the KONECT website as downloadable tarballs.  A short overview paper of the KONECT system was
 published in 2013 at the International World Wide Web Conference (WWW),
-as part of the Web Observatory Workshop \citep{kunegis:konect}.  In 2015
-and 2016, various parts of the KONECT project were placed on GitHub under the GNU
-General Public License version 3, including this handbook.  From 2017
-on, the KONECT project continued to be developed at the University of
+as part of the Web Observatory Workshop \citep{kunegis:konect}.  
+In 2015 and 2016, various parts of the KONECT project were placed on GitHub under the GNU
+General Public License version 3, including this handbook.  
+
+From 2017 on, the KONECT project continued to be developed at the University of
 Namur (Belgium), with web hosting provided by the Institute for Web
 Science and Technologies (WeST) at the University of
-Koblenz--Landau.
+Koblenz--Landau in Koblenz (Germany).  In that phase, the number of
+networks, statistics, and plots was yet again increased, and a more
+powerful computation server was acquired. 
 
-\paragraph{Structure of this Handbook}
+The Stu build
+tool\footnote{\href{https://github.com/kunegis/stu}{https://github.com/kunegis/stu}}
+was developed in parallel with KONECT.  KONECT used \texttt{make(1)} in
+the first years of its operation.  The Stu build system was initiated in
+2014, and KONECT was gradually switched to it, serving as its main use
+case.  Stu was essentially completed in August 2017 with version 2.5. 
+
+\subsection{Structure of this Handbook}
 This handbook serves both as a compendium of mathematical definitions
 used in the KONECT project, as well as documentation of the software
 used in KONECT. 
