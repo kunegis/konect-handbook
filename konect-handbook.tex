@@ -1145,7 +1145,7 @@ can be described be the transition probability matrix defined as
 The matrix $\mathbf P$ is right stochastic, since its row sums are one. 
 
 A further variant of Laplacian matrix is the signless Laplacian $\mathbf
-K$. 
+K$ \citep{b900}. 
 \begin{align}
   \mathbf K = \mathbf D + \mathbf A. 
 \end{align}
@@ -2116,14 +2116,14 @@ Furthermore, the triadic conflict can be defined as the proportion of
 triangles that are in conflict, i.e., that are unbalanced. 
 \begin{align}
   \marginnote{\texttt{tconflict}}  
-  T &= \frac 
+  \tau &= \frac 
   {|\{ u, v, w \mid w(u, v) w(v, w) w(w, u) < 0\}|}
   {|\{ u, v, w \mid u \sim v \sim w \sim u \}|}
 \end{align}
 This is also known as the triangle index.
 It is also related to the relative signed clustering coefficient by
 \begin{align*}
-T &= 2 c_{\mathrm r} - 1.
+\tau &= 2 c_{\mathrm r} - 1.
 \end{align*}
 
 \subsection{Preferential Attachment Statistics}
@@ -2520,7 +2520,7 @@ number of connected components that are bipartite.
 
 \subsubsection{Signless Laplacian ($\mathbf K$)}
 The signless Laplacian of a graph is defined as the Laplacian of the
-corresponding graph in which all edges are interpreted as negative.  It
+corresponding graph in which all edges are interpreted as negative \citep{b900}.  It
 thus equals
 \begin{align}
   \marginnote{\texttt{lapq}}
@@ -3740,10 +3740,11 @@ measures. \\
   $\zeta$ & negativity \\
   $\eta$ & dyadic conflict \\
   $\lambda$ & eigenvalue \\
-  $\mu$ & average edge weight \\
+  $\mu$  & average edge weight \\
   $\rho$ & assortativity \\
   $\rho$ & spectral radius \\
-  $\xi$ & algebraic conflict \\
+  $\tau$ & triadic conflict \\
+  $\xi$  & algebraic conflict \\
   $\sigma$ & singular value \\
 \midrule
   $C_k$ & $k$-cycle count \\
@@ -3756,7 +3757,6 @@ measures. \\
   $N$   & size of largest connected component\\
   $P_k$ & $k$-path count \\
   $S_k$ & $k$-star count \\
-  $T$   & triadic conflict \\
   $T_k$ & $k$-tour count \\
   $V$   & vertex set \\
   $W_k$ & $k$-walk count \\
