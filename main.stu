@@ -80,7 +80,7 @@ plot/$name.pdf:
 	echo analysis/plot/"$name".eps
 }
 
-tex/$name.tex = analysis/tex/$name.tex;
+tex/$name.tex = -o analysis/tex/$name.tex;
 
 # Determines whether to use external images or not.  Contains '1' or
 # '0'. 
