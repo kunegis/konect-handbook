@@ -23,7 +23,7 @@
 \usepackage{subfigure}
 \usepackage{marvosym} % for \Clocklogo
 \usepackage{color}
-\usepackage{marginnote}
+%% \usepackage{marginnote}
 \usepackage{textcomp} % for \textlangle, \textrangle 
 \usepackage{array}
 \usepackage{wasysym} % for \newmoon
@@ -39,6 +39,10 @@
 \newcommand{\wTwo}{0.45\textwidth}
 \newcommand{\wThree}{0.31\textwidth}
 \newcommand{\wFour}{0.24\textwidth}
+
+\def\mathnote#1{%
+  \tag*{\rlap{\hspace\marginparsep\smash{\parbox[t]{\marginparwidth}{#1}}}}
+}
 
 \input{colors}
 
@@ -260,11 +264,9 @@ used in KONECT.
 \item Section \ref{sec:format} ``File Formats'' finally documents the
   file formats used by KONECT. 
 \end{itemize}
-\marginnote{
-  \textlangle{}\texttt{name}\textrangle
-}
-Throughout the handbook, we will use margin notes to give the internal
-names of various parameters. 
+Throughout the handbook, we use margin notes to give the internal 
+\marginpar{\textlangle{}\texttt{name}\textrangle}
+names of various parameters, as shown here on the side of this text.  
 
 \section{Networks}
 \label{sec:taxonomy}
@@ -281,7 +283,7 @@ formats are summarized in Table~\ref{tab:format}.
 \begin{itemize}
 \item 
   In \textbf{undirected networks} (U), 
-  \marginnote{\texttt{sym}}
+  \marginpar{\texttt{sym}}
   edges are undirected.  That is,
   there is no difference between the edge from $u$ to $v$ and the edge
   from $v$ to $u$; both are the edge $\{u,v\}$. 
@@ -291,7 +293,7 @@ formats are summarized in Table~\ref{tab:format}.
   in which there is no difference between the statements ``A 
   is a friend of B'' and ``B is a friend of A.''
 \item In a \textbf{directed network} (D), 
-  \marginnote{\texttt{asym}}
+  \marginpar{\texttt{asym}}
   the links are directed. That is, there is a
   difference between the edge $(u,v)$ and the edge $(u,v)$. 
   Directed networks are sometimes also called \emph{digraphs} (for \emph{directed
@@ -302,7 +304,7 @@ formats are summarized in Table~\ref{tab:format}.
   in which the fact that user A follows user B does not imply 
   that user B follows user A. 
 \item \textbf{Bipartite networks} (B) 
-  \marginnote{\texttt{bip}}
+  \marginpar{\texttt{bip}}
   include two types of nodes, and all edges
   connect one node type with the other. An example of a bipartite
   network is a rating graph, consisting of the node types \emph{user}
@@ -337,35 +339,35 @@ The types of edge weights and multiplicities are summarized in
 Table~\ref{tab:weights}. 
 \begin{itemize}
 \item An \textbf{unweighted network} ($-$) 
-  \marginnote{\texttt{unweighted}}
+  \marginpar{\texttt{unweighted}}
   has edges that are
   unweighted, and only a 
   single edge is allowed between any two nodes.  
 \item In a \textbf{network with multiple edges} ($=$), 
-  \marginnote{\texttt{positive}}
+  \marginpar{\texttt{positive}}
   two nodes can be
   connected by any number of edges, and all edges are unweighted. This
   type of network is also called a multigraph.  
 \item In a \textbf{positive network} ($+$), 
-  \marginnote{\texttt{posweighted}}
+  \marginpar{\texttt{posweighted}}
   edges are annotated
   with positive weights, and only a single edge is allowed between
   any node pair.  The weight zero identified with the lack of an edge
   and thus, we require that each edge has a weight strictly larger than
   zero. 
 \item In a \textbf{signed network} ($\pm$), 
-  \marginnote{\texttt{signed}}
+  \marginpar{\texttt{signed}}
   both positive and negative
   edges are 
   allowed. Positive and negative edges are represented by positive and
   negative edge weights. Many networks of this type have only the
   weights $\pm 1$, but in the general case we allow any nonzero weight.
 \item \textbf{Networks with multiple signed edges} ($\stackrel{+}{=}$) 
-  \marginnote{\texttt{multisigned}}
+  \marginpar{\texttt{multisigned}}
   allow multiple edges between two nodes, which may have the same values
   as edges in a signed network.
 \item \textbf{Rating networks} ($*$) 
-  \marginnote{\texttt{weighted}}
+  \marginpar{\texttt{weighted}}
   have arbitrary real edge weights.  They
   differ from positive and signed networks in that the edge weights are
   interpreted as an interval scale, and thus the value zero has no
@@ -375,11 +377,11 @@ Table~\ref{tab:weights}.
   continuous, such as a rating given in percent. 
   This type of network allows only a single edge between two nodes. 
 \item \textbf{Networks with multiple ratings} ($_*{}^*$) 
-  \marginnote{\texttt{multiweighted}}
+  \marginpar{\texttt{multiweighted}}
   have edges annotated
   with rating values, and allow multiple edges between two nodes.
 \item \textbf{Dynamic networks} ($\rightleftarrows$) are networks in
-  \marginnote{\texttt{dynamic}}
+  \marginpar{\texttt{dynamic}}
   which edges can appear and disappear.  They are always
   temporal. Individual edges are not weighted. 
 \end{itemize}
@@ -451,7 +453,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
 
 \begin{description}
 \item[Affiliation networks] are bipartite networks denoting the
-  \marginnote{\texttt{Affiliation}}
+  \marginpar{\texttt{Affiliation}}
   membership of actors in groups.  Groups can be defined as narrowly as
   individual online communities in which users have been active
   (\href{http://konect.uni-koblenz.de/networks/flickr-groupmemberships}{\textsf{FG}})
@@ -463,7 +465,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   connected.
 
 \item[Animal networks] are networks of contacts between animals.  
-  \marginnote{\texttt{Animal}}
+  \marginpar{\texttt{Animal}}
   They are the animal equivalent to human social networks.  Note that
   datasets of websites such as Dogster
   (\href{http://konect.uni-koblenz.de/networks/petster-friendships-dog}{\textsf{Sd}})
@@ -471,7 +473,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   network) category, since the networks are generated by humans. 
 
 \item[Authorship networks] are unweighted bipartite networks consisting
-  \marginnote{\texttt{Authorship}}
+  \marginpar{\texttt{Authorship}}
   of links between authors and their works.  In some authorship networks
   such as that of scientific literature
   (\href{http://konect.uni-koblenz.de/networks/dblp-author}{\textsf{Pa}}),
@@ -480,18 +482,18 @@ An overview of the categories is given in Table~\ref{tab:categories}.
     (\href{http://konect.uni-koblenz.de/networks/edit-enwiki}{\textsf{en}}).
 
 \item[Citation networks] consist of documents that reference each
-  \marginnote{\texttt{Citation}}
+  \marginpar{\texttt{Citation}}
   other.  The primary example are scientific publications, but the
   category also allow patents and other types of documents that
   reference each other. 
 
 \item[Coauthorship networks] are unipartite network connecting authors
-  \marginnote[\texttt{Coauthorship}]
+  \marginpar{\texttt{Coauthorship}}
   who have written works together, for instance academic literature, but
   also other types of works such as music or movies. 
 
 \item[Communication networks] contain edges that represent
-  \marginnote{\texttt{Communication}}
+  \marginpar{\texttt{Communication}}
   individual messages between persons.  Communication networks are directed
   and allow multiple edges.  
   Examples of communication networks are those of
@@ -503,21 +505,21 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   known and KONECT can only provide an undirected network. 
 
 \item[Computer networks] are networks of connected computers. 
-  \marginnote{\texttt{Computer}}
+  \marginpar{\texttt{Computer}}
   Nodes in them are computers, and edges are connections. 
   When speaking about \emph{networks} in a computer science context, one
   often means only computer networks.  An example is the internet
   topology network (\href{http://konect.uni-koblenz.de/networks/topology}{\textsf{TO}}).
 
 \item[Feature networks] are bipartite, and denote any kind of feature
-  \marginnote{\texttt{Feature}}
+  \marginpar{\texttt{Feature}}
   assigned to entities. Feature networks are unweighted and have
   edges that are not annotated with edge creation times.  Examples are
   songs and their genres
   (\href{http://konect.uni-koblenz.de/networks/dbpedia-genre}{\textsf{GE}}).   
 
 \item[Folksonomies] consist of tag assignments connecting a user, an
-  \marginnote{\texttt{Folksonomy}}
+  \marginpar{\texttt{Folksonomy}}
   item and a tag.  For folksonomies, we follow the 3-bipartite
   projection approach and consider the three possible bipartite
   networks, i.e., the user--item, user--tag and item--tag networks.
@@ -531,7 +533,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   (\href{http://konect.uni-koblenz.de/networks/movielens-10m_ui}{\textsf{Mui}}).
 
 \item[Human contact networks] are unipartite networks of actual contact
-  \marginnote{\texttt{HumanContact}}
+  \marginpar{\texttt{HumanContact}}
   between persons, i.e., talking with each other, spending time
   together, or at least being physically close.  Usually, these datasets
   are collected by giving out RFID tags to people with chips that record
@@ -543,7 +545,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
 
 \item[Human social networks] are real-world social networks between
   humans.  
-  \marginnote{\texttt{HumanSocial}}
+  \marginpar{\texttt{HumanSocial}}
   The ties must be offline, and not from an online social network.
   Also, the ties represent a state, as opposed to human contact
   networks, in which each edge represents an event. 
@@ -552,7 +554,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   hyperlinks.  
 
 \item[Infrastructure networks] are networks of physical infrastructure.  
-  \marginnote{\texttt{Infrastructure}}
+  \marginpar{\texttt{Infrastructure}}
   Examples are road networks
   (\href{http://konect.uni-koblenz.de/networks/roadNet-CA}{RO}), airline
   connection networks
@@ -561,7 +563,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   (\href{http://konect.uni-koblenz.de/networks/opsahl-powergrid}{UG}).  
   
 \item[Interaction networks] are bipartite networks consisting of people
-  \marginnote{\texttt{Interaction}}
+  \marginpar{\texttt{Interaction}}
   and items, where each edge represents an interaction. 
   In interaction networks, we always allow multiple edges between the
   same person--item pair.
@@ -575,7 +577,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   and sports results. 
 
 \item[Lexical networks] consist of words from natural 
-  \marginnote{\texttt{Lexical}}
+  \marginpar{\texttt{Lexical}}
   languages and the
   relationships between them. 
   Relationships can be semantic (i.e, related to the
@@ -589,18 +591,18 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   broader Cooccurrence category. 
 
 \item[Metabolic networks] model metabolic pathways,
-  \marginnote{\texttt{Metabolic}}
+  \marginpar{\texttt{Metabolic}}
   in which nodes a chemical substances and edges are often directed and
   represents cheical interactions.  A subset are protein--protein
   interaction networks (PPI), in which nodes are proteins, and which are
   usually undirected. 
 
 \item[Miscellaneous networks] are any networks that do not fit into one
-  \marginnote{\texttt{Misc}}
+  \marginpar{\texttt{Misc}}
   of the other categories. 
   
 \item[Online Contact networks] consist of people and interactions between
-  \marginnote{\texttt{OnlineContact}}
+  \marginpar{\texttt{OnlineContact}}
   them. 
   Contact networks are unipartite and allow multiple edges, i.e., there
   can always be multiple interactions between the same two persons.
@@ -611,7 +613,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   (\href{http://konect.uni-koblenz.de/networks/dblp_coauthor}{\textsf{Pc}}).
 
 \item[Physical networks] represent physically existing network
-  \marginnote{\texttt{Physical}}
+  \marginpar{\texttt{Physical}}
   structures in the broadest sense.  This category covers such diverse data as
   physical computer networks
   (\href{http://konect.uni-koblenz.de/networks/topology}{\textsf{TO}}),
@@ -621,7 +623,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   (\href{http://konect.uni-koblenz.de/networks/foodweb-baydry}{\textsf{FD}}).   
 
 \item[Rating networks] consist of assessments given to items by users,
-  \marginnote{\texttt{Rating}}
+  \marginpar{\texttt{Rating}}
   weighted by a rating value.  Rating networks are bipartite.  
   Networks in which users can rate other users are not included here,
   but in the Social category instead.  If only a single type of rating
@@ -636,7 +638,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   (\href{http://konect.uni-koblenz.de/networks/escorts}{\textsf{SX}}).   
 
 \item[Online social networks] represent ties between
-  \marginnote{\texttt{Social}}
+  \marginpar{\texttt{Social}}
   persons in online social networking platforms.  Certain social
   networks allow negative edges, which denote 
   enmity, distrust or dislike.
@@ -653,13 +655,13 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   These networks are all included in the Social category. 
 
 \item[Software networks] are networks of interacting software
-  \marginnote{\texttt{Software}}
+  \marginpar{\texttt{Software}}
   component.  Node can be software packages connected by their
   dependencies, source files connected by includes, and classes
   connected by imports. 
 
 \item[Text networks] consist of text documents containing words.  They
-  \marginnote{\texttt{Text}}
+  \marginpar{\texttt{Text}}
   are bipartite and their nodes are documents and words.  Each edge
   represents the occurrence of a word in a document. Document types are
   for instance
@@ -669,7 +671,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   (\href{http://konect.uni-koblenz.de/networks/gottron-excellent}{\textsf{EX}}). 
 
 \item[Trophic networks] consist of biological species connected by edges denotes
-  \marginnote{\texttt{Trophic}}
+  \marginpar{\texttt{Trophic}}
   which pairs of species are subject to carbon exchange, i.e., which
   species eats which.  The term \emph{food chain} describes such
   relation ships, but note that in the general case, a trophic network
@@ -1206,7 +1208,7 @@ The size of a network is the number of nodes it contains, and
 is almost universally denoted $n$.  The size of a graph is sometimes also
 called the order of the graph. 
 \begin{align}
-  \marginnote{\texttt{size}}
+  \mathnote{\texttt{size}}
   n &= |V|
 \end{align}
 In a bipartite graph, the size can be decomposed as $n = n_1 + n_2$ with
@@ -1222,7 +1224,7 @@ of edges, giving the volume of a network.
 
 The volume of a network equals the number of edges and is defined as 
 \begin{align}
-  \marginnote{\texttt{volume}}
+  \mathnote{\texttt{volume}}
   m &= |E|. 
 \end{align}
 Note that in mathematical contexts, the number of edges may be called
@@ -1252,7 +1254,7 @@ of memory needed to represent a network.
 We will also make use of the number of edges without counting multiple
 edges.  We will call this the unique volume of the graph. 
 \begin{align}
-  \marginnote{\texttt{uniquevolume}}
+  \mathnote{\texttt{uniquevolume}}
   \bar{\bar m} &= m[\bar{\bar{G}}]
 \end{align}
 
@@ -1262,13 +1264,13 @@ remember that the weight is defined as the sum over ratings from which the overa
 mean rating has been subtracted, in accordance with the definition of
 the adjacency matrix for these networks. 
 \begin{align}
-  \marginnote{\texttt{weight}}
+  \mathnote{\texttt{weight}}
   w &= \sum_{e \in E} |w(e)|
 \end{align}
 
 The average degree is defined as
 \begin{align}
-  \marginnote{\texttt{avgdegree}}
+  \mathnote{\texttt{avgdegree}}
   d &= \frac 1 {|V|} \sum_{u\in V} d(u) = \frac {2m} n . 
 \end{align}
 The average degree is sometimes called the density.  We avoid the term
@@ -1291,7 +1293,7 @@ model \citep{b569}, where it denotes the probability that an edge is present bet
 two randomly chosen nodes, and is usually called $p$, which is the
 notation we also use in KONECT. 
 \begin{align}
-  \marginnote{\texttt{fill}}
+  \mathnote{\texttt{fill}}
   p &= \left\{ \begin{array}{ll}
     2m / [n(n-1)] & \text{when $G$ is undirected without loop} \\
     2m / [n(n+1)] & \text{when $G$ is undirected with loops} \\
@@ -1309,13 +1311,13 @@ network\footnote{Used for instance in this blog entry:  \href{https://proopnarin
 The maximum degree equals the highest degree value attained
 by any node.
 \begin{align}
-  \marginnote{\texttt{maxdegree}}
+  \mathnote{\texttt{maxdegree}}
   d_{\max} &= \max_{u\in V} d(u)
 \end{align}
 
 The maximum degree can be divided by the average degree to normalize it.
 \begin{align}
-  \marginnote{\texttt{relmaxdegree}}
+  \mathnote{\texttt{relmaxdegree}}
   d_{\mathrm{MR}} &= \frac {d_{\max}} {d}
 \end{align}
 
@@ -1323,7 +1325,7 @@ In a directed network, the reciprocity equals the proportion of edges
 for which an edge in the opposite direction exists, i.e., that are
 reciprocated \citep{b866}.  
 \begin{align}
-  \marginnote{\texttt{reciprocity}}
+  \mathnote{\texttt{reciprocity}}
   y = \frac 1 m  | \{ (u,v) \in E \mid (v,u) \in E \} | 
 \end{align}
 The reciprocity has also been noted $r$ \citep[e.g.][]{b867}. 
@@ -1338,7 +1340,7 @@ In a graph with multiple edges, we may consider the average
 multiplicity, i.e., the average number of edges connecting two nodes
 that are connected by at least one edge. 
 \begin{align}
-  \marginnote{\texttt{avgmult}}
+  \mathnote{\texttt{avgmult}}
   \frac m {\bar{\bar m}} 
 \end{align}
 
@@ -1357,7 +1359,7 @@ network is connected.
 The size of the largest connected component is denoted 
 $N$.  
 \begin{align}
-  \marginnote{\texttt{coco}}
+  \mathnote{\texttt{coco}}
   N &= \max_{F \subseteq \mathcal C} |F|  \\
   \mathcal C &= \{ C \subseteq V \mid \forall u, v \in C:  \exists w_1,
   w_2, \ldots \in V:  u \leftrightarrow w_1 \leftrightarrow w_2 \leftrightarrow \cdots \leftrightarrow v \} \nonumber
@@ -1371,7 +1373,7 @@ The relative size of the largest connected component equals the
 size of the largest connected component divided by the size of the
 network
 \begin{align}
-  \marginnote{\texttt{cocorel}}
+  \mathnote{\texttt{cocorel}}
   N_{\mathrm{rel}} &= \frac N n. 
 \end{align}
 
@@ -1379,12 +1381,12 @@ We also use an inverted variant of the relative size of the largest
 connected component, which makes it easier to plot the values on a
 logarithmic scale.
 \begin{align}
-  \marginnote{\texttt{cocorelinv}}
+  \mathnote{\texttt{cocorelinv}}
   N_{\mathrm{inv}} &= 1 - \frac N n 
 \end{align}
 
 In directed networks, we additionally define the size of the largest
-\marginnote{\texttt{cocos}}
+\marginpar{\texttt{cocos}}
 strongly connected component $N_{\mathrm s}$.  A strongly
 connected component is a 
 set of vertices in a directed graph such that any node is reachable from
@@ -1538,7 +1540,7 @@ connected to two other nodes, or equivalently two incident edges, or a
 path of length 2.  The specific name for 2-stars is \emph{wedges}.  The number of
 wedges can be defined as 
 \begin{align}
-  \marginnote{\texttt{twostars}}
+  \mathnote{\texttt{twostars}}
   s = \sum_{u \in V} {d(u) \choose 2} = \sum_{u \in V} \frac 1 2 d(u) (d(u) - 1),
 \end{align}
 where $d(u)$ is the degree of node $u$. 
@@ -1549,7 +1551,7 @@ Three-stars are defined analogously to two-stars, and their count
 denoted $z$.  Three-stars are also called \emph{claws} and
 \emph{tripins} \citep[e.g.][]{b853}.   
 \begin{align}
-  \marginnote{\texttt{threestars}}
+  \mathnote{\texttt{threestars}}
   z = \sum_{u \in V} {d(u) \choose 3} = \sum_{u \in V} \frac 1 6 d(u)
   (d(u) - 1) (d(u) - 2)
 \end{align}
@@ -1564,14 +1566,14 @@ triangles defined in the following way is independent of the orientation
 of edges when the graph is directed.  Loops in the graph, as well as
 edge multiplicities, are ignored.
 \begin{align}
-  \marginnote{\texttt{triangles}}
+  \mathnote{\texttt{triangles}}
   t = | \{ \{u, v, w\} \mid u \leftrightarrow v \leftrightarrow w \leftrightarrow u \} | \;/\; 6
 \end{align}
 
 A square is a cycle of length four, and the number of squares in a graph
 is denoted $q$.
 \begin{align}
-  \marginnote{\texttt{squares}}
+  \mathnote{\texttt{squares}}
   q = | \{ u, v, w, x \mid u \leftrightarrow v \leftrightarrow w \leftrightarrow x \leftrightarrow u \} | \;/\; 8
 \end{align}
 The factor 8 ensures that squares are counted regardless of their edge
@@ -1606,7 +1608,7 @@ We note the following equalities:
   T_1 &= 0 \nonumber \\
   T_2 &= 2m \nonumber \\
   T_3 &= 6t \nonumber \\
-  \marginnote{\texttt{tour4}}
+  \mathnote{\texttt{tour4}}
   T_4 &= 8q + 4s + 2m 
 \end{align}
 Again, these are true when the graph is loopless.  The last equality
@@ -1645,7 +1647,7 @@ multiple ways of estimating $\gamma$, and thus a network does not have a
 single definite value of it. In KONECT, we estimate $\gamma$ using the
 robust method given in \citep[Eq.~5]{b408}
 \begin{align}
-  \marginnote{\texttt{power}} \gamma &= 1 + n \left( \sum_{u\in V} \ln
+  \mathnote{\texttt{power}} \gamma &= 1 + n \left( \sum_{u\in V} \ln
   \frac {d(u)} {d_{\min}} \right) ^{-1},
 \end{align}
 in which $d_{\min}$ is the minimal degree.
@@ -1659,7 +1661,7 @@ of a distribution, or using the following expression.  Let $d_1 \leq d_2
 \leq \dotsb \leq d_{n}$ be the sorted list of degrees in the
 network. Then, the Gini coefficient is defined as
 \begin{align}
-  \marginnote{\texttt{gini}} G &= \frac {2 \sum_{i=1}^{n} i d_i} {n
+  \mathnote{\texttt{gini}} G &= \frac {2 \sum_{i=1}^{n} i d_i} {n
     \sum_{i-1}^{n} d_i} - \frac {n+1} {n}.
 \end{align}
 The Gini coefficient takes values between zero and one, with zero
@@ -1671,11 +1673,11 @@ the degree distribution, and equals one when all degrees are equal, and
 attains the limit value of zero when all edges attach to a single node
 \citep{kunegis:power-law}.  It is defined as
 \begin{align}
-  \marginnote{\texttt{dentropyn}} H_{\mathrm{er}} &= \frac 1 {\ln n}
+  \mathnote{\texttt{dentropyn}} H_{\mathrm{er}} &= \frac 1 {\ln n}
   \sum_{u \in V} - \frac{d(u)}{2m} \ln \frac{d(u)}{2m}.
 \end{align}
 
-Another statistic for \marginnote{\texttt{own}} measuring the inequality
+Another statistic for \marginpar{\texttt{own}} measuring the inequality
 in the degree distribution is associated with the Lorenz curve (see
 Section~\ref{sec:plot:degree}), and is given by the intersection point
 of the Lorenz curve with the antidiagonal given by $y = 1 - x$
@@ -1703,7 +1705,7 @@ high-degree nodes are typically connected to low-degree and vice versa.
 The amount of assortativity can be measured by the Pearson correlation
 $\rho$ between the degree of connected nodes.  
 \begin{align}
-  \marginnote{\texttt{assortativity}} 
+  \mathnote{\texttt{assortativity}} 
   \rho &= \frac
   {\sum_{\{u,v\} \in E} (d(u) - d)(d(v) - d)}
   {\sum_{\{u,v\} \in E} (d(u) - d)^2}
@@ -1713,7 +1715,7 @@ undefined whenever the Pearson correlation is undefined, for instance,
 if all nodes have the same degree (i.e., when the graph is regular), and
 when the graph does not contain any edges. 
 
-\marginnote{\texttt{inoutassort}}
+\marginpar{\texttt{inoutassort}}
 In directed networks, we define the in-out assortativity as the Pearson
 correlation coefficient between in-degree and the out-degree of nodes,
 taking the logarithm of one plus the degree.
@@ -1757,7 +1759,7 @@ first way defines it as the probability that two incident edges are
 completed by a third edge to form a triangle \citep{b736}. This is also
 called the transitivity ratio, or simply the transitivity.
 \begin{align}
-  \marginnote{\texttt{clusco}} c &= 
+  \mathnote{\texttt{clusco}} c &= 
   \frac {|\{ u, v, w \in V \mid u \leftrightarrow v \leftrightarrow w \leftrightarrow u \}|} 
         {|\{ u, v, w \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}|} 
         = \frac {3t} s
@@ -1776,7 +1778,7 @@ average of the local clustering coefficients. This second variant was
 historically the first to be defined.  In was defined in
 1998 \citep{b228} and precedes the first variant by four years.
 \begin{align}
-  \marginnote{\texttt{clusco2}} c_2 &= \frac 1 {|V|} \sum_{u \in V} c(u)
+  \mathnote{\texttt{clusco2}} c_2 &= \frac 1 {|V|} \sum_{u \in V} c(u)
 \end{align}
 This second variant of the global clustering coefficient is zero when a
 graph is triangle-free, and one when the graph is a disjoint union of
@@ -1881,7 +1883,7 @@ The diameter $\delta$ of a graph equals the longest shortest path in the
 network \citep{b779}.  It can be equivalently defined as the largest eccentricity of
 all nodes.
 \begin{align}
-  \marginnote{\texttt{diam}} \delta &= \max_{u \in V} \epsilon(u) =
+  \mathnote{\texttt{diam}} \delta &= \max_{u \in V} \epsilon(u) =
   \max_{u,v \in V} d(u,v)
 \end{align}
 
@@ -1895,7 +1897,7 @@ $\tilde \delta$.
 A statistic related to the diameter is the radius, defined as the
 smallest eccentricity
 \begin{align}
-  \marginnote{\texttt{radius}} r &= \min_{u \in V} \epsilon(u) = \min_{u
+  \mathnote{\texttt{radius}} r &= \min_{u \in V} \epsilon(u) = \min_{u
     \in V} \max_{v \in V} d(u,v)
 \end{align}
 
@@ -1919,7 +1921,7 @@ The mean path length $\delta_{\mathrm m}$ in a network is defined as as
 the mean distance over all node pairs, including the distance between a
 node and itself \citep{b779}:
 \begin{align}
-  \marginnote{\texttt{meandist}} 
+  \mathnote{\texttt{meandist}} 
   \delta_{\mathrm m} &= \frac 1 {n^2}
   \sum_{u \in V} \sum_{v\in V} d(u,v)
 \end{align}
@@ -1929,7 +1931,7 @@ equivalently, the inverse of the harmonic mean of distances
 \citep{b877}.  The sum of path lengths has been used on chemistry, where
 it is referred to as the Wiener index \citep{b901}.
 
-\marginnote{\texttt{mediandist}}
+\marginpar{\texttt{mediandist}}
 Likewise, the median path length $\delta_{\mathrm M}$ is the median
 length of shortest paths in the network.  In KONECT, both the median and
 mean path lengths are computed taking into account node pairs of the
@@ -1960,7 +1962,7 @@ largest connected component.
 The spectral norm of a network equals the spectral norm (i.e., the
 largest absolute eigenvalue) of the network's adjacency matrix
 \begin{align}
-  \marginnote{\texttt{snorm}} 
+  \mathnote{\texttt{snorm}} 
   \left\| \mathbf A \right\|_2
   &= 
   | \lambda_1[\mathbf A] | .
@@ -1971,7 +1973,7 @@ size of a network.
 The algebraic connectivity equals the second smallest nonzero eigenvalue
 of $\mathbf L$ \citep{b652}
 \begin{align}
-  \marginnote{\texttt{alcon}} a &= \lambda_2[\mathbf L].
+  \mathnote{\texttt{alcon}} a &= \lambda_2[\mathbf L].
 \end{align}
 The algebraic connectivity is zero when the network is disconnected~--
 this is one reason why we restrict the matrix $\mathbf L$ to each
@@ -1984,7 +1986,7 @@ node pairs can be negative, the smallest eigenvalue of $\mathbf L$ can
 be larger than zero.  (In other networks, it is always zero.) The
 algebraic conflict equals this smallest eigenvalue
 \begin{align}
-  \marginnote{\texttt{conflict}} \xi &= \lambda_1[\mathbf L].
+  \mathnote{\texttt{conflict}} \xi &= \lambda_1[\mathbf L].
 \end{align}
 The algebraic conflict measures the amount of conflict in the network,
 i.e., the tendency of the network to contain cycles with an odd number
@@ -2021,7 +2023,7 @@ frustrated edges in any bipartition of $V$, or, put differently, the
 minimum number of edges that have to be removed from the graph to make
 it bipartite.  Then, a measure of non-bipartivity is given by
 \begin{align}
-  \marginnote{\texttt{frustration}} F &= \frac f {|E|}.
+  \mathnote{\texttt{frustration}} F &= \frac f {|E|}.
 \end{align}
 This statistic is always in the range $[0, 1/2]$.  It attains the value
 zero if and only if $G$ is bipartite.
@@ -2061,7 +2063,7 @@ eigenvalue of a matrix equals its minimal Rayleigh quotient.
 \end{align*}
 We can thus approximate the previous measure of non-bipartivity by
 \begin{align}
-  \marginnote{\texttt{anticonflict}} \tilde F &= \frac {|V|} {8 |E[\bar
+  \mathnote{\texttt{anticonflict}} \tilde F &= \frac {|V|} {8 |E[\bar
       G]|} \lambda_{\min}[\mathbf K[\bar G]]
 \end{align}
 The eigenvalue $\lambda_{\min}[\mathbf K[\bar G]]$ can also be
@@ -2074,7 +2076,7 @@ zero, i.e., all eigenvalues of a bipartite graph come in pairs $\pm
 \lambda$. Thus, the ratio of the smallest and largest eigenvalues can be
 used as a measure of non-bipartivity
 \begin{align}
-  \marginnote{\texttt{nonbip}} b_{\mathrm A} &= 1 - \left| \frac
+  \mathnote{\texttt{nonbip}} b_{\mathrm A} &= 1 - \left| \frac
              {\lambda_{\min}[\mathbf A[\bar G]]} {\lambda_{\max}[\mathbf
                  A[\bar G]]} \right|,
 \end{align}
@@ -2097,7 +2099,7 @@ is $-1$ exactly when $G$ is bipartite.  Thus, this value minus one is a
 measure of non-bipartivity. Equivalently, it equals two minus the
 largest eigenvalue of the normalized Laplacian matrix $\mathbf Z$.
 \begin{align}
-  \marginnote{\texttt{nonbipn}} b_{\mathrm N} &= \lambda_{\min}[\mathbf
+  \mathnote{\texttt{nonbipn}} b_{\mathrm N} &= \lambda_{\min}[\mathbf
     N[\bar G]] + 1 = 2 - \lambda_{\max}[\mathbf Z[\bar G]]
 \end{align}
 
@@ -2106,7 +2108,7 @@ In networks that allow negative edges such as signed networks and rating
 networks, we may be interested in the proportion of edges that are
 actually negative.  We call this the \emph{negativity} of the network. 
 \begin{align}
-  \marginnote{\texttt{negativity}}
+  \mathnote{\texttt{negativity}}
   \zeta &= \frac { | \{ e \in E \mid w(e) < 0 \} | } {m}
 \end{align}
 The negativity is denoted $q$ in \citep{b868}. 
@@ -2116,7 +2118,7 @@ conflict, i.e., the propostion of node pairs connected by two oppositely
 oriented edges of different, compared to the total number of pairs of
 nodes connected by two edges of opposite orientation. 
 \begin{align}
-  \marginnote{\texttt{dconflict}}
+  \mathnote{\texttt{dconflict}}
   \eta &= \frac 
        {|\{ u,v \mid u \rightleftarrows v, w(u,v) = - w(v,u) \}|} 
        {|\{ u, v \mid u \rightleftarrows v \}|}
@@ -2125,7 +2127,7 @@ nodes connected by two edges of opposite orientation.
 Furthermore, the triadic conflict can be defined as the proportion of
 triangles that are in conflict, i.e., that are unbalanced. 
 \begin{align}
-  \marginnote{\texttt{tconflict}}  
+  \mathnote{\texttt{tconflict}}  
   \tau &= \frac 
   {|\{ u, v, w \mid w(u, v) w(v, w) w(w, u) < 0\}|}
   {|\{ u, v, w \mid u \sim v \sim w \sim u \}|}
@@ -2183,8 +2185,8 @@ power law degree distributions in the pre-asymptotic regime
 
 The following minimization problem gives an estimate for the exponent
 $\beta$ \citep{kunegis:preferential-attachment}.
+\marginpar{\texttt{prefatt}}
 \begin{align}
-  \marginnote{\texttt{prefatt}}
   \min_{\alpha,\beta} \sum_{u\in V} \left( \alpha + \beta \ln[1 + d_1(u)]
   - \ln[\lambda + d_2(u)]  \right)^2
   \label{eq:min}
@@ -2210,20 +2212,20 @@ and the eccentricity.  Features have multiple uses, such as to measure
 the centrality or the influence of a node in a network. 
 
 The degree is defined as the number 
-\marginnote{\texttt{degree}}
+\marginpar{\texttt{degree}}
 of neighbors of a node.  In directed networks, we can distinguish the
 indegree, the outdegree and the degree difference (indegree minus
 outdegree, notes \texttt{degreediff}). 
 
 Certain features are spectral, i.e., they are defined as the
 eigenvectors of certain matrices.  For instance, the PageRank vector
-\marginnote{\texttt{pagerank}} is defined as the dominant eigenvector of
+\marginpar{\texttt{pagerank}} is defined as the dominant eigenvector of
 the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$, and the
 eigenvector centrality as the component in the dominant eigenvector of
 the adjacency matrix $\mathbf A$. 
 
 The local clustering coefficients give the clustering coefficient
-distribution \marginnote{\texttt{cluscod}} \citep{b865}. 
+distribution \marginpar{\texttt{cluscod}} \citep{b865}. 
 
 Other node features include:
 \begin{itemize}
@@ -2266,7 +2268,7 @@ $\mathbf A_{uv}=0$ when $u$ and $v$ are not connected.
 The eigenvalue decomposition of the matrix $\mathbf A$ for undirected
 graphs is widely used to analyse graphs: 
 \begin{align}
-  \marginnote{\texttt{sym}}
+  \mathnote{\texttt{sym}}
   \mathbf A &= \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T}
 \end{align}
 $\mathbf \Lambda$ is an $n \times n$ real diagonal matrix containing the
@@ -2327,7 +2329,7 @@ matrix.  The Laplacian matrix is also called the Kirchhoff matrix.
 
 We consider the eigenvalue decomposition of the Laplacian:
 \begin{align*}
-  \marginnote{\texttt{lap}}
+  \mathnote{\texttt{lap}}
   \mathbf L &= \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T}
 \end{align*}
 The Laplacian matrix of positive-semidefinite, i.e., all eigenvalues are
@@ -2367,7 +2369,7 @@ contains the node degrees, i.e., $\mathbf D_{uu} = d(u)$.
 The matrix $\mathbf N$ is symmetric and its eigenvalue decomposition can
 be considered:
 \begin{align}
-  \marginnote{\texttt{sym-n}}
+  \mathnote{\texttt{sym-n}}
   \mathbf N = \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T}
 \end{align}
 The eigenvalues $\lambda_i$ of $\mathbf N$ can be used to characterize
@@ -2437,7 +2439,7 @@ matrix.
 \subsubsection{Stochastic Adjacency Matrix ($\mathbf P$)}
 The matrix
 \begin{align*}
-  \marginnote{\texttt{stoch1}}
+  \mathnote{\texttt{stoch1}}
   \mathbf P &= \mathbf D^{-1} \mathbf A
 \end{align*}
 is called the stochastic adjacency matrix.  This matrix is asymmetric,
@@ -2474,7 +2476,7 @@ random walk on an undirected graph, the stationary distribution of nodes
 is proportional to the node degrees. 
 
 The alternative matrix $\mathbf A \mathbf D^{-1}$ can also be
-considered. \marginnote{\texttt{stoch2}} It is left-stochastic, and
+considered. \marginpar{\texttt{stoch2}} It is left-stochastic, and
 can be derived by considering random walks that tranverse edges in a
 backward direction. 
 
@@ -2533,7 +2535,7 @@ The signless Laplacian of a graph is defined as the Laplacian of the
 corresponding graph in which all edges are interpreted as negative \citep{b900}.  It
 thus equals
 \begin{align}
-  \marginnote{\texttt{lapq}}
+  \mathnote{\texttt{lapq}}
   \mathbf K &= \mathbf D + \mathbf A
 \end{align}
 This matrix is positive-semidefinite, and its smallest eigenvalue is
@@ -2565,7 +2567,7 @@ The singular value decomposition is defined for any matrix, including
 those that are not symmetric, and even those that are not quadratic.
 Thus, it can be applied to the adjacency matrix of directed graphs. 
 \begin{align}
-  \marginnote{\texttt{svd}}
+  \mathnote{\texttt{svd}}
   \mathbf A &= \mathbf U \mathbf \Sigma \mathbf V^{\mathrm T}
 \end{align}
 The matrices $\mathbf U$ and $\mathbf V$ are each orthogonal, but they
@@ -2589,7 +2591,7 @@ are the diagonal matrices of out- and indegrees.
 The normalized adjacency matrix $\mathbf N$ can be used in the singular
 value decomposition, too:
 \begin{align}
-  \marginnote{\texttt{svd-n}}
+  \mathnote{\texttt{svd-n}}
   \mathbf N &= \mathbf U \mathbf \Sigma \mathbf V^{\mathrm T}
 \end{align}
 
@@ -2599,7 +2601,7 @@ for an asymmetric matrix $\mathbf A$, its eigenvectors and eigenvalues
 are well-defined, if we distinguish between left and right
 eigenvectors.
 
-\marginnote{\texttt{diag}}
+\marginpar{\texttt{diag}}
 Thus, we define the method \texttt{diag}, which is a decomposition in
 the KONECT sense, but not in the strict mathematical sense. 
 $\mathbf U$ and $\mathbf V$ are then defined as the matrices containing
@@ -2612,7 +2614,7 @@ are identical.
 \subsubsection{Eigenvectors (Normalized)}
 This corresponds to finding the eigenvectors of the asymmetric matrix
 $\mathbf N$. 
-\marginnote{\texttt{diag-n}}
+\marginpar{\texttt{diag-n}}
 The same comments as for the non-normalized case apply. 
 
 \subsubsection{Skew Adjacency Matrix ($\mathbf Y$)}
@@ -2646,7 +2648,7 @@ such that
 where $\mathbf U$, $\mathbf V$ and $\mathbf D$ are real matrices.  In
 fact, this decomposition can be equivalently written as
 \begin{align}
-  \marginnote{\texttt{skew}}
+  \mathnote{\texttt{skew}}
   \mathbf Y = \mathbf A - \mathbf A^{\mathrm T} &=
   \mathbf U \mathbf D \mathbf V^{\mathrm T} - \mathbf V \mathbf D \mathbf U^{\mathrm T}.
 \end{align}
@@ -2668,7 +2670,7 @@ decomposition is the same.
 \subsubsection{Normalized Skew Adjacency Matrix}
 This corresponds to the matrix
 \begin{align}
-  \marginnote{\texttt{skew}}
+  \mathnote{\texttt{skew}}
   \mathbf N - \mathbf N^{\mathrm T} = 
   \mathbf D_{\mathrm O}^{-1/2} \mathbf A \mathbf D_{\mathrm I}^{-1/2} - 
   \mathbf D_{\mathrm I}^{-1/2} \mathbf A^{\mathrm T} \mathbf D_{\mathrm O}^{-1/2} 
@@ -2682,7 +2684,7 @@ account all connectivity information of a directed graph in a
 directed graph, the symmetric and skew-symmetric adjacency matrices can
 be combined in the following way:
 \begin{align}
-  \marginnote{\texttt{herm}}
+  \mathnote{\texttt{herm}}
   \mathbf H &= \frac 1 {\sqrt 2} \left[
   \mathbf A + \mathbf A^{\mathrm T} + i(\mathbf A - \mathbf A^{\mathrm T})
   \right]. 
