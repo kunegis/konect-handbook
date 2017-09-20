@@ -202,7 +202,8 @@ Holger Heinz.
 Code for dataset extraction and the Matlab Toolbox were first published
 on the KONECT website as downloadable tarballs.  A short overview paper of the KONECT system was
 published in 2013 at the International World Wide Web Conference (WWW),
-as part of the Web Observatory Workshop \citep{kunegis:konect}.  
+as part of the Web Observatory Workshop \citep{kunegis:konect}.\footnote{
+  The Google Scholar citation page for that publication gives a list of papers using KONECT, see \href{https://scholar.google.com/scholar?cites=7174338004474749050}{https://scholar.google.com/scholar?cites=7174338004474749050}}
 In 2015 and 2016, various parts of the KONECT project were placed on GitHub under the GNU
 General Public License version 3, including this handbook.  
 
@@ -1702,7 +1703,8 @@ high-degree nodes are typically connected to low-degree and vice versa.
 The amount of assortativity can be measured by the Pearson correlation
 $\rho$ between the degree of connected nodes.  
 \begin{align}
-  \marginnote{\texttt{\small assortativity}} \rho &= \frac
+  \marginnote{\texttt{assortativity}} 
+  \rho &= \frac
   {\sum_{\{u,v\} \in E} (d(u) - d)(d(v) - d)}
   {\sum_{\{u,v\} \in E} (d(u) - d)^2}
 \end{align}
@@ -1710,6 +1712,11 @@ The assortativity is
 undefined whenever the Pearson correlation is undefined, for instance,
 if all nodes have the same degree (i.e., when the graph is regular), and
 when the graph does not contain any edges. 
+
+\marginnote{\texttt{inoutassort}}
+In directed networks, we define the in-out assortativity as the Pearson
+correlation coefficient between in-degree and the out-degree of nodes,
+taking the logarithm of one plus the degree.
 
 \subsection{Clustering Statistics}
 \label{sec:statistic:clustering}
@@ -1912,12 +1919,15 @@ The mean path length $\delta_{\mathrm m}$ in a network is defined as as
 the mean distance over all node pairs, including the distance between a
 node and itself \citep{b779}:
 \begin{align}
-  \marginnote{\texttt{meandist}} \delta_{\mathrm m} &= \frac 1 {n^2}
+  \marginnote{\texttt{meandist}} 
+  \delta_{\mathrm m} &= \frac 1 {n^2}
   \sum_{u \in V} \sum_{v\in V} d(u,v)
 \end{align}
 The mean path length defined in this way is undefined when a graph is
 disconnected.  Also, the average inverse distance has been used, or
-equivalently, the inverse of the harmonic mean of distances \citep{b877}. 
+equivalently, the inverse of the harmonic mean of distances
+\citep{b877}.  The sum of path lengths has been used on chemistry, where
+it is referred to as the Wiener index \citep{b901}.
 
 \marginnote{\texttt{mediandist}}
 Likewise, the median path length $\delta_{\mathrm M}$ is the median
