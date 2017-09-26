@@ -180,7 +180,7 @@ paper \emph{Learning Spectral Graph Transformations for Link Prediction}
 datasets and spectral link prediction methods, i.e., code based on the
 decomposition of various characteristic graph matrices.  
 The first unipartite networks appeared at this time, one of the earliest
-begin the trust network of Advogato. 
+being the trust network of Advogato. 
 The first dataset crawled specifically for KONECT was the Slashdot Zoo,
 for which crawling began in 2008, with the corresponding paper published
 in 2009 \citep{kunegis:slashdot-zoo}. 
@@ -550,8 +550,15 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   Also, the ties represent a state, as opposed to human contact
   networks, in which each edge represents an event. 
 
-\item[Hyperlink networks] are the networks of web pages connected by
-  hyperlinks.  
+\item[Hyperlink networks] are the networks 
+  \marginpar{\texttt{Hyperlink}}
+  of pages on the World Wide Web connected by
+  hyperlinks.  These are in general directed.  Since any type of
+  information can be represented on the World Wide Web, hyperlink
+  networks are often simultaneously in another category.  For instance,
+  user pages linked to each other represent a hyperlink network and 
+  a social network at the same time.  In such cases, only the more
+  specific (non-hyperlink) category is used in KONECT. 
 
 \item[Infrastructure networks] are networks of physical infrastructure.  
   \marginpar{\texttt{Infrastructure}}
@@ -601,7 +608,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   \marginpar{\texttt{Misc}}
   of the other categories. 
   
-\item[Online Contact networks] consist of people and interactions between
+\item[Online contact networks] consist of people and interactions between
   \marginpar{\texttt{OnlineContact}}
   them. 
   Contact networks are unipartite and allow multiple edges, i.e., there
@@ -670,8 +677,9 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   and Wikipedia articles
   (\href{http://konect.uni-koblenz.de/networks/gottron-excellent}{\textsf{EX}}). 
 
-\item[Trophic networks] consist of biological species connected by edges denotes
+\item[Trophic networks] consist of biological 
   \marginpar{\texttt{Trophic}}
+  species connected by edges denotes
   which pairs of species are subject to carbon exchange, i.e., which
   species eats which.  The term \emph{food chain} describes such
   relation ships, but note that in the general case, a trophic network
@@ -724,7 +732,7 @@ Table~\ref{tab:groups}.
     attributes. 
   }
   \makebox[\textwidth]{
-  \begin{tabular}{ c l }
+  \begin{tabular}{ l l }
     \toprule
     \textbf{Internal name} & \textbf{Definition} \\
     \midrule
@@ -993,7 +1001,11 @@ outgoing edges, and the indegree $d_2$ as the number of ingoing edges.
   d_2(u) &= \{ v \in V \mid (v,u) \in E \}
 \end{align}
 The outdegree and indegree are often also denoted $d^+(u)$ and
-$d^-(u)$, respectively. 
+$d^-(u)$, respectively.  Note that the indices $1$ and $2$ used for out-
+and indegree respectively can be thought as referring to rows and
+columns of a matrix, and are consistent with the usage in bipartite
+graphs, where the nodes in the first set of nodes correspond to rows of
+matrices, and nodes in the second set to columns. 
 
 The sum of all outdegrees, and likewise the sum of all indegrees always
 equals the number of nodes in the network.  
@@ -1015,8 +1027,8 @@ The weight of a node may also be called its strength \citep{b792}.
 For directed graphs, we can distinguish the outdegree weight and the
 indegree weight:
 \begin{align}
-  w_{\mathrm O}(u) &= \sum_{(u,v)\in E} |w((u,v))| \\
-  w_{\mathrm I}(u) &= \sum_{(v,u)\in E} |w((v,u))| 
+  w_1(u) &= \sum_{(u,v)\in E} |w((u,v))| \\
+  w_2(u) &= \sum_{(v,u)\in E} |w((v,u))| 
 \end{align}
 
 \subsection{Graph Transformations}
@@ -1106,8 +1118,8 @@ A$.
 For directed graphs, we can define the diagonal degree matrix
 specifically for outdegrees and indegrees as follows:
 \begin{align}
-  [\mathbf D_{\mathrm O}]_{uu} &= |w_{\mathrm O}(u)| \\
-  [\mathbf D_{\mathrm I}]_{uu} &= |w_{\mathrm I}(u)| 
+  [\mathbf D_1]_{uu} &= |w_1(u)| \\
+  [\mathbf D_2]_{uu} &= |w_2(u)| 
 \end{align}
 
 The normalized adjacency matrix $\mathbf N$ is a $|V|$-by-$|V|$ matrix
@@ -2583,9 +2595,9 @@ It also corresponds to HITS (Hyperlink-Induced Topic Search) \cite{b27}.
 The adjacency matrix can be normalized for directed network, in the same
 way as for undirected networks.
 \begin{align}
-  \mathbf N &= \mathbf D_{\mathrm O}^{-1/2} \mathbf A \mathbf D_{\mathrm I}^{-1/2}
+  \mathbf N &= \mathbf D_1^{-1/2} \mathbf A \mathbf D_2^{-1/2}
 \end{align}
-Here, $\mathbf D_{\mathrm O}^{-1/2}$ and $\mathbf D_{\mathbf I}^{-1/2}$
+Here, $\mathbf D_1^{-1/2}$ and $\mathbf D_2^{-1/2}$
 are the diagonal matrices of out- and indegrees. 
 
 The normalized adjacency matrix $\mathbf N$ can be used in the singular
@@ -2672,8 +2684,8 @@ This corresponds to the matrix
 \begin{align}
   \mathnote{\texttt{skew}}
   \mathbf N - \mathbf N^{\mathrm T} = 
-  \mathbf D_{\mathrm O}^{-1/2} \mathbf A \mathbf D_{\mathrm I}^{-1/2} - 
-  \mathbf D_{\mathrm I}^{-1/2} \mathbf A^{\mathrm T} \mathbf D_{\mathrm O}^{-1/2} 
+  \mathbf D_1^{-1/2} \mathbf A \mathbf D_2^{-1/2} - 
+  \mathbf D_2^{-1/2} \mathbf A^{\mathrm T} \mathbf D_1^{-1/2} 
 \end{align}
 
 \subsubsection{Hermitian Adjacency Matrix ($\mathbf H$)}
@@ -3313,9 +3325,10 @@ the three cases:
   values.  This is the main KONECT data format from which the two others
   are derived.  The format has the advantage that it can be read easily
   from many different programming languages and environments.
-\item RDF format: Datasets are also available as RDF.  This is intended
-  for easy integration with other datasets.  This format is deprecated
-  as it did not have any users. 
+\item RDF format: Datasets are also available as RDF, as text-based
+  format used in the \emph{Semantic Web} community.  
+  This format was deprecated as it did not have any users, and the files
+  were generally an order of magnitude larger than other formats. 
 \item Matlab format: To compute statistics and plots and perform
   experiments, we use Matlab's own binary format (version 7.3), which can be accessed
   efficiently from within Matlab.
@@ -3399,7 +3412,8 @@ value.  The following metadata are used:
   different datasets from the same source, e.g., ``Youtube
   ratings'' and ``Youtube friendships''.  Uses sentence case.  These
   names are unique across KONECT, falling back to the \texttt{name} when
-  the fullname is not given. 
+  the fullname is not given.  This field is only recommended when the
+  \texttt{name} field is not unique. 
 \item \texttt{long-description}: (optional, recommended) A long descriptive
   text consisting of full sentences, and describing the dataset in
   a verbose way.  HTML markup may be used sparingly (tags: I,
@@ -3417,19 +3431,20 @@ value.  The following metadata are used:
   these. 
 \item \texttt{extr}: (optional, recommended) The name of the
   subdirectory of \texttt{konect-extr/extr/} that
-  contains the extraction code for this dataset.
+  contains the extraction code for this dataset in the KONECT
+  Extraction package.\footnote{See \href{https://github.com/kunegis/konect-extr/tree/master/extr}{https://github.com/kunegis/konect-extr/tree/master/extr}}
 \item \texttt{timeiso}: (optional) A single ISO timestamp denoting
   the date of the dataset or two timestamps separated by a
-  slash(/) for a time range. The format is:
-  YYYY[-MM[-DD]][/YYYY[-MM[-DD]]], e.g., ``2005-10-08/2006-11-03''
-  or ``2007''.
+  slash (/) for a time range. The format is:
+  \texttt{YYYY[-MM[-DD]][/YYYY[-MM[-DD]]]}, e.g., \texttt{2005-10-08/2006-11-03}
+  or \texttt{2007}.
 \item \texttt{tags}: (optional) A space-separated list of hashtags
   describing the network.  The list of tags is given in
   Section~\ref{sec:tags}.  
 \item \texttt{n3-*}: (optional, deprecated) Metadata which is used for the
   generation of RDF files. The symbol \texttt{\{n\}} in the name
   of the meta key represents an order by unique, sequential
-  numbers starting at 1.
+  numbers starting at one.  These are deprecated. 
   \begin{itemize}
   \item \texttt{n3-add-prefix\{n\}} (optional):
     Used to define additional N3 prefixes. The

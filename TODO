@@ -35,7 +35,9 @@ Recommendations:  If you do machine learning, use [auc].  If you evaluate a reco
 
 ===Format===
 
-The file naming format depends on how many relations are included in a dataset. If only one relation is present a simplified naming schema can be used as shown in the following.
+The file naming format depends on how many relations are included in a
+dataset. If only one relation is present a simplified naming schema can
+be used as shown in the following.  
 
 ====Multiple relations====
 
