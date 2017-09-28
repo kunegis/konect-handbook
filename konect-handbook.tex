@@ -889,7 +889,17 @@ undirected edges; in KONECT, we use the term \emph{edge} or \emph{directed
   edge} for them, and the term \emph{edge} does not imply
 undirectedness.  Note that the term \emph{directed} may apply to both an
 individual edge as well as to a whole graph, but in KONECT, graphs never
-contain both directed and undirected edges. 
+contain both directed and undirected edges.  
+For directed graphs, we use the following terminology:  A directed graph
+is \emph{symmetric} if all edges are reciprocated, i.e., if, for every
+directed edge $(u,v)$, there is another directed edge $(j,i)$.  A
+symmetric directed graph is equivalent to an undirected graph, but we
+must take care of a subtelty:  In a symmetric directed graph, the degree
+of each node is twice of that in the corresponding undirected graph.
+Thus, we cannot just identify both with each other, and must be careful
+whether we are talking about an undirected graph, or a symmetric
+directed graph.  Directed graphs that are not symmetric will be called
+asymmetric. 
 
 In bipartite graphs, we can partition the set of nodes $V$ into two
 disjoint sets $V_1$ and $V_2$, which we will call the left and right
@@ -2261,15 +2271,28 @@ decompositions, and their uses.  Since most decompositions are based on
 a specific matrix, this section also serves as a survey of
 characteristic graph matrices.  
 
-Graph decompositions are implemented in the KONECT Toolbox by the
-\texttt{konect\_decomposition()} function.  Each decomposition has a
-name, which is given in the margin in the following. 
+Each matrix resp.\ decomposition has an internal name in KONECT, which
+is given in the margin.  Using the KONECT Toolbox, the corresponding
+matrices can be generated using the \texttt{konect\_matrix()} function,
+and the corresponding (rank reduced) matrix decomposition can be
+computed with the function \texttt{konect\_decomposition()}. 
+
+As a general rule, matrices are noted with bold uppercase letters.  The
+letters shown in this section for each characteristic matrix are used
+systematically within KONECT, but not necessarily in the literature.
+Among established matrix names, there is the adjacency matrix ($\mathbf
+A$) and the Laplacian ($\mathbf L$), but we must note that even the
+adjacency matrix is not always called $\mathbf A$ in the literature.
 
 \subsection{Decompositions of Undirected Graphs}
-These matrices and decompositions apply to undirected graphs.
+These matrices and decompositions apply to undirected graphs.  In this
+subsection, the matrix $\mathbf A$ always denotes the symmetric
+adjacency matrix. 
 
-In KONECT, these decompositions can be applied to directed graphs, in
-which case edge directions are ignored. 
+In KONECT, these decompositions can be applied to directed graphs as well, in
+which case edge directions are ignored.  Note that since (almost all)
+directed graphs contain reciprocated edges, which are counted as two
+parallel edges. 
 
 \subsubsection{Symmetric Adjacency Matrix ($\mathbf A$)}
 The symmetric adjacency matrix $\mathbf A$ is the most basic graph
@@ -2334,6 +2357,7 @@ smallest and largest eigenvalues have the same absolute value.
 \subsubsection{Laplacian Matrix ($\mathbf L$)}
 The Laplacian matrix of an undirected graph is defined as
 \begin{align*}
+  \mathnote{\texttt{lap}}
   \mathbf L &= \mathbf D - \mathbf A,
 \end{align*}
 i.e., the diagonal degree matrix from which we subtract the adjacency
@@ -2341,7 +2365,6 @@ matrix.  The Laplacian matrix is also called the Kirchhoff matrix.
 
 We consider the eigenvalue decomposition of the Laplacian:
 \begin{align*}
-  \mathnote{\texttt{lap}}
   \mathbf L &= \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T}
 \end{align*}
 The Laplacian matrix of positive-semidefinite, i.e., all eigenvalues are
@@ -2374,6 +2397,7 @@ cycle with an odd number of negative edges.
 The normalized adjacency matrix $\mathbf N$ of an undirected graph is
 defined as 
 \begin{align*}
+  \mathnote{\texttt{sym-n}}
   \mathbf N &= \mathbf D^{-1/2} \mathbf A \mathbf D^{-1/2},
 \end{align*}
 where we remind the reader that the diagonal matrix $\mathbf D$
@@ -2381,7 +2405,6 @@ contains the node degrees, i.e., $\mathbf D_{uu} = d(u)$.
 The matrix $\mathbf N$ is symmetric and its eigenvalue decomposition can
 be considered:
 \begin{align}
-  \mathnote{\texttt{sym-n}}
   \mathbf N = \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T}
 \end{align}
 The eigenvalues $\lambda_i$ of $\mathbf N$ can be used to characterize
@@ -2711,10 +2734,10 @@ Furthermore, the Hermitian adjacency matrix can be defined by
 which additionally justifies the factor $1/\sqrt 2$ in the initial
 definition of $\mathbf H$, as $e^{i \frac \pi 4} = 1/\sqrt 2 + i/\sqrt
 2$.  Using this form, the Hermitian adjacency matrix can be generalized
-to the matrix $\mathbf H_\alpha$ where $0 \leq \alpha \leq \pi/2$ is a
+to the matrix $\mathbf H_\theta$ where $0 \leq \theta \leq \pi/2$ is a
 real parameter, giving 
 \begin{align}
-  [\mathbf H_{\alpha}]_{uv} &= \exp\left\{i \alpha \mathbf Y_{uv} \right\},  
+  [\mathbf H_{\theta}]_{uv} &= \exp\left\{i \theta \mathbf Y_{uv} \right\},  
 \end{align}
 from which the following special cases can be recovered:
 \begin{align}
@@ -2724,6 +2747,17 @@ from which the following special cases can be recovered:
 \end{align}
 These matrices appear in the modeling of quantum walks, as used for
 instance by \cite{toedtli:ctqw}.  
+
+\subsubsection{Magnetic Laplacian ($\mathbf T$)}
+The matrix
+\begin{align}
+  \mathbf T_{\theta} &= \mathbf D - \mathbf H_{\theta} 
+\end{align}
+is the magnetic Laplacian \citep{b903}.  It is Hermitian and positive
+semi-definite.   
+
+For symmetric graphs, it does not reduce to the ordinary Laplacian
+$\mathbf L$ (when $\theta \neq 0$). 
 
 \subsubsection{Decomposition into Directed Components}
 DEDICOM (decomposition into directed components) refers to a class of
@@ -3563,6 +3597,8 @@ to reflect best practices and to avoid confusion.
     in favor of \emph{directed edge}.  (In other texts, an edge is taken
     to be undirected by definition, and the term \emph{directed edge} is
     then a contradiction.)
+  \item[Asymmetric] A directed graph is called asymmetric if it contains
+    at least one unreciprocated edge. 
   \item[Biadjacency matrix]
     The characteristic matrix of a bipartite network, usually denoted
     $\mathbf B$.  The corresponding adjacency matrix is then $[\mathbf
@@ -3605,6 +3641,9 @@ to reflect best practices and to avoid confusion.
     may refer to either the fill (probability that an edge exists), or to
     the average degree.  The former definition is typically used in mathematical
     contexts, while the latter is used in computer science contexts.
+  \item[Directed] A directed graph contains directed edges.  A directed
+    graph can be symmetric (if all edges are reciprocated), or
+    asymmetric (otherwise). 
   \item[Edge] A connection between two nodes.  In mathematics, an edge
     is undirected and constrasts with an arc which is directed.  In the
     context of KONECT, all types of connections between nodes are called
@@ -3669,6 +3708,11 @@ to reflect best practices and to avoid confusion.
     describes a network, such as the clustering coefficient, the
     diameter or the algebraic connectivity.  All statistics are real
     numbers.   
+  \item[Symmetric] A directed graph is called symmetric if all its edges
+    are reciprocated.  Symmetric directed graphs are equivalent to
+    undirected graphs, but have double the node degrees.  Thus,
+    equations between the two are in general \emph{not} exchangeable.
+    For graphs, \emph{symmetric} only applies to directed graphs. 
   \item[Tour]
     A cyclic sequence of connected nodes which may contain a single
     vertex multiple times.  It can be considered a walk that returns to
@@ -3802,6 +3846,7 @@ measures. \\
   $\mathbf N$ & normalized adjacency matrix \\
   $\mathbf P$ & stochastic adjacency matrix \\
   $\mathbf S$ & stochastic Laplacian matrix \\
+  $\mathbf T$ & magnetic Laplacian matrix \\
   $\mathbf U, \mathbf V$ & eigenvector matrices \\
   $\mathbf Y$ & skew-symmetric adjacency matrix \\
   $\mathbf Z$ & normalized Laplacian matrix \\
