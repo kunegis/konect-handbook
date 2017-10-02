@@ -816,6 +816,10 @@ The following tags can be given to networks.  They are declared in the
   used when the network is non-reciprocal, but does contain
   directed cycles.  If the network is acyclic,
   \texttt{\#acyclic} is used. 
+\item \texttt{\#path}:  The edges represent paths have have been
+  navigated in some form.  Thus, a purely network-analysis approach will
+  fail to take into account the paths and only consider the
+  adjacencies. 
 \item \texttt{\#regenerate}: The network can be regenerated
   periodically and may be updated when a more recent dataset
   becomes available.
@@ -3454,15 +3458,18 @@ value.  The following metadata are used:
   etc.), usually only for absolutely necessary typography, such as
   setting species names in italics.  Hyperlinks are not used. 
 \item \texttt{entity-names}: A comma-seperated list of
-  entity names (e.g., ``user, movie'').  Unipartite networks give
+  entity names (e.g., ``user, movie'' or ``protein'').  Unipartite networks give
   a single name; bipartite networks give two.
+  The names are in the singular and in lowercase. 
   We usually follow the nomenclature given by the data sources in naming
   these. 
 \item \texttt{relationship-names}: The name of the
-  relationship represented by edges, as a substantive (e.g.,
+  relationship represented by edges, as a lowercase substantive in the singular (e.g.,
   ``friendship'').
   Again, we usually follow the nomenclature given by the data sources in naming
-  these. 
+  these.  The substantive may be a phrase, i.e., contain spaces such as
+  in ``tag assignment''.  If there are multiple relationship types, they
+  are separated by a slash, e.g. ``answer/comment''.
 \item \texttt{extr}: (optional, recommended) The name of the
   subdirectory of \texttt{konect-extr/extr/} that
   contains the extraction code for this dataset in the KONECT
