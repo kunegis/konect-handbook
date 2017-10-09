@@ -199,16 +199,19 @@ for Web Science and Technologies (WeST).  The name \emph{KONECT --
   \underline{Ko}blenz \underline{Ne}twork
   \underline{C}ollec\underline{t}ion} was adopted sometime in 2011.  The
 KONECT website was created in 2011 at \texttt{konect.uni-koblenz.de}.
-In this phase of the project, extraction of datasets and maintenance of
+In this phase of the project, extraction of datasets and maintenance of the
 KONECT website was performed in collaboration with Daniel Dünker and
 Holger Heinz. 
 
 Code for dataset extraction and the Matlab Toolbox were first published
-on the KONECT website as downloadable tarballs.  A short overview paper of the KONECT system was
+on the KONECT website as downloadable tarballs.  All published code was
+licensed under the GNU General Public License (GPL) version~3 from the beginning. 
+A short overview paper of the KONECT system was
 published in 2013 at the International World Wide Web Conference (WWW),
 as part of the Web Observatory Workshop \citep{kunegis:konect}.\footnote{
   The Google Scholar citation page for that publication gives a list of papers using KONECT, see \href{https://scholar.google.com/scholar?cites=7174338004474749050}{https://scholar.google.com/scholar?cites=7174338004474749050}}
-In 2015 and 2016, various parts of the KONECT project were placed on GitHub under the GNU
+In 2015 and 2016, various parts of the KONECT project were placed on
+GitHub, again under the GNU
 General Public License version 3, including this handbook.  
 
 From 2017 on, the KONECT project continued to be developed at the University of
@@ -394,7 +397,10 @@ and weights listed above.
   edge, and thus the network can be reconstructed for any moment in the
   past.  By default, the timestamp is in Unix time, and gives one
   timestamp to each edge, denoting when that edge was added, or when the
-  event represented by the edge took place.  When the tag
+  event represented by the edge took place.  
+  It is unspecified whether timestamps include or not leap seconds.  In
+  practice, no dataset has precise enough information for that to matter.
+  When the tag
   \texttt{\#unspecifiedtime} is set, the timestamps are not in Unix
   time, but rather in an unspecified monotonous time scale. 
 \item \textbf{Networks with loops} ($\circlearrowright$) are unipartite networks in
@@ -1379,7 +1385,7 @@ multiplicity, i.e., the average number of edges connecting two nodes
 that are connected by at least one edge. 
 \begin{align}
   \mathnote{\texttt{avgmult}}
-  \frac m {\bar{\bar m}} 
+  \tilde{m} = \frac m {\bar{\bar m}} 
 \end{align}
 
 \subsection{Connectivity Statistics}
@@ -1737,7 +1743,7 @@ The analysis of degrees can be generalized to pairs of nodes:  What is
 the distribution of degrees for pairs of connected edges?  In some
 networks, high-degree nodes are connected to other high-degree nodes,
 while low-degree nodes are connected to low-degree nodes.  This property
-is called assortativity \citep{b854}, or more precisely, the degree
+is called the degree assortativity \citep{b854}, or, very often, simply the
 assortativity.  Inversely, in a network with dissortativity,  
 high-degree nodes are typically connected to low-degree and vice versa.
 The amount of assortativity can be measured by the Pearson correlation
@@ -3841,6 +3847,8 @@ measures. \\
   $g$ & line count, data volume \\
   $l$ & loop count \\
   $m$ & volume, edge count \\
+  $\tilde{m}$ & average multiplicity \\
+  $\bar{\bar m}$ & number of unique edges \\
   $n$ & size, node count \\
   $p$ & fill \\
   $q$ & square count \\
