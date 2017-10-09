@@ -392,7 +392,11 @@ and weights listed above.
 \begin{itemize}
 \item \textbf{Temporal networks} (\Clocklogo) include a timestamp for each
   edge, and thus the network can be reconstructed for any moment in the
-  past. 
+  past.  By default, the timestamp is in Unix time, and gives one
+  timestamp to each edge, denoting when that edge was added, or when the
+  event represented by the edge took place.  When the tag
+  \texttt{\#unspecifiedtime} is set, the timestamps are not in Unix
+  time, but rather in an unspecified monotonous time scale. 
 \item \textbf{Networks with loops} ($\circlearrowright$) are unipartite networks in
   which edges of the form $\{u,u\}$ are allowed, i.e., edges connecting
   a node with itself. 
@@ -764,9 +768,11 @@ The following tags can be given to networks.  They are declared in the
   the form $(u,v)$ and $(v,u)$.  If the network does not contain
   reciprocal edges, but has cycles, the tag
   \texttt{\#nonreciprocal} is used.
-\item \texttt{\#aggregatetime}:  The small value of timestamps
-  stand for any earlier time; these timestamps should not be
-  considered when performing time-based methods and plots. 
+\item \texttt{\#aggregatetime}:  The smallest value in the timestamp column
+  stands for any earlier time; all timestamp having this smallest value should not be
+  considered when performing time-based methods and plots.  In most
+  cases, this value is zero, but it can just as well be -1 or the most
+  negative integer of the integer type used when creating the dataset. 
 \item \texttt{\#incomplete}: The network is incomplete, i.e.,
   not all edges or nodes are included.  This implies that
   strictly speaking, certain statistics or plots like 
@@ -817,6 +823,11 @@ The following tags can be given to networks.  They are declared in the
   used when the network is non-reciprocal, but does contain
   directed cycles.  If the network is acyclic,
   \texttt{\#acyclic} is used. 
+\item \texttt{\#unspecifiedtime}:  The timestamps do not represent Unix
+  time, but something else.  The only assumption that can be made is
+  that timestamps are monotonously increasing, i.e., that larger values
+  denote later times.  These could be simply year numbers, number of
+  days since a starting point, or something else. 
 \item \texttt{\#path}:  The edges represent paths have have been
   navigated in some form.  Thus, a purely network-analysis approach will
   fail to take into account the paths and only consider the
@@ -833,7 +844,7 @@ The following tags can be given to networks.  They are declared in the
   not contain loops, and thus
   \texttt{\#loop} must not be defined. 
 \item \texttt{\#trianglefree}:  The network is triangle-free, i.e., the
-  network does not contain any triangles.  Cannot only be used on
+  network does not contain any triangles.  Can only be used on
   unipartite networks.  By default, it is an error for a unipartite
   network to not contain triangles.  This tag allows a network to be
   triangle-free. 
