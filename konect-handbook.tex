@@ -276,7 +276,8 @@ links. Networks can be classified by their format
 multiplicities, by the 
 presence of metadata such as timestamps and node labels, and by
 the types of objects represented by nodes and links. 
-The full list of networks is given online.\footnote{\href{http://konect.uni-koblenz.de/networks/}{konect.uni-koblenz.de/networks}}
+The full list of networks is given
+online.\footnote{\href{http://konect.uni-koblenz.de/networks/}{konect.uni-koblenz.de/networks}}  
 
 The format of a network is always one of the following.  The network
 formats are summarized in Table~\ref{tab:format}. 
@@ -3181,7 +3182,16 @@ matrix \texttt{A}.
 
 \subsection{Variables}
 Naming variables can be quite complicated and hard to read in
-Matlab. Therefore KONECT code follows these rules.
+Octave or MAtlab. Therefore KONECT code follows specific rules as laid
+out in this section.  As a general rule, variables with the same name
+always denote the same thing.  Thus a variable \texttt{network} will
+always be a string denoting the internal name of a network (such as
+\texttt{ucidata-zachary} for the famous Karate Club), and a
+variable \texttt{statistic} will always be a string representing the
+internal name of a statistic (such as \texttt{clusco} for the clustering
+coefficient).   Likewise, \texttt{value} will always be a numerical
+variable denoting the value of a statistic (such as 0.234 for a
+clustering coefficient). 
 
 Long variable names (containing full words) are in all-lowercase. Words
 are separated by underscore.  When refering to a variable in comments,
@@ -3192,6 +3202,17 @@ matrices.
 \subsubsection{Strings}
 Table~\ref{tab:string-variables} shows common variable names used for
 string variables.
+As a general rules, strings as used for what we call \emph{internal
+  names}.  These are canonical names given to individual networks,
+matrix decompositions, statistics, error measures, etc.  These internal
+names are stable:  We never change them, because that will break
+things.  As a result, many internal names may appear inaccurate,
+inconsistent, or may simply look like having bad typography.  For
+instance, some variants of the diameter statistic include the name
+\texttt{diam}, while others include the name \texttt{diameter}.  This is
+unfortunate, but backward compatibility is tantamount here.  In
+``user-facing'' material such as the website and papers, we use pretty
+names for all of these, which we can change as we want. 
 
 \begin{table}
   \caption{ 
@@ -3203,8 +3224,8 @@ string variables.
     \toprule 
     network & The internal network name, e.g., ``advogato''.
     The internal network name is used in the names of files related to
-    the network. \\ 
-
+    the network.  These names do not contain periods, slashes, spaces,
+    or colons, but may otherwise contain dashes, spaces, etc.  \\ 
     class &
     The internal name for a set of networks, e.g., ``test'', ``1'',
     ``2'', ``3''. The class ``N'' includes the $10\times N$ smallest
@@ -3242,7 +3263,12 @@ string variables.
 
 \subsubsection{Scalars}
 Table~\ref{tab:scalar-variables} shows variable names used for scalar
-values.
+values.  
+As a general rule, we try to use individual lowercase latin letters for
+scalar variables, in keeping with Octave/Matlab usage.  This aligns
+nicely with the mathematical aspects of KONECT, but can lead to
+ambiguities, and there we also use longer variable names in certain
+cases. 
 
 \begin{table}
   \caption{ Variable names used for scalars in KONECT.
@@ -3262,7 +3288,10 @@ values.
 
 \subsubsection{Matrices}
 Table~\ref{tab:matrix-variables} shows variable names used for
-matrix-valued variables.
+matrix-valued variables. 
+As a general rules, matrices have uppercase names consisting of
+individual letters, as is the usage in Octave/Matlab, and in
+mathematics. 
 
 Note that when the adjacency matrix of an undirected graph is stored in
 a variable, each edge is usually stored just once, instead of twice. In
