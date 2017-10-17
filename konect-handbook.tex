@@ -384,7 +384,7 @@ Table~\ref{tab:weights}.
   \marginpar{\texttt{multiweighted}}
   have edges annotated
   with rating values, and allow multiple edges between two nodes.
-\item \textbf{Dynamic networks} ($\rightleftarrows$) are networks in
+\item \textbf{Dynamic networks} ($\rightleftharpoons$) are networks in
   \marginpar{\texttt{dynamic}}
   which edges can appear and disappear.  They are always
   temporal. Individual edges are not weighted. 
@@ -436,7 +436,7 @@ and weights listed above.
     5 & $\stackrel{+}{=}$ & Multiple signed  & Yes & $(-\infty,+\infty)$ & Ratio scale    & \texttt{multisigned} \\
     6 & $*$   & Rating              & No  & $(-\infty,+\infty)$ &Interval scale  & \texttt{weighted}   \\
     7 & $_*{}^*$ & Multiple ratings & Yes & $(-\infty,+\infty)$ & Interval scale  & \texttt{multiweighted}\\
-    8 & $\rightleftarrows$ & Dynamic & Yes & $\{1\}$            & --	     & \texttt{dynamic}      \\
+    8 & $\rightleftharpoons$ & Dynamic & Yes & $\{1\}$            & --	     & \texttt{dynamic}      \\
     9 &  & Multiple positive weights & Yes & $(0, \infty)$      & Ratio scale & \texttt{multiposweighted} \\
     \bottomrule
   \end{tabular}
