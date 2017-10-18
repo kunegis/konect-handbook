@@ -23,7 +23,6 @@
 \usepackage{subfigure}
 \usepackage{marvosym} % for \Clocklogo
 \usepackage{color}
-%% \usepackage{marginnote}
 \usepackage{textcomp} % for \textlangle, \textrangle 
 \usepackage{array}
 \usepackage{wasysym} % for \newmoon
@@ -3472,50 +3471,36 @@ The file is a text file coded in UTF-8.  Each line
 contains one key/value pair, written as the key, a colon and the
 value.  The following metadata are used:
 \begin{itemize}
-\item \texttt{name}: The name of the dataset.  This contains only the
+\item \texttt{name}: (obligatory) The name of the dataset.  This contains only the
   name of the source, without description the type or category,
   e.g., ``YouTube'', ``Wikipedia elections'').  The name uses
   sentence case.  For networks with the same name the source (e.g.,
-  the conference) is added in parentheses.  Within each category,
+  the conference or author name) is added in parentheses.  Within each category,
   all names must be distinct, but multiple networks can have the same
-  \texttt{name} if they have different categories. 
-\item \texttt{code}: The short code used in plots and narrow
+  \texttt{name} if they have different categories.  We use the
+  conference name for disambiguation if the dataset is recent, and the
+  author name if it is older; this is however just a rule of thumb. 
+\item \texttt{code}: (obligatory) The short code used in plots and narrow
   tables.  The code consists of two or three alphanumeric characters.  The first
   two characters are usually uppercase letters and denote the data
   source.  The last character, if present, usually distinguishes
   the different networks from one source.  The code is unique across all
   of KONECT, although it is not an error if they are not:  It will only
-  lead to certain plots be confusing. 
-\item \texttt{url}: (optional) The URL(s) of the data sources, as a comma
-  separated list.  Most datasets have a single URL.
-\item \texttt{category}: The name of the category, as given in the
+  lead to certain plots being confusing. 
+\item \texttt{category}: (obligatory) The name of the category, as given in the
   column ``Category'' in Table~\ref{tab:categories}.
-\item \texttt{description}: (deprecated) A short description of the form
-  ``User–movie ratings''.  Note that the file should contain an
-  actual en dash, coded in UTF-8.
-\item \texttt{cite}: (optional) The bibtex key of the citation(s) for this dataset, as a
-  comma separated list. Most dataset have a single bibtex entry.  This
-  is usually the actual paper about the dataset.  Many researchers have
-  a preference about which of their papers should be cited for a dataset
-  they have released, and we follow these. 
-\item \texttt{fullname}: (optional) A longer name to disambiguate
-  different datasets from the same source, e.g., ``Youtube
-  ratings'' and ``Youtube friendships''.  Uses sentence case.  These
-  names are unique across KONECT, falling back to the \texttt{name} when
-  the fullname is not given.  This field is only recommended when the
-  \texttt{name} field is not unique. 
 \item \texttt{long-description}: (optional, recommended) A long descriptive
   text consisting of full sentences, and describing the dataset in
   a verbose way.  HTML markup may be used sparingly (tags: I,
   etc.), usually only for absolutely necessary typography, such as
   setting species names in italics.  Hyperlinks are not used. 
-\item \texttt{entity-names}: A comma-seperated list of
+\item \texttt{entity-names}: (optional, recommended) A comma-seperated list of
   entity names (e.g., ``user, movie'' or ``protein'').  Unipartite networks give
   a single name; bipartite networks give two.
   The names are in the singular and in lowercase. 
   We usually follow the nomenclature given by the data sources in naming
   these. 
-\item \texttt{relationship-names}: The name of the
+\item \texttt{relationship-names}: (optional, recommended) The name of the
   relationship represented by edges, as a lowercase substantive in the singular (e.g.,
   ``friendship'').
   Again, we usually follow the nomenclature given by the data sources in naming
@@ -3525,7 +3510,20 @@ value.  The following metadata are used:
 \item \texttt{extr}: (optional, recommended) The name of the
   subdirectory of \texttt{konect-extr/extr/} that
   contains the extraction code for this dataset in the KONECT
-  Extraction package.\footnote{See \href{https://github.com/kunegis/konect-extr/tree/master/extr}{https://github.com/kunegis/konect-extr/tree/master/extr}}
+  Extraction package.\footnote{See
+    \href{https://github.com/kunegis/konect-extr/tree/master/extr}{https://github.com/kunegis/konect-extr/tree/master/extr}} 
+\item \texttt{url}: (optional, recommended for almost all networks) The
+  URL(s) of the data sources, as a comma 
+  separated list.  Most datasets have a single URL.
+\item \texttt{description}: (deprecated) A short description of the form
+  ``User–movie ratings''.  Note that the file should contain an
+  actual en dash, coded in UTF-8.
+\item \texttt{cite}: (optional, recommended for almost all networks) The
+  bibtex key of the citation(s) for this dataset, as a  
+  comma separated list. Most dataset have a single bibtex entry.  This
+  is usually the actual paper about the dataset.  Many researchers have
+  a preference about which of their papers should be cited for a dataset
+  they have released, and we follow these. 
 \item \texttt{timeiso}: (optional) A single ISO timestamp denoting
   the date of the dataset or two timestamps separated by a
   slash (/) for a time range. The format is:
@@ -3534,6 +3532,12 @@ value.  The following metadata are used:
 \item \texttt{tags}: (optional) A space-separated list of hashtags
   describing the network.  The list of tags is given in
   Section~\ref{sec:tags}.  
+\item \texttt{fullname}: (optional, semi-deprecated) A longer name to disambiguate
+  different datasets from the same source, e.g., ``Youtube
+  ratings'' and ``Youtube friendships''.  Uses sentence case.  These
+  names are unique across KONECT, falling back to the \texttt{name} when
+  the fullname is not given.  This field is only recommended when the
+  \texttt{name} field is not unique. 
 \item \texttt{n3-*}: (optional, deprecated) Metadata which is used for the
   generation of RDF files. The symbol \texttt{\{n\}} in the name
   of the meta key represents an order by unique, sequential
