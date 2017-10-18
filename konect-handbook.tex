@@ -3474,7 +3474,11 @@ value.  The following metadata are used:
 \item \texttt{name}: (obligatory) The name of the dataset.  This contains only the
   name of the source, without description the type or category,
   e.g., ``YouTube'', ``Wikipedia elections'').  The name uses
-  sentence case.  For networks with the same name the source (e.g.,
+  sentence case.
+  When the name refers to the name of entities represented by the
+  dataset, we use the plural (e.g., ``monkeys'' rather than ``monkey'',
+  but note that many animal names are invariable in English).  
+  For networks with the same name the source (e.g.,
   the conference or author name) is added in parentheses.  Within each category,
   all names must be distinct, but multiple networks can have the same
   \texttt{name} if they have different categories.  We use the
