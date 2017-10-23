@@ -528,19 +528,19 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   songs and their genres
   (\href{http://konect.uni-koblenz.de/networks/dbpedia-genre}{\textsf{GE}}).   
 
-\item[Folksonomies] consist of tag assignments connecting a user, an
-  \marginpar{\texttt{Folksonomy}}
-  item and a tag.  For folksonomies, we follow the 3-bipartite
-  projection approach and consider the three possible bipartite
-  networks, i.e., the user--item, user--tag and item--tag networks.
-  This allows us to apply methods for bipartite graphs to hypergraphs,
-  which is not possible otherwise.  Items that are tagged in
-  folksonomies include bookmarks
-  (\href{http://konect.uni-koblenz.de/networks/delicious-ui}{\textsf{Dui}}),
-  scientific publications
-  (\href{http://konect.uni-koblenz.de/networks/citeulike-ui}{\textsf{Cui}})
-  and movies
-  (\href{http://konect.uni-koblenz.de/networks/movielens-10m_ui}{\textsf{Mui}}).
+%% \item[Folksonomies] consist of tag assignments connecting a user, an
+%%   \marginpar{\texttt{Folksonomy}}
+%%   item and a tag.  For folksonomies, we follow the 3-bipartite
+%%   projection approach and consider the three possible bipartite
+%%   networks, i.e., the user--item, user--tag and item--tag networks.
+%%   This allows us to apply methods for bipartite graphs to hypergraphs,
+%%   which is not possible otherwise.  Items that are tagged in
+%%   folksonomies include bookmarks
+%%   (\href{http://konect.uni-koblenz.de/networks/delicious-ui}{\textsf{Dui}}),
+%%   scientific publications
+%%   (\href{http://konect.uni-koblenz.de/networks/citeulike-ui}{\textsf{Cui}})
+%%   and movies
+%%   (\href{http://konect.uni-koblenz.de/networks/movielens-10m_ui}{\textsf{Mui}}).
 
 \item[Human contact networks] are unipartite networks of actual contact
   \marginpar{\texttt{HumanContact}}
@@ -581,9 +581,10 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   
 \item[Interaction networks] are bipartite networks consisting of people
   \marginpar{\texttt{Interaction}}
-  and items, where each edge represents an interaction. 
+  and items or between people and other people, where each edge represents an interaction. 
   In interaction networks, we always allow multiple edges between the
-  same person--item pair.
+  same person--item pair, and an interaction is always to be understood as an event. 
+  Interaction networks can be online or offline.
   Examples are
   people writing in forums
   (\href{http://konect.uni-koblenz.de/networks/opsahl-ucforum}{\textsf{UF}}),
