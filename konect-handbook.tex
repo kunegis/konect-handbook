@@ -468,6 +468,18 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   }
 \end{table*}
 
+%
+% The following texts describing each category are extracted
+% automatically by konect-www/sh/handbook-category to generate the
+% website, and therefore they should follow the following rules: 
+%	- Each line begins by \item[LONGNAMEs], where LONGNAME is the long
+%	  name of the category as given in
+%	  konect-toolbox/m/konect_data_category.m
+%	- Each block ends in an empty line, or a line starting
+%	  with \item or \end
+%	- Not all Latex markup is supported; see
+%	  konect-www/sh/handbook-category
+%
 \begin{description}
 \item[Affiliation networks] are bipartite networks denoting the
   \marginpar{\texttt{Affiliation}}
@@ -504,11 +516,16 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   category also allow patents and other types of documents that
   reference each other. 
 
-\item[Coauthorship networks] are unipartite network connecting authors
+\item[Co-authorship networks] are unipartite networks connecting authors
   \marginpar{\texttt{Coauthorship}}
   who have written works together, for instance academic literature, but
   also other types of works such as music or movies. 
 
+\item[Co-citation networks] are unipartite networks of documents,
+  connected by an edge if they are both cited by a same other document.
+  As a general rule, co-citation networks are the self-join of citation
+  networks. 
+  
 \item[Communication networks] contain edges that represent
   \marginpar{\texttt{Communication}}
   individual messages between persons.  Communication networks are directed
@@ -535,20 +552,6 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   songs and their genres
   (\href{http://konect.cc/networks/dbpedia-genre}{\textsf{GE}}).   
 
-%% \item[Folksonomies] consist of tag assignments connecting a user, an
-%%   \marginpar{\texttt{Folksonomy}}
-%%   item and a tag.  For folksonomies, we follow the 3-bipartite
-%%   projection approach and consider the three possible bipartite
-%%   networks, i.e., the user--item, user--tag and item--tag networks.
-%%   This allows us to apply methods for bipartite graphs to hypergraphs,
-%%   which is not possible otherwise.  Items that are tagged in
-%%   folksonomies include bookmarks
-%%   (\href{http://konect.cc/networks/delicious-ui}{\textsf{Dui}}),
-%%   scientific publications
-%%   (\href{http://konect.cc/networks/citeulike-ui}{\textsf{Cui}})
-%%   and movies
-%%   (\href{http://konect.cc/networks/movielens-10m_ui}{\textsf{Mui}}).
-
 \item[Human contact networks] are unipartite networks of actual contact
   \marginpar{\texttt{HumanContact}}
   between persons, i.e., talking with each other, spending time
@@ -561,30 +564,29 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   (\href{http://konect.cc/networks/mit}{\textsf{RM}}). 
 
 \item[Human social networks] are real-world social networks between
-  humans.  
-  \marginpar{\texttt{HumanSocial}}
-  The ties must be offline, and not from an online social network.
-  Also, the ties represent a state, as opposed to human contact
-  networks, in which each edge represents an event. 
+  humans.  \marginpar{\texttt{HumanSocial}} The ties are offline,
+  and not from an online social network.  Also, the ties represent a
+  state, as opposed to human contact networks, in which each edge
+  represents an event.
 
-\item[Hyperlink networks] are the networks 
-  \marginpar{\texttt{Hyperlink}}
-  of pages on the World Wide Web connected by
-  hyperlinks.  These are in general directed.  Since any type of
-  information can be represented on the World Wide Web, hyperlink
-  networks are often simultaneously in another category.  For instance,
-  user pages linked to each other represent a hyperlink network and 
-  a social network at the same time.  In such cases, only the more
-  specific (non-hyperlink) category is used in KONECT. 
+\item[Hyperlink networks] are the
+  networks \marginpar{\texttt{Hyperlink}} of pages on the World Wide Web
+  or on another system of linked knowldge,
+  connected by hyperlinks or similar types of links.  These are in general directed.  Since any
+  type of information can be represented on the World Wide Web,
+  hyperlink networks are often simultaneously in another category.  For
+  instance, user pages linked to each other represent a hyperlink
+  network and a social network at the same time.  In such cases, only
+  the more specific (non-hyperlink) category is used in KONECT.
 
 \item[Infrastructure networks] are networks of physical infrastructure.  
   \marginpar{\texttt{Infrastructure}}
   Examples are road networks
-  (\href{http://konect.cc/networks/roadNet-CA}{RO}), airline
+  (\href{http://konect.cc/networks/roadNet-CA}{\textsf{RO}}), airline
   connection networks
-  (\href{http://konect.cc/networks/opsahl-openflights}{OF}), 
+  (\href{http://konect.cc/networks/opsahl-openflights}{\textsf{OF}}), 
   and power grids
-  (\href{http://konect.cc/networks/opsahl-powergrid}{UG}).  
+  (\href{http://konect.cc/networks/opsahl-powergrid}{\textsf{UG}}).  
   
 \item[Interaction networks] are bipartite networks consisting of people
   \marginpar{\texttt{Interaction}}
@@ -602,107 +604,88 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   and sports results. 
 
 \item[Lexical networks] consist of words from natural 
-  \marginpar{\texttt{Lexical}}
-  languages and the
-  relationships between them. 
-  Relationships can be semantic (i.e, related to the
-  meaning of words) such as the
-  synonym
-    relationship (\href{http://konect.cc/networks/wordnet-words}{\textsf{WO}}), associative such
-  as when two words are associated with each other by people in
-  experiments (\href{http://konect.cc/networks/eat}{\textsf{EA}}), or denote 
-  cooccurrence, i.e., the fact that two words co-occur in text (\href{http://konect.cc/networks/lasagne-spanishbook}{\textsf{SB}}).  Note
-  that lexical cooccurrence networks are explicitly not included in the
-  broader Cooccurrence category. 
+  \marginpar{\texttt{Lexical}} languages and the relationships between
+  them.  Relationships can be semantic (i.e, related to the meaning of
+  words) such as the synonym relationship
+  (\href{http://konect.cc/networks/wordnet-words}{\textsf{WO}}),
+  associative such as when two words are associated with each other by
+  people in experiments
+  (\href{http://konect.cc/networks/eat}{\textsf{EA}}), or denote
+  co-occurrence, i.e., the fact that two words co-occur in text
+  (\href{http://konect.cc/networks/lasagne-spanishbook}{\textsf{SB}}).
 
 \item[Metabolic networks] model metabolic pathways,
-  \marginpar{\texttt{Metabolic}}
-  in which nodes a chemical substances and edges are often directed and
-  represents cheical interactions.  A subset are protein--protein
-  interaction networks (PPI), in which nodes are proteins, and which are
-  usually undirected. 
+  \marginpar{\texttt{Metabolic}} in which nodes a chemical substances
+  and edges are often directed and represents chemical interactions.  A
+  subset are protein--protein interaction networks (PPI), in which nodes
+  are proteins, and which are usually undirected.
 
 \item[Miscellaneous networks] are any networks that do not fit into one
   \marginpar{\texttt{Misc}}
   of the other categories. 
   
 \item[Online contact networks] consist of people and interactions between
-  \marginpar{\texttt{OnlineContact}}
-  them. 
-  Contact networks are unipartite and allow multiple edges, i.e., there
-  can always be multiple interactions between the same two persons.
-  They can be both directed or undirected.
-  Examples are people that meet each other
-  (\href{http://konect.cc/networks/mit}{\textsf{RM}}), or
-  scientists that write a paper together
-  (\href{http://konect.cc/networks/dblp_coauthor}{\textsf{Pc}}).
+  \marginpar{\texttt{OnlineContact}} them.  Contact networks are
+  unipartite and allow multiple edges, i.e., there can always be
+  multiple interactions between the same two persons.  They can be both
+  directed or undirected.
 
 \item[Physical networks] represent physically existing network
-  \marginpar{\texttt{Physical}}
-  structures in the broadest sense.  This category covers such diverse data as
-  physical computer networks
-  (\href{http://konect.cc/networks/topology}{\textsf{TO}}),
-  transport networks
-  (\href{http://konect.cc/networks/opsahl-openflights}{\textsf{OF}})
-  and biological food networks
-  (\href{http://konect.cc/networks/foodweb-baydry}{\textsf{FD}}).   
+  \marginpar{\texttt{Physical}} structures in the broadest sense.  This
+  category covers such diverse data as physical computer networks
+  (\href{http://konect.cc/networks/topology}{\textsf{TO}}), transport
+  networks
+  (\href{http://konect.cc/networks/opsahl-openflights}{\textsf{OF}}) and
+  biological food networks
+  (\href{http://konect.cc/networks/foodweb-baydry}{\textsf{FD}}).
 
 \item[Rating networks] consist of assessments given to items by users,
-  \marginpar{\texttt{Rating}}
-  weighted by a rating value.  Rating networks are bipartite.  
-  Networks in which users can rate other users are not included here,
-  but in the Social category instead.  If only a single type of rating
-  is possible, for instance the ``favorite'' relationship, then rating
-  networks are unweighted.  Examples of items that are rated are movies
-  (\href{http://konect.cc/networks/movielens-10m_rating}{\textsf{M3}}), 
-  songs
-  (\href{http://konect.cc/networks/yahoo-song}{\textsf{YS}}),
-  jokes
-  (\href{http://konect.cc/networks/jester}{\textsf{JE}}),
-  and even sexual escorts
-  (\href{http://konect.cc/networks/escorts}{\textsf{SX}}).   
+  \marginpar{\texttt{Rating}} weighted by a rating value.  Rating
+  networks are bipartite.  Networks in which users can rate other users
+  are not included here, but in the Social category instead.  If only a
+  single type of rating is possible, for instance the ``favorite''
+  relationship, then rating networks are unweighted.  Examples of items
+  that are rated are movies
+  (\href{http://konect.cc/networks/movielens-10m_rating}{\textsf{M3}}),
+  songs (\href{http://konect.cc/networks/yahoo-song}{\textsf{YS}}),
+  jokes (\href{http://konect.cc/networks/jester1/}{\textsf{J1}}), and even
+  sexual escorts
+  (\href{http://konect.cc/networks/escorts}{\textsf{SX}}).
 
 \item[Online social networks] represent ties between
-  \marginpar{\texttt{Social}}
-  persons in online social networking platforms.  Certain social
-  networks allow negative edges, which denote 
-  enmity, distrust or dislike.
-  Examples are Facebook friendships
-  (\href{http://konect.cc/networks/facebook-sg}{\textsf{FSG}}),
-  the Twitter follower relationship
-  (\href{http://konect.cc/networks/twitter_mpi}{\textsf{TF}}), 
-  and friends and foes on Slashdot
-  (\href{http://konect.cc/networks/slashdot-zoo}{\textsf{SZ}}).  
-  Note that some social networks can be argued to be rating networks,
-  for instance the 
-  user--user rating network of a dating site
-  (\href{http://konect.cc/networks/libimseti}{\textsf{LI}}). 
-  These networks are all included in the Social category. 
+  \marginpar{\texttt{Social}} persons in online social networking
+  platforms.  Certain social networks allow negative edges, which denote
+  enmity, distrust or dislike.  Examples are Facebook friendships
+  (\href{http://konect.cc/networks/facebook-wosn-links/}{\textsf{Ol}}),
+  the
+  Twitter follower relationship
+  (\href{http://konect.cc/networks/twitter_mpi}{\textsf{TF}}), and
+  friends and foes on Slashdot
+  (\href{http://konect.cc/networks/slashdot-zoo}{\textsf{SZ}}).  Note
+  that some social networks can be argued to be rating networks, for
+  instance the user--user rating network of a dating site
+  (\href{http://konect.cc/networks/libimseti}{\textsf{LI}}).  These
+  networks are all included in the Social category.
 
 \item[Software networks] are networks of interacting software
-  \marginpar{\texttt{Software}}
-  component.  Node can be software packages connected by their
-  dependencies, source files connected by includes, and classes
-  connected by imports. 
+  \marginpar{\texttt{Software}} component.  Node can be software
+  packages connected by their dependencies, source files connected by
+  includes, and classes connected by imports.
 
 \item[Text networks] consist of text documents containing words.  They
-  \marginpar{\texttt{Text}}
-  are bipartite and their nodes are documents and words.  Each edge
-  represents the occurrence of a word in a document. Document types are
-  for instance
-  newspaper articles
-  (\href{http://konect.cc/networks/gottron-trec}{\textsf{TR}})
-  and Wikipedia articles
-  (\href{http://konect.cc/networks/gottron-excellent}{\textsf{EX}}). 
+  \marginpar{\texttt{Text}} are bipartite and their nodes are documents
+  and words.  Each edge represents the occurrence of a word in a
+  document. Document types are for instance newspaper articles
+  (\href{http://konect.cc/networks/gottron-trec}{\textsf{TR}}) and
+  Wikipedia articles
+  (\href{http://konect.cc/networks/gottron-excellent}{\textsf{EX}}).
 
 \item[Trophic networks] consist of biological 
-  \marginpar{\texttt{Trophic}}
-  species connected by edges denotes
-  which pairs of species are subject to carbon exchange, i.e., which
-  species eats which.  The term \emph{food chain} describes such
-  relation ships, but note that in the general case, a trophic network
-  is not a chain, i.e., it is not linear.  Trophic networks are
-  directed. 
+  \marginpar{\texttt{Trophic}} species connected by edges denotes which
+  pairs of species are subject to carbon exchange, i.e., which species
+  eats which.  The term \emph{food chain} describes such relationships,
+  but note that in the general case, a trophic network is not a chain,
+  i.e., it is not linear.  Trophic networks are directed.
 
 \end{description}
 
