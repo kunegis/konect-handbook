@@ -25,6 +25,11 @@ file="$1"
 	exit 1
 }
 
+[ -e "$file" ] || {
+	echo >&2 "*** $0: Cannot read file '$file'" 
+	exit 1
+}
+
 if [ -z "$TEXDEP_GRAPHICSEXT" ] ; then
 	graphicsext=pdf
 else
@@ -113,4 +118,3 @@ done
 while IFS= read -r name ; do
 	echo "$name.cls"
 done
-
