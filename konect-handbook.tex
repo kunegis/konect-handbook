@@ -194,7 +194,7 @@ project was renamed \emph{Web Store}, in line with Koblenz' Institute
 for Web Science and Technologies (WeST).  The name \emph{KONECT --
   \underline{Ko}blenz \underline{Ne}twork
   \underline{C}ollec\underline{t}ion} was adopted sometime in 2011.  The
-KONECT website was created in 2011 at \texttt{konect.cc}.
+KONECT website was created in 2011 at \texttt{konect.uni-koblenz.de}.
 In this phase of the project, extraction of datasets and maintenance of the
 KONECT website was performed in collaboration with Daniel Dünker and
 Holger Heinz. 
@@ -204,8 +204,11 @@ on the KONECT website as downloadable tarballs.  All published code was
 licensed under the GNU General Public License (GPL) version~3 from the beginning. 
 A short overview paper of the KONECT system was
 published in 2013 at the International World Wide Web Conference (WWW),
-as part of the Web Observatory Workshop \citep{kunegis:konect}.\footnote{
-  The Google Scholar citation page for that publication gives a list of papers using KONECT, see \href{https://scholar.google.com/scholar?cites=7174338004474749050}{https://scholar.google.com/scholar?cites=7174338004474749050}}
+as part of the Web Observatory Workshop \citep{kunegis:konect}\footnote{
+  The Google Scholar citation page for that publication gives a list of
+  papers using KONECT, see
+  \href{https://scholar.google.com/scholar?cites=7174338004474749050}{https://scholar.google.com/scholar?cites=7174338004474749050}},
+and remains the primary publication to cite when using KONECT. 
 In 2015 and 2016, various parts of the KONECT project were placed on
 GitHub, again under the GNU
 General Public License version 3, including this handbook.  
@@ -215,7 +218,13 @@ Namur (Belgium), with web hosting provided by the Institute for Web
 Science and Technologies (WeST) at the University of
 Koblenz--Landau in Koblenz (Germany).  In that phase, the number of
 networks, statistics, and plots was yet again increased, and a more
-powerful computation server was acquired. 
+powerful computation server was acquired.  The domain name
+\href{http://konect.cc/}{\texttt{konect.cc}} was adopted in October
+2017. 
+A tutorial on the use of large network dataset collections, largely based
+on KONECT, was given at CIKM~2017 under the name \emph{Network Analysis
+  in the Age of Large Network Dataset Collections -- Challenges,
+  Solutions and Applications}.\footnote{\href{http://xn.unamur.be/network-collection-tutorial-cikm2017/}{http://xn.unamur.be/network-collection-tutorial-cikm2017/}}
 
 The Stu build
 tool\footnote{\href{https://github.com/kunegis/stu}{https://github.com/kunegis/stu}}
@@ -1108,8 +1117,9 @@ expressions.  For instance, the number of common friends of
 two people in a social network can be expressed as the square of a
 matrix. 
 This section gives brief definition of the most important graph
-matrices.  More properties of these matrices, as well as other such
-matrices are given in Section~\ref{sec:matrix}. 
+matrices.  More properties of these matrices, in particular their
+decompositions, as well as other such 
+matrices, are given in Section~\ref{sec:matrix}. 
 
 An unweighted graph $G=(V,E)$ can be represented by a $|V|$-by-$|V|$
 matrix containing the values 0 and 1, denoting whether a certain edges
@@ -1165,41 +1175,6 @@ defined as
 \begin{align}
   \mathbf L = \mathbf D - \mathbf A. 
 \end{align}
-
-%% TODO:  merge the rest of this section into the Graph Matrix chapter.  
-
-The normalized Laplacian $\mathbf Z$ is a normalized version of the Laplacian matrix
-$\mathbf L$.  Just as the ordinary Laplacian, $\mathbf Z$ capture
-aspects of the graph that are useful for clustering. 
-\begin{align}
-  \mathbf Z = \mathbf I - \mathbf N = \mathbf D^{-1/2} \mathbf L \mathbf
-  D^{-1/2}
-\end{align}
-The equation $\mathbf Z = \mathbf I - \mathbf N$ shows that $\mathbf Z$
-has the same eigenvectors as $\mathbf N$, and its eigenvalues are those
-of $\mathbf N$, but shifted and inverted. 
-
-The consideration of random walks on a graph leads to the definition of
-the stochastic adjacency matrix $\mathbf P$.  Imagine a random walker on
-the nodes of a graph, who can walk from node to node by following
-edges.  If, at each edge, the probability that the random walker will go
-to each neighboring node with equal probability, then the random walk
-can be described be the transition probability matrix defined as
-\begin{align}
-  \mathbf P = \mathbf D^{-1} \mathbf A = \mathbf D^{-1/2} \mathbf N
-  \mathbf D^{1/2}.
-\end{align}
-The matrix $\mathbf P$ is right stochastic, since its row sums are one. 
-
-A further variant of Laplacian matrix is the signless Laplacian $\mathbf
-K$ \citep{b900}. 
-\begin{align}
-  \mathbf K = \mathbf D + \mathbf A. 
-\end{align}
-The signless Laplacian is also denoted $\mathbf Q$. 
-The signless Laplacian $\mathbf K$ corresponds to the ordinary Laplacian
-$\mathbf L$ of the graph with inverted edge weights, i.e., $\mathbf K[G] =
-\mathbf L[-G]$. 
 
 Note that in most cases, we work on just a single graph, and it is
 implicit that the characteristic matrices apply to this graph.  In a few
@@ -2297,12 +2272,6 @@ decompositions, and their uses.  Since most decompositions are based on
 a specific matrix, this section also serves as a survey of
 characteristic graph matrices.  
 
-Each matrix resp.\ decomposition has an internal name in KONECT, which
-is given in the margin.  Using the KONECT Toolbox, the corresponding
-matrices can be generated using the \texttt{konect\_matrix()} function,
-and the corresponding (rank reduced) matrix decomposition can be
-computed with the function \texttt{konect\_decomposition()}. 
-
 As a general rule, matrices are noted with bold uppercase letters.  The
 letters shown in this section for each characteristic matrix are used
 systematically within KONECT, but not necessarily in the literature.
@@ -2310,15 +2279,35 @@ Among established matrix names, there is the adjacency matrix ($\mathbf
 A$) and the Laplacian ($\mathbf L$), but we must note that even the
 adjacency matrix is not always called $\mathbf A$ in the literature.
 
+Each matrix resp.\ decomposition has an internal name in KONECT, which
+is given in the margin.  Using the KONECT Toolbox, the corresponding
+matrices can be generated using the \texttt{konect\_matrix()} function,
+and the corresponding (rank reduced) matrix decomposition can be
+computed with the function \texttt{konect\_decomposition()}. 
+
+The first subsection contains decompositions that apply to simple
+graphs.  Subsequent subsections contain matrices that apply to specific
+types of graphs, in particular signed and directed graphs.  Almost all
+decompositions given in the first subsection can also be applied to
+non-simple graphs, in which cases the KONECT implementation will ignore
+the extra information.  Exceptions to this are when a decomposition
+given in a subsequent subsection shares an internal name with one given
+in the first subsection.  In that case, KONECT will do the obvious
+generalization when a signed or directed graph is given. 
+
 \subsection{Decompositions of Undirected Graphs}
 These matrices and decompositions apply to undirected graphs.  In this
 subsection, the matrix $\mathbf A$ always denotes the symmetric
 adjacency matrix. 
 
 In KONECT, these decompositions can be applied to directed graphs as well, in
-which case edge directions are ignored.  Note that since (almost all)
-directed graphs contain reciprocated edges, which are counted as two
-parallel edges. 
+which case edge directions are ignored.  A directed graph that contains
+reciprocal edges (the majority) will thus result in an undirected graph
+with multiple parallel edges, even if the original directed graph did
+not contain parallel directed edges.  As a result, one must be careful:
+Expressions involving the number of edges $m$ in this chapter may refer
+to the number of unique edges, which gives a different result for
+directed and undirected graphs.  
 
 \subsubsection{Symmetric Adjacency Matrix ($\mathbf A$)}
 The symmetric adjacency matrix $\mathbf A$ is the most basic graph
@@ -2410,15 +2399,6 @@ the Fiedler vector, and can be used to cluster nodes in the
 graph. Together with further eigenvectors, it can be used to draw
 graphs \citep{kunegis:signed-kernels}. 
 
-When the graph is signed, i.e., when the grpah admits edges with
-negative weights, then the smallest eigenvalue of $\mathbf L$ is called
-the algebraic conflict $\xi$. It is zero if and only if the graph is balanced,
-i.e., when the nodes can be divided into two groups such that all
-positive edges connect nodes within the same group, and all negative
-edges connect nodes of different groups.  Equivalently, $\xi$ is larger
-than zero if and only if each connected component contains at least one
-cycle with an odd number of negative edges. 
-
 \subsubsection{Normalized Adjacency Matrix ($\mathbf N$)}
 The normalized adjacency matrix $\mathbf N$ of an undirected graph is
 defined as 
@@ -2498,25 +2478,32 @@ included, since it can be derived from that of the normalized adjacency
 matrix. 
 
 \subsubsection{Stochastic Adjacency Matrix ($\mathbf P$)}
-The matrix
+The consideration of random walks on a graph leads to the definition of
+the stochastic adjacency matrix $\mathbf P$.  Imagine a random walker on
+the nodes of a graph, who can walk from node to node by following
+edges.  If, at each edge, the probability that the random walker will go
+to each neighboring node with equal probability, then the random walk
+can be described be the transition probability matrix defined as
 \begin{align*}
   \mathnote{\texttt{stoch1}}
-  \mathbf P &= \mathbf D^{-1} \mathbf A
+  \mathbf P &= \mathbf D^{-1} \mathbf A.
 \end{align*}
-is called the stochastic adjacency matrix.  This matrix is asymmetric,
+This matrix is called the stochastic adjacency matrix.  It is asymmetric,
 even when the graph is undirected, except when the graph is regular,
 i.e., when all degrees are the same.  
 Thus, its eigenvalue decomposition
 is not always defined, and in any case may not involve orthogonal
 matrices. 
 
+The sum of rows of $\mathbf P$ sum to one, making this matrix
+right-stochastic. 
 For directed graphs we may distinguish the right-stochastic (or
 row-stochastic) matrix 
-$\mathbf D^{-1} \mathbf A$ and the left-stochastic (or column-stochastic)
-matrix $\mathbf A \mathbf D^{-1}$.  Note the subtle terminology:
+$\mathbf P = \mathbf D^{-1} \mathbf A$ and the left-stochastic (or column-stochastic)
+matrix $\mathbf A \mathbf D^{-1}$.  Note the subtle terminology here:
 $\mathbf D^{-1} \mathbf A$ is left-normalized but right-stochastic. 
 
-This matrix is related to the normalized adjacency matrix $\mathbf N$ by
+The matrix $\mathbf P$ is related to the normalized adjacency matrix $\mathbf N$ by
 \begin{align*}
   \mathbf P &= \mathbf D^{-1/2} \mathbf N \mathbf D^{1/2}
 \end{align*}
@@ -2597,8 +2584,13 @@ corresponding graph in which all edges are interpreted as negative \citep{b900}.
 thus equals
 \begin{align}
   \mathnote{\texttt{lapq}}
-  \mathbf K &= \mathbf D + \mathbf A
+  \mathbf K &= \mathbf D + \mathbf A.
 \end{align}
+The signless Laplacian is also denoted $\mathbf Q$. 
+It corresponds to the ordinary Laplacian
+$\mathbf L$ of the graph with inverted edge weights, i.e., $\mathbf K[G] =
+\mathbf L[-G]$. 
+
 This matrix is positive-semidefinite, and its smallest eigenvalue is
 zero if and only if at least one connected component of the graph is bipartite.  Thus, $\mathbf K$ is used
 in measures of bipartivity. 
@@ -2608,6 +2600,59 @@ number of connected component that are bipartite.
 In signed graphs, the multiplicity of the eigenvalue zero equals the
 number of connected components that are balanced after all their edges
 have been negated (i.e., switch between positive and negative). 
+
+\subsection{Decompositions of Signed Graphs}
+In this subsection, we review matrices and decompositions that apply to
+signed graphs.  
+
+In KONECT, in cases where the matrices are generalizations of a matrix and
+decomposition for unsigned graphs, they share the internal name of the
+decomposition with the unsigned case.  On matrix at least is however
+specific to signed graphs. 
+
+\subsubsection{Signed Adjacency Matrix}
+In undirected signed graphs, the adjacency matrix contains the values
+$\pm 1$.  In general, it can be used in the same fashion as the
+adjacency matrix of an unsigned graph, with the property that when edge
+weights get multiplied with each other, the multipliciation follows the
+multiplication rules for signed multiplication, i.e., 
+\begin{align*}
+  +1 \times +1 &= +1 \\
+  +1 \times -1 &= -1 \\
+  -1 \times +1 &= -1 \\
+  -1 \times -1 &= +1 
+\end{align*}
+As an example of this, powers of the adjacency matrix of a signed graph
+will not contain counts of paths, but counts of paths weighted by the
+sign of each path, i.e., denoting whether each path contains an even or
+odd number of edges.  As another example, the trace of the cube of
+$\mathbf A$ will equal six times the number of balanced triangles minus
+the number of unbalanced triangles. 
+
+\subsubsection{Signed Laplacian Matrix}
+\label{sec:decomposition:lap:signed}
+In a signed graph, the Laplacian matrix is defined as in an unsigned
+graph as
+\begin{align*}
+  \mathbf L &= \mathbf D - \mathbf A.
+\end{align*}
+Note that the values in $\mathbf A$ are signed, but those in $\mathbf D$
+are not.  Thus, the properties of $\mathbf L$ differ from the unsigned
+case.  In particular, it is no longer true that the smallest eigenvalue
+of $\mathbf L$ is always zero.  While $\mathbf L$ is still
+positive-semidefinite in the signed case, 
+the smallest eigenvalue of $\mathbf L$ may be larger than zero,
+rendering $\mathbf L$ positive-definite. 
+The smallest eigenvalue of $\mathbf L$ is signed graphs is called 
+the algebraic conflict $\xi$.  In connected signed graphs, it is zero if and only if the graph is balanced,
+i.e., when the nodes can be divided into two groups such that all
+positive edges connect nodes within the same group, and all negative
+edges connect nodes of different groups.  Equivalently, $\xi$ is larger
+than zero if and only if each connected component contains at least one
+cycle with an odd number of negative edges. 
+In signed graphs consisting of multiple connected components, the
+smallest eigenvalue of $\mathbf L$ is zero if and only if at least one
+connected component is balanced.  
 
 \subsubsection{Alternative Signed Laplacian}
 The Laplacian matrix $\mathbf L = \mathbf D - \mathbf A$ as defined
@@ -2619,8 +2664,20 @@ many applications related to signed graphs, and results in a positive-semidefini
 smallest eigenvalue is zero if and only if there is at least one
 balanced component in the signed network.  Alternatively, using the sum
 of edge weights instead results in a different matrix, which may have
-negative eigenvalues.  This matrix appears in certain contexts; see
-e.g.\ the examples given by \cite{b875}. 
+negative eigenvalues:
+\begin{align*}
+  \mathbf{\hat L} &= \mathbf{\hat D} - \mathbf A,
+\end{align*}
+where the diagonal matrix $\mathbf{\hat D}$ is defined as
+\begin{align*}
+  [\mathbf{\hat D}]_{uu} &= \sum_{v \sim u} \mathbf A_{uv}.
+\end{align*}
+$\mathbf{\hat L}$ has also been called simply the \emph{signed Laplacian
+  matrix}, but should not be confused with the matrix $\mathbf L =
+\mathbf D - \mathbf A$ as defined in
+Section~\ref{sec:decomposition:lap:signed}. 
+The matrix $\mathbf{\hat L}$ appears in various contexts; see e.g.\ the
+examples given by \cite{b875}.  
 
 \subsection{Decompositions of Directed Graphs}
 In directed graphs, the adjacency matrix $\mathbf A$ is itself
@@ -2734,10 +2791,18 @@ expression $\mathbf U \mathbf D \mathbf V^{\mathrm T}$ is \emph{not} the
 singular value decomposition of $\mathbf A$, even if the form of the
 decomposition is the same. 
 
+In some cases, we may be interested in the matrix
+\begin{align*}
+  \mathnote{\texttt{skewi}}
+  i \mathbf Y &= i ( \mathbf A - \mathbf A^{\mathrm T} ),
+\end{align*}
+which has purely real eigenvalues distributed symmetrically around
+zero. 
+
 \subsubsection{Normalized Skew Adjacency Matrix}
 This corresponds to the matrix
 \begin{align}
-  \mathnote{\texttt{skew}}
+  \mathnote{\texttt{skewn}}
   \mathbf N - \mathbf N^{\mathrm T} = 
   \mathbf D_1^{-1/2} \mathbf A \mathbf D_2^{-1/2} - 
   \mathbf D_2^{-1/2} \mathbf A^{\mathrm T} \mathbf D_1^{-1/2} 
@@ -2775,10 +2840,24 @@ from which the following special cases can be recovered:
 \begin{align}
   \mathbf H_0 &= \mathbf A + \mathbf A^{\mathrm T}, \\
   \mathbf H_{\pi/4} &= \mathbf H, \\
-  \mathbf H_{\pi/2} &= \mathbf Y.
+  \mathbf H_{\pi/2} &= i \mathbf Y.
 \end{align}
 These matrices appear in the modeling of quantum walks, as used for
 instance by \cite{toedtli:ctqw}.  
+
+\subsubsection{Normalized Hermitian Matrix}
+The normalized Hermitian matrix is
+\begin{align*}
+  \mathnote{\texttt{hermn}}
+  \frac 1{\sqrt 2} \mathbf D^{-1/2} \mathbf H \mathbf D^{-1/2}. 
+\end{align*}
+
+\subsubsection{Directed Laplacian (Chung)}
+This variant of a Laplacian matrix for directed graphs is given by
+\cite{b264}.  It is itself symmetric, but takes into account edge
+directions. \marginpar{\texttt{lapd}}
+
+A normalized variant is also possible. \marginpar{\texttt{lapd-n}} 
 
 \subsubsection{Magnetic Laplacian ($\mathbf T$)}
 The matrix
@@ -2790,6 +2869,34 @@ semi-definite.
 
 For symmetric graphs, it does not reduce to the ordinary Laplacian
 $\mathbf L$ (when $\theta \neq 0$). 
+
+For the case $\theta = \pi/4$, this can be called the Hermitian
+Laplacian, and is simply denoted $\mathbf T$, in the same way that
+$\mathbf H_{\pi/4}$ is denoted $\mathbf H$:
+\begin{align*}
+  \mathnote{\texttt{lapherm}}
+  \mathbf T = \mathbf T_{\pi/4} &= \mathbf D - \mathbf H
+\end{align*}
+
+For $\theta = \pi/2$ this is called the skew Laplacian:
+\begin{align*}
+  \mathnote{\texttt{lapskew}}
+  \mathbf T_{\pi/2} &= \mathbf D - i (\mathbf A - \mathbf A^{\mathrm T})
+\end{align*}
+
+\subsubsection{Alternative Directed Laplacian}
+This is the generally non-normal matrix
+\begin{align*}
+  \mathnote{\texttt{lapdiag}}
+  \mathbf{\hat L} &= \mathbf D - \mathbf A, 
+\end{align*}
+where $\mathbf D$ is the usual diagonal degree matrix, and $\mathbf A$
+is the generally asymmetric adjacency matrix of the given directed
+graph. 
+
+This matrix is in general non-normal and as such its eigenvalue
+decomposition cannot be considered.  However, the eigenvalues and
+eigenvectors are well-defined. 
 
 \subsubsection{Decomposition into Directed Components}
 DEDICOM (decomposition into directed components) refers to a class of
@@ -2812,7 +2919,8 @@ definition of a certain numerical statistic.
 
 As a running example, we show the plots for the Wikipedia elections
 network
-(\href{http://konect.cc/networks/elec/}{\textsf{EL}}).  Plots
+(\href{http://konect.cc/networks/elec/}{\textsf{EL}}), or for larger
+networks in some cases.  Plots
 for all networks (in which computation was feasible) are shown on the
 KONECT
 website\footnote{\href{http://konect.cc/plots/}{konect.cc/plots}}. The
