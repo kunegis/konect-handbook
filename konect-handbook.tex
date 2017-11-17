@@ -50,7 +50,9 @@
 \title{
   \includegraphics[width=3cm]{konect-logo} \\
   \vspace{1cm}
-         {\Huge Handbook of Network Analysis} \\
+         {\Huge Handbook of Network Analysis\footnote{This handbook is
+             continuously updated; an up-to-date version can always be found at
+         \href{https://github.com/kunegis/konect-handbook/raw/master/konect-handbook.pdf}{https://github.com/kunegis/konect-handbook/raw/master/konect-handbook.pdf}.}} \\
          The KONECT Project \\
          \texttt{\href{http://KONECT.cc/}{KONECT.cc}}
 }
@@ -2401,6 +2403,13 @@ The Laplacian matrix of an undirected graph is defined as
 \end{align*}
 i.e., the diagonal degree matrix from which we subtract the adjacency
 matrix.  The Laplacian matrix is also called the Kirchhoff matrix. 
+The Laplacian matrix is the discrete analogue of the Laplace operator
+ubiquitous in physics and other areas employing multivariate calculus.
+This operator is also simply called the Laplacian, and denoted $\Delta$ or
+$\nabla^2$.  In that context, the Laplacian matrix is also called the
+discrete Laplace operator. 
+Due to this equivalence, the Laplacian matrix $\mathbf L$
+has many uses in network analysis. 
 
 We consider the eigenvalue decomposition of the Laplacian:
 \begin{align*}
@@ -2587,7 +2596,7 @@ random.  For any two nodes $u$ and $v$, the number
   \left[\alpha  (\mathbf I - (1-\alpha) \mathbf P^{\mathrm T})^{-1}\right]_{uv}
 \end{align}
 gives the asymptotic probability that a random walk with restart starting at node $u$
-stays at node $v$.  
+finds itself at node $v$.  
 
 The matrix $\mathbf P$ is further related to the mean first-passage time
 (MFPT) on the network \citep{b880}.
@@ -2963,7 +2972,7 @@ case with the eigenvalue and singular value decompositions.
 
 A useful overview of rare and esoteric matrix decompositions and
 decomposition-like methods for generally asymmetric matrices is given by
-\citep{b136} in the context of computing the matrix exponential. 
+\cite{b136} in the context of computing the matrix exponential. 
 
 The \textbf{Schur decomposition}
 \marginpar{\texttt{schur}} reduces a matrix to cycle-free form
