@@ -1,43 +1,6 @@
-* definition of the weight function for a node pair:  add a case for DYNAMIC 
-
-== List of decompositions (merge from Wiki) ==
-
-=== Fully dense decompositions ===
-Implementations of these decompositions only exist with full rank.  They don't scale to large networks.
-* Schur decomposition – [schur] reduce to cycle-free form
-** '''A''' = '''U''' '''R''' '''U'''<sup>T</sup> with '''U''' orthogonal and '''R''' triangular
-** this is the preferred method in [136]
-** schur() in Matlab only takes dense matrix and computes a full decomposition
-* [139] orthogonal Hessenberg decomposition :  A = U H U', where U is orthogonal and H is Hessenberg
-** OTHES in EISPACK.
-** hess() in matlab, but only dense.
-* Jordan decomposition:
-** U F U<sup>−1</sup>
-** is not stable, i.e. not robust against multiple eigenvalues
-** exists in Matlab only in the symbolic toolbox (due to instability a version for floats would not work)
-* Companion decomposition [136:19], a.k.a. Frobenius normal form
-** A = YCY' where C is a companion matrix
-
-== List of Measures ==
-What is called a "measure" in KONECT is a measure of link prediction accuracy.
-
-* [ap] The average precision.  Measured over the whole test set.  The best value is 1; the worst value depends on the ratio of true and false elements in the test set (for equally many, it is <math>1-\ln 2</math>.  When a proportion <math>p</math> of pairs in the test set is true, then the average precision of a random guess is <math>p</math>.
-* [map] The mean average precision.  This is the average precision measured for each node separately, and then averaged over all nodes.  The value is between 0 and 1. This is very slow to compute.
-* [auc] The area under the curve.  This is the area under the ROC curve.  The value is between 0 and 1. The area under the curve of a random is always <math>\frac 12</math>, regardless of the test set true/false ratio.  This is very similar to the average precision, but can be used when the relative size of the true/false test sets is different from run to run.
-* [mauc] The mean area under the curve.  This is the area under the curve computed for each node, and then averaged over all nodes. This is very slow to compute.
-* [corr] The Pearson correlation.  This is probably the fastest to compute, but is not justified by any model.
-* [kendall] The Kendall correlation.  Very slow to compute and not justified by any model.
-* [spear] The Spearman correlation. Very slow to compute and not justified by any model.
-
-Recommendations:  If you do machine learning, use [auc].  If you evaluate a recommender system, use [mauc]. If [mauc] is too slow, use [auc] instead.
-
 ==File name schema==
 
 ===Format===
-
-The file naming format depends on how many relations are included in a
-dataset. If only one relation is present a simplified naming schema can
-be used as shown in the following.  
 
 ====Multiple relations====
 
@@ -121,64 +84,12 @@ Note: For datasets containing only a single relation there is no need for an _al
 | ent.network_all_all.E3.A4 || ||ent.network_all.E3.A4 || ||
 |}
 
-==Format==
-Datasets are represented as one file per relationship and one file per entity.  Unirelational datasets consists of one relationship file.  Semantic datasets consist of any number of files.
-
-All files are readable by Matlab using the option <code>-ascii</code>, and contain header lines beginning with ''%''.
-
-All files are in UTF-8.
-
-=== Relationships ===
-Filenames:  out.* (unirelational)
-
-The format is documented in the Handbook.
-
-=== Semantic Relationships ===
-
-Filename:  rel.*
-
- % ent.NAME_A ent.NAME_B [WEIGHT_TYPE.NAME] dat.NAME*
-
-WEIGHT_TYPE can be:
-* weight – unspecified type
-* double, float, int, short, byte – the corresponding Java™ type
-
-Data can be integers, floating point numbers or strings.  Only numbers with well-defined differences are stored as numbers (e.g. zip codes are stored as strings).
-
-===Entities===
-Filename: ent.NETWORK_RELATION[_RELATION]_ENTITY_ATTRIBUTE
-* NETWORK is the network name.
-* RELATION is the name of the relation connecting one or two entity types. The RELATION string is present twice for files in extr/ and only once for files in {uni/,dat/}.
-* ENTITY is the name of the entity.
-* ATTRIBUTE is the name of the attribute.
-
-All entity attributes are stored column-oriented and each attribute is stored in a own file.
-
-Header:
-
- % ⟨empty⟩
-  [% COUNT]
-
-COUNT represents the biggest ID and may be omitted.
-
-Format:
- [DATA]
-
-The ID of the entity equals their line number and matches the corresponding ID from the out.NETWORK-RELATION file. The ent file only contains entities that are present in the out file. An empty line indicates that there is no data available for this specific entity.
-There is no need to quote or escape characters as there is always only one attribute per line.
-
-=== Pre-extraction format ===
-Files named reli.* and outi.* contain string IDs instead of numerical IDs.
-
 == Other ==
-* Glossary of Mathematical Symbols:  use a single table that spans
-  multiple pages  (like in the PhD thesis) 
-* Glossary of Mathematical Symbols:  link to their definition and show
-  the internal name if there is one
-* B:  Incidence matrix    (use another name because B is already the biadjacency matrix for us) 
 * G:  line matrix, has same eigenvalues as A
-     G = B'B with L = (1/2) BB'
+     G = E'E with L = EE'
      (use another notation because G is already the "Google matrix" for us)
 ** spectrum of A is the same as spectrum of G
-** spectrum of P = D_A^-1 A is the same as spectrum D_G^-1 D
+** spectrum of P = D_A^-1 A is the same as spectrum D_G^-1 G
+* Glossary of Mathematical Symbols:  link to their definition and show
+  the internal name if there is one
 * include a table of content 

@@ -238,38 +238,39 @@ This handbook serves both as a compendium of mathematical definitions
 used in the KONECT project, as well as documentation of the software
 used in KONECT. 
 \begin{itemize}
-\item Section \ref{sec:taxonomy} ``Networks'' gives the basic
+\item Section \ref{sec:taxonomy} \textbf{Networks} gives the basic
   definition of a network as used in KONECT -- as networks exists in
   many different variants such as directed, bipartite, signed, etc., the
   exact definitions are often overlooked, but can be crucial for
   understanding individual relations. The taxonomy of networks given in
   this section serves for the rest of the project. 
-\item Section \ref{sec:definitions} ``Graph Theory'' gives the
+\item Section \ref{sec:definitions} \textbf{Graph Theory} gives the
   graph-theoretical definitions underlying all topics of network analysis.  Again,
   the devil is in the details and the graph theory literature is often
   split between multiple incompatible definitions for commonly used
   terms.  This sections presents the terminology and definitions as used
   in KONECT, which represents a compromise that has been proven useful
   in practice. 
-\item Section \ref{sec:statistics} ``Network Statistics'' is devoted to
+\item Section \ref{sec:statistics} \textbf{Network Statistics} is devoted to
   network statistics, i.e., numerical measures that characterize a
   network as a whole.  These are central to network analysis, and most
   common network statistics are covered. 
-\item Section \ref{sec:features} ``Node Features'' covers node features,
-  i.e., numerical measures that characterize individual nodes in a
-  network.  These are often used as measures of centrality or
-  importance, etc. 
-\item Section \ref{sec:matrix} ``Graph Matrices and Decompositions'' reviews
+\item Section \ref{sec:matrix} \textbf{Graph Matrices and Decompositions} reviews
   characteristic matrices used to analyse graphs, with a focus on their
   decompositions.  These are crucial in various types of analyses,
   include pairwise node measures such as distances and similarities, as
   well as node-based measures such as centralities. 
-\item Section \ref{sec:plots} ``Network Plots'' reviews common ways to
+\item Section \ref{sec:plots} \textbf{Network Plots} reviews common ways to
   visualize properties of a network.  Some of those, such as the degree
   distribution, are ubiquitous in the literature. 
-\item Section \ref{sec:toolbox} ``The KONECT Toolbox'' describes the GNU
+\item Section \ref{sec:other} \textbf{Other definitions} covers other
+  definitions used in KONECT, including node features,
+  i.e., numerical measures that characterize individual nodes in a
+  network, and error measures.  These are often used as measures of centrality or
+  importance, etc. 
+\item Section \ref{sec:toolbox} \textbf{The KONECT Toolbox} describes the GNU
   Octave and Matlab toolbox that is part of the KONECT project. 
-\item Section \ref{sec:format} ``File Formats'' finally documents the
+\item Section \ref{sec:format} \textbf{File Formats} finally documents the
   file formats used by KONECT. 
 \end{itemize}
 Throughout the handbook, we use margin notes to give the internal 
@@ -1185,6 +1186,40 @@ graphs.  In these cases, we will write
 \end{align*}
 to denote the characteristic matrices of the graph $G$. 
 
+Another matrix that appears in relation to graph analysis is the
+incidence matrix.  Unlike almost all other matrices used in KONECT and
+in network analysis in general, the incidence matrix is not indexed by
+nodes of the graph, but by edges.  The incidence matrix $\mathbf E \in
+\{0,1\}^{|V|\times|E|}$ is a nodes-by-edges matrix, and it contains the
+value one when a node is incident to an edge, hence the name:
+\begin{align*}
+  \mathbf E_{u \{u,v\}} &= 1 \\
+  \mathbf E_{u \{v,w\}} &= 0 \;\text{when $u \neq v$ and $u \neq w$}
+\end{align*}
+The incidence matrix is ordinarily noted $\mathbf B$, but we use the name
+$\mathbf E$ in KONECT to avoid confusion with the biadjacency matrix,
+which we note $\mathbf B$. 
+
+The incidence matrix $\mathbf E$ is highly sparse:  Only a proportion
+$2/m$ of all entries are nonzero.  Since the incidence matrix represents
+the same information as the adjacency matrix, it is not necessary to represent
+it programmatically, except when additional edge attributes are used,
+which is not the case in KONECT.  Rather, the matrix is of theoretical
+interest.  For instance, we can derive the equality $\mathbf E \mathbf
+E^{\mathrm T} = \mathbf D + \mathbf A$, which corresponds to the
+\emph{signless Laplacian matrix}, as will be defined in
+Section~\ref{sec:signless-laplacian}.  
+
+A variant is the signed incidence matrix $\mathbf E^{\pm}$, which has
+the same size and values as $\mathbf E$, with the exception that in each
+column, a single value of $1$ is replaced by $-1$.  The choice of which
+of the two nonzero values in each column to negate is arbitrary, and
+corresponds to chosing an orientation for each edge.  This matrix appears
+for instance in the equality $\mathbf E^{\pm} [\mathbf E^{\pm}]^{\mathrm
+  T} = \mathbf D - \mathbf A = \mathbf L$, which proves that the matrix
+$\mathbf L$ is positive semi-definite.  Note that the equality holds
+independently of the chosen edge orientations. 
+
 \section{Network Statistics}
 \label{sec:statistics}
 A network statistic is a numerical value that characterizes a network.
@@ -2068,7 +2103,8 @@ x^{\mathrm T} \mathbf K[\bar G] \mathbf x &= \frac 12 \sum_{(u,v) \in E}
 (\mathbf x_u + \mathbf x_v)^2,
 \end{align*}
 where $\mathbf K[\bar G] = \mathbf D[\bar G] + \mathbf A[\bar G]$ is the
-signless Laplacian matrix of the underlying unweighted graph.  Thus, the
+signless Laplacian matrix of the underlying unweighted graph (see
+Section~\ref{sec:signless-laplacian}).  Thus, the 
 minimal number of frustrated edges $f$ is given by
 \begin{align*}
   f &= \min_{\mathbf x \in \{\pm 1/2\}^{|V|}} \frac 12 \mathbf
@@ -2227,38 +2263,6 @@ logarithmic error $\epsilon$ can be defined in the following way:
 This gives the average factor by which the actual new number of edges
 differs from the predicted value, computed logarithmically. 
 The value of $\epsilon$ is larger or equal to one by construction. 
-
-\section{Node Features}
-\label{sec:features}
-A feature is a numerical characteristic of a node, such as the degree
-and the eccentricity.  Features have multiple uses, such as to measure
-the centrality or the influence of a node in a network. 
-
-The degree is defined as the number 
-\marginpar{\texttt{degree}}
-of neighbors of a node.  In directed networks, we can distinguish the
-indegree, the outdegree and the degree difference (indegree minus
-outdegree, notes \texttt{degreediff}). 
-
-Certain features are spectral, i.e., they are defined as the
-eigenvectors of certain matrices.  For instance, the PageRank vector
-\marginpar{\texttt{pagerank}} is defined as the dominant eigenvector of
-the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$, and the
-eigenvector centrality as the component in the dominant eigenvector of
-the adjacency matrix $\mathbf A$. 
-
-The local clustering coefficients give the clustering coefficient
-distribution \marginpar{\texttt{cluscod}} \citep{b865}. 
-
-Other node features include:
-\begin{itemize}
-\item Average degree of neighbors
-\item Betweenness centrality
-\item $k$-Core number:  largest $k$ such that a node is still part of
-  the graph's $k$-core.  The distribution of $k$-core values over all
-  nodes is then the $k$-core distribution, which can also be seen as the
-  size of the $k$-core for all $k \leq 0$. 
-\end{itemize}
 
 \section{Graph Matrices and Decompositions}
 \label{sec:matrix}
@@ -2579,6 +2583,7 @@ In the general case, the eigenvalue two has a multiplicity equal to the
 number of connected components that are bipartite. 
 
 \subsubsection{Signless Laplacian ($\mathbf K$)}
+\label{sec:signless-laplacian}
 The signless Laplacian of a graph is defined as the Laplacian of the
 corresponding graph in which all edges are interpreted as negative \citep{b900}.  It
 thus equals
@@ -2593,7 +2598,7 @@ $\mathbf L$ of the graph with inverted edge weights, i.e., $\mathbf K[G] =
 
 This matrix is positive-semidefinite, and its smallest eigenvalue is
 zero if and only if at least one connected component of the graph is bipartite.  Thus, $\mathbf K$ is used
-in measures of bipartivity. 
+in measures of bipartivity \citep[see e.g.][]{kunegis:bipartivity}. 
 
 In unsigned graphs, the multiplicity of the eigenvalue zero equals the
 number of connected component that are bipartite.  
@@ -2701,7 +2706,7 @@ singular values, which are all nonnegative.
 
 This decomposition corresponds to the eigenvalue decomposition of the
 directed graph's bipartite double cover. 
-It also corresponds to HITS (Hyperlink-Induced Topic Search) \cite{b27}.
+It also corresponds to HITS \citep[Hyperlink-Induced Topic Search, ][]{b27}.
 
 \subsubsection{Normalized Adjacency Matrix}
 The adjacency matrix can be normalized for directed network, in the same
@@ -2910,6 +2915,64 @@ there is no single best one, and in particular the problem of finding
 the best rank-$k$ such decompositions is not given by the truncation to
 rank $k$ of the solution to the full-rank problem.  An overview of
 algorithms is given in \citep{kunegis:directed-decomposition}. 
+
+\subsubsection{Impractical Decompositions}
+The decompositions presented in this section apply to the (generally) asymmetric
+adjacency matrix $\mathbf A$ of directed graphs.  
+They all have practical problems that forbids their application to
+almost all networks in KONECT: 
+Some are fully dense in the sense that
+they need $O(n^2)$ memory to be represented.  Others are numerically
+unstable. 
+Thus, these decomposition can only be used with the
+smallest of networks.  As a result, they are not of practical interest
+in KONECT, but rather of theoretical importance. 
+
+As a general rule, implementations of these decompositions only exist
+with full rank, and no low-rank approximation is possible, as is the
+case with the eigenvalue and singular value decompositions. 
+
+A useful overview of rare and esoteric matrix decompositions and
+decomposition-like methods for generally asymmetric matrices is given by
+\citep{b136} in the context of computing the matrix exponential. 
+
+The \textbf{Schur decomposition}
+\marginpar{\texttt{schur}} reduces a matrix to cycle-free form
+\begin{align*}
+  \mathbf A = \mathbf U \mathbf R \mathbf U^{\mathrm T},
+\end{align*}
+with $\mathbf U$ orthogonal and $\mathbf R$ triangular.  
+This is the preferred method used in \citep{b136}. 
+The Octave/Matlab function \texttt{schur()} only takes dense a matrix and
+computes a full decomposition. 
+
+The \textbf{orthogonal Hessenberg decomposition} \citep{b139} is defined
+as
+\begin{align*}
+  \mathbf A = \mathbf U \mathbf H \mathbf U^{\mathrm T},
+\end{align*}
+where $\mathbf U$ is orthogonal and $\mathbf H$ is an upper Hessenberg
+matrix, i.e., an upper triangular matrix in which additionally the
+subdiagonal contains non-zeroes.  This corresponds to the function
+\texttt{OTHES} in EISPACK, and to \texttt{hess()} in Octave/Matlab.  It
+is only implemented for dense matrices. 
+
+The \textbf{Jordan decomposition} is defined as
+\begin{align*}
+  \textbf{U} \textbf{F} \textbf{U}^{-1}.
+\end{align*}
+This decomposition is not stable, i.e., it is not robust against
+multiple eigenvalues. 
+An implementation exists in Matlab only in the symbolic toolbox; due to its
+instability, an implementation for floating point values would not
+work. 
+
+The \textbf{companion decomposition} or Frobenius normal form
+\citep[p.\ 19]{b136} is given by
+\begin{align*}
+  \mathbf A = \mathbf Y \mathbf C \mathbf Y^{\mathrm T},
+\end{align*} 
+in which $\mathbf C$ is a companion matrix.
 
 \section{Network Plots}
 \label{sec:plots}
@@ -3282,6 +3345,88 @@ are shown in Figure~\ref{fig:map.ax}.
     \label{fig:map.ax}
   }
 \end{figure}
+
+\section{Other Definitions}
+\label{sec:other}
+This section contains other definitions used in KONECT. 
+
+\subsection{Node Features}
+\label{sec:features}
+A feature is a numerical characteristic of a node, such as the degree
+and the eccentricity.  Features have multiple uses, such as to measure
+the centrality or the influence of a node in a network. 
+
+The degree is defined as the number 
+\marginpar{\texttt{degree}}
+of neighbors of a node.  In directed networks, we can distinguish the
+indegree, the outdegree and the degree difference (indegree minus
+outdegree, notes \texttt{degreediff}). 
+
+Certain features are spectral, i.e., they are defined as the
+eigenvectors of certain matrices.  For instance, the PageRank vector
+\marginpar{\texttt{pagerank}} is defined as the dominant eigenvector of
+the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$, and the
+eigenvector centrality as the component in the dominant eigenvector of
+the adjacency matrix $\mathbf A$. 
+
+The local clustering coefficients give the clustering coefficient
+distribution \marginpar{\texttt{cluscod}} \citep{b865}. 
+
+Other node features include:
+\begin{itemize}
+\item Average degree of neighbors
+\item Betweenness centrality
+\item $k$-Core number:  largest $k$ such that a node is still part of
+  the graph's $k$-core.  The distribution of $k$-core values over all
+  nodes is then the $k$-core distribution, which can also be seen as the
+  size of the $k$-core for all $k \leq 0$. 
+\end{itemize}
+
+\subsection{Measures}
+What is called a \emph{measure} in KONECT is a measure of link
+prediction accuracy. 
+
+\begin{itemize}
+\item The \textbf{average precision}.  Measured over the whole test
+  \marginpar{\texttt{ap}}
+  set.  The best value is 1; the worst value depends on the ratio of
+  true and false elements in the test set (for equally many, it is
+  $1-\ln 2$.  When a proportion $p$ of pairs in
+  the test set is true, then the average precision of a random guess is
+  $p$. 
+\item The \textbf{mean average precision}.  This is the average
+  \marginpar{\texttt{map}}
+  precision measured for each node separately, and then averaged over
+  all nodes.  The value is between 0 and 1. This is very slow to
+  compute. 
+\item The \textbf{area under the curve} \citep{b366}.  This is the area under
+  \marginpar{\texttt{auc}}
+  the ROC curve.  The value is between 0 and 1. The area under the curve
+  of a random is always $\frac 12$, regardless of the test
+  set true/false ratio.  This is very similar to the average precision,
+  but can be used when the relative size of the true/false test sets is
+  different from run to run. 
+\item The \textbf{mean area under the curve}.  This is the area
+  \marginpar{\texttt{mauc}}
+  under the curve computed for each node, and then averaged over all
+  nodes. This is very slow to compute. 
+\item The \textbf{Pearson correlation coefficient}.  This is probably the
+  \marginpar{\texttt{corr}}
+  fastest to compute, but is not justified by any model.  We used it
+  successfully in an early paper
+  \citep{kunegis:spectral-transformation}. 
+\item The \textbf{Kendall rank correlation coefficient}.  Very slow to compute
+  \marginpar{\texttt{kendall}}
+  and not justified by any model. 
+\item \textbf{Spearman's rank correlation coefficient}. 
+  \marginpar{\texttt{spear}}
+  Very slow to compute and not
+  justified by any model.
+\end{itemize}
+
+Recommendations:  We performing machine learning, use \texttt{auc}.  When
+evaluating a recommender system, use \texttt{mauc}.
+If \texttt{mauc} is too slow, use \texttt{auc} instead. 
 
 \section{The KONECT Toolbox}
 \label{sec:toolbox}
@@ -3723,6 +3868,84 @@ value.  The following metadata are used:
   \end{itemize}
 \end{itemize}
 
+\subsection{Semantic Data Format}
+For datasets that contain multiple relationship types, we use a more
+elaborative scheme.  This scheme is not used systematically in KONECT,
+because the scope of KONECT is to handle each network separately.
+However, this scheme is used by certain families of datasets, and in
+particular by the extraction code. 
+
+This data format is semantic in the sense that it is able to represent
+almost all types of data in a structured fashion.  It should not be
+confused with \emph{semantic web} formats.  This format is closer in
+spirit to relational databases, only that it systematically
+distinguishes between entity types and relationship types. 
+
+As all KONECT data format, the goal is to enable batch processing, and
+to allow reading and writing from many different programming languages,
+and to allow multiple programming languages and libraries to be composed
+easily.  This goes at the price of compactness (no binary
+representation) and updatability (all IDs are continuous). 
+
+In this format, a dataset consists of an arbitrary number of entities
+types and entity types.  All entity types has integer ID going from one
+to the number of entities of that type.  All information about entities
+(i.e., what would be contained in the corresponding entity table in a
+relational database) is contain in individual text file, separated by
+entity type and attribute.  All information about relationships is
+stored in text files with one line per relationship, with one file per
+relationship type.  
+
+In the following, \texttt{\$network} is the internal name of the semantic
+network. 
+For one semantic network, there are multiple \texttt{ent.*} files, and
+multiple \texttt{rel.*} files, as described in the following. 
+
+\paragraph{Entities}
+
+For each attribute \texttt{\$att} of the entity type \texttt{\$ent}
+related to the relationship type \texttt{\$rel}, there is one file named 
+\texttt{ent.\$network\_\$rel[\_\$rel]\_\$ent\_\$att}.  This is not strictly
+semantic, as the relationship type name should not appear. However, this
+is done in order to facilitate conversion to individual datasets.
+
+The \texttt{\$rel} string is present twice for files in \texttt{extr/} and only once for files in \texttt{\{uni/,dat/\}}.
+
+The entity attributes file contain one line per entity, and do
+\emph{not} contain the entity IDs -- these are implicit in the line
+numbers.  In addition, there is a header:
+
+\begin{verbatim}
+   % <empty>
+   [% COUNT]
+\end{verbatim}
+
+\texttt{COUNT} represents the biggest ID, and may be omitted.
+
+An empty line indicates that there is no data available for this specific entity.
+There is no need to quote or escape characters as there is always only one attribute per line.
+
+\paragraph{Relationships}
+
+For each relationship type \texttt{\$rel}, there is a file named
+\texttt{rel.\$network\_\$rel}. 
+
+The first line of the file is a comment line that defines the columns: 
+
+\texttt{\% ent.NAME\_A ent.NAME\_B [WEIGHT\_TYPE.NAME] dat.NAME*}
+
+\texttt{WEIGHT\_TYPE} can be:
+\begin{itemize}
+  \item \texttt{weight}: an unspecified type
+  \item \texttt{double}, \texttt{float}, \texttt{int}, \texttt{short}, \texttt{byte}: the corresponding type as in
+    C, except that \texttt{char} is written as \texttt{byte}.  (This
+    last convention is influenced by the Java programming language.)
+\end{itemize}
+
+Data can be integers, floating point numbers or strings.  Only numbers
+with well-defined numerical semantics are stored as numbers (e.g., zip codes are
+stored as strings). 
+
 \section*{Acknowledgments}
 The KONECT project would not have been possible without the
 effort of many people who have made datasets available and also helped
@@ -4030,6 +4253,7 @@ measures. \\
   $\mathbf A$ & adjacency matrix \\
   $\mathbf B$ & biadjacency matrix \\
   $\mathbf D$ & degree matrix \\
+  $\mathbf E$ & incidence matrix \\
   $\mathbf G$ & PageRank matrix (``Google matrix'') \\
   $\mathbf H$ & Hermitian adjacency matrix \\
   $\mathbf I$ & identity matrix \\

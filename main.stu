@@ -7,7 +7,7 @@
 # directory.  
 #
 
-% version 2.4
+% version 2.5
 
 @main:   konect-handbook.pdf;
 @arxiv:  arxiv.tar.gz;
@@ -41,15 +41,15 @@ konect-toolbox: {
 	exit 1
 }
 
->FILES:  texdep konect-handbook.tex
+>FILES:  -t texdep konect-handbook.tex
 {
 	./texdep konect-handbook.tex
 }
 
 >FILES-ARXIV:  <FILES
 {
-	# Replace the .bib files by the .bbl file
-	sed -e '/.bib$/d'
+	# Replace the .bib files by the single .bbl file
+	sed -E -e '/.bib$/d'
 	echo konect-handbook.bbl
 }
 

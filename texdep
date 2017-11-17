@@ -14,7 +14,7 @@
 #				without the dot; defaults to "pdf"
 #
 # ABOUT
-#	(c) 2015, 2016 Written by Jérôme Kunegis <kunegis@gmail.com>
+#	(c) 2015-2017 Written by Jérôme Kunegis <kunegis@gmail.com>
 #
 
 file="$1"
@@ -95,10 +95,9 @@ done
 #
 
 <"$file" sed -E -e '
-s,^[^%]*\\input.*\{([^}]+)\}.*$,\1,
+s,^[^%]*\\(input|include)[[:>:]].*\{([^}]+)\}.*$,\2,
 t
 d
-#/\\input.*\{/!d;s,^.*\{,,;s,\}.*$,,
 ' |
 while IFS= read -r name ; do
 	if [ -z "$name" ] ; then
