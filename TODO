@@ -85,11 +85,6 @@ Note: For datasets containing only a single relation there is no need for an _al
 |}
 
 == Other ==
-* G:  line matrix, has same eigenvalues as A
-     G = E'E with L = EE'
-     (use another notation because G is already the "Google matrix" for us)
-** spectrum of A is the same as spectrum of G
-** spectrum of P = D_A^-1 A is the same as spectrum D_G^-1 G
 * Glossary of Mathematical Symbols:  link to their definition and show
   the internal name if there is one
 * include a table of content 

@@ -220,7 +220,7 @@ Koblenz--Landau in Koblenz (Germany).  In that phase, the number of
 networks, statistics, and plots was yet again increased, and a more
 powerful computation server was acquired.  The domain name
 \href{http://konect.cc/}{\texttt{konect.cc}} was adopted in October
-2017. 
+2017, with hosting now switched to the University of Namur. 
 A tutorial on the use of large network dataset collections, largely based
 on KONECT, was given at CIKM~2017 under the name \emph{Network Analysis
   in the Age of Large Network Dataset Collections -- Challenges,
@@ -1199,6 +1199,9 @@ value one when a node is incident to an edge, hence the name:
 The incidence matrix is ordinarily noted $\mathbf B$, but we use the name
 $\mathbf E$ in KONECT to avoid confusion with the biadjacency matrix,
 which we note $\mathbf B$. 
+To be precise, the exact definition of $\mathbf E$ requires one to
+define a number of the edges, just as a number of the nodes is necessary
+to define the adjacency matrix. 
 
 The incidence matrix $\mathbf E$ is highly sparse:  Only a proportion
 $2/m$ of all entries are nonzero.  Since the incidence matrix represents
@@ -1214,11 +1217,28 @@ A variant is the signed incidence matrix $\mathbf E^{\pm}$, which has
 the same size and values as $\mathbf E$, with the exception that in each
 column, a single value of $1$ is replaced by $-1$.  The choice of which
 of the two nonzero values in each column to negate is arbitrary, and
-corresponds to chosing an orientation for each edge.  This matrix appears
+corresponds to chosing an orientation for each edge.  
+This matrix appears
 for instance in the equality $\mathbf E^{\pm} [\mathbf E^{\pm}]^{\mathrm
   T} = \mathbf D - \mathbf A = \mathbf L$, which proves that the matrix
-$\mathbf L$ is positive semi-definite.  Note that the equality holds
+$\mathbf L$ is positive-semidefinite.  Note that the equality holds
 independently of the chosen edge orientations. 
+
+Finally, the line matrix $\mathbf F \in \{0,1\}^{|E|\times|E|}$ of a graph is the edge-by-edge
+matrix given by 
+\begin{align*}
+  \mathbf F &= \mathbf F^{\mathrm T} \mathbf F.
+\end{align*}
+This matrix denotes which pairs of edges are incident, i.e., share an
+endpoint.  This matrix is sometimes also denoted $\mathbf G$.  It shares
+its spectrum with the signless Laplacian matrix $\mathbf K = \mathbf D +
+\mathbf A$, and thus, as will be shown in
+Section~\ref{sec:signless-laplacian}, it is positive-semidefinite, and
+has eigenvalue zero if and only if the graph contains a connected
+component that is bipartite. 
+
+The line matrix $\mathbf F$ is also the adjacency matrix of the original
+graph's line graph. 
 
 \section{Network Statistics}
 \label{sec:statistics}
@@ -2403,6 +2423,16 @@ the Fiedler vector, and can be used to cluster nodes in the
 graph. Together with further eigenvectors, it can be used to draw
 graphs \citep{kunegis:signed-kernels}. 
 
+The Laplacian matrix $\mathbf L$ can be expressed in terms of the signed
+incidence matrix $\mathbf E^{\pm}$:
+\begin{align*}
+  \mathbf L &= \mathbf E^{\pm} [\mathbf E^{\pm}]^{\mathrm T}
+\end{align*}
+From this equality follows that $\mathbf L$ is positive-semidefinite.   
+Note that while the matrix $\mathbf E^{\pm}$ is called the signed
+incidence matrix, it is not related to signed graphs.  In fact, the
+equality only holds for unsigned, unweighted graphs. 
+
 \subsubsection{Normalized Adjacency Matrix ($\mathbf N$)}
 The normalized adjacency matrix $\mathbf N$ of an undirected graph is
 defined as 
@@ -2869,8 +2899,7 @@ The matrix
 \begin{align}
   \mathbf T_{\theta} &= \mathbf D - \mathbf H_{\theta} 
 \end{align}
-is the magnetic Laplacian \citep{b903}.  It is Hermitian and positive
-semi-definite.   
+is the magnetic Laplacian \citep{b903}.  It is Hermitian and positive-semidefinite.   
 
 For symmetric graphs, it does not reduce to the ordinary Laplacian
 $\mathbf L$ (when $\theta \neq 0$). 
@@ -4253,7 +4282,8 @@ measures. \\
   $\mathbf A$ & adjacency matrix \\
   $\mathbf B$ & biadjacency matrix \\
   $\mathbf D$ & degree matrix \\
-  $\mathbf E$ & incidence matrix \\
+  $\mathbf E$ & incidence matrix \\ 
+  $\mathbf F$ & line matrix \\
   $\mathbf G$ & PageRank matrix (``Google matrix'') \\
   $\mathbf H$ & Hermitian adjacency matrix \\
   $\mathbf I$ & identity matrix \\
