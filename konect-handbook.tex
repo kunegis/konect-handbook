@@ -332,7 +332,10 @@ formats are summarized in Table~\ref{tab:format}.
   network is a rating graph, consisting of the node types \emph{user}
   and \emph{movie}, and each rating connects a user and a movie
   (\href{http://konect.cc/networks/movielens-10m_rating/}{\textsf{M3}}).  
-  Bipartite networks are always undirected in KONECT. 
+  Bipartite networks are always undirected in KONECT.  Datasets that can
+  be represented as hypergraphs can also be represented without loss as
+  bipartite networks, explaining why KONECT does not have a
+  \emph{hypergraph} format, and also why bipartite networks are common. 
 \end{itemize}
 
 \begin{table}
@@ -952,6 +955,21 @@ right nodes are denoted $n_1 = |V_1|$ and $n_2 = |V_2|$.  As a general
 rule, a certain number of quantities used in graph theory can be applied
 to the left and to the right node left separately, in which case we will
 use the indexes of one and two consistently. 
+
+Additionally, bipartite networks can be interpreted as a way to
+represent hypergraphs.  A hypergraph $G=(V,E)$ is similar to a graph,
+except that the edges in $E$ are sets that may contain any number of
+nodes, and not only two as in ordinary graphs.  These sets in $E$ are
+called hyperedges.  Equivalently, a
+hypergraph $G=(V,E)$ can be represented as bipartite graph $G=(V \cup E,
+F)$, where $\{v,e\} \in F$ whenever $v\in V$, $e \in E$ and $v \in e$.
+In other words, nodes of the hypergraph are kept as left nodes of the
+bipartite graph, hyperedges become right nodes, and the edges of the
+bipartite graph correspond to the inclusion relation between them.
+Since this equivalence is isomorphic, KONECT does not include a format
+\emph{hypergraph}, and represents all such networks as bipartite ones.
+Note that for this isomorphism to be precise, one must allow empty and
+singleton hyperedges. 
 
 Networks with multiple edges are written as $G=(V,E)$ just as other networks, with $E$ being
 a multiset.  The degree of nodes in such networks takes into account
