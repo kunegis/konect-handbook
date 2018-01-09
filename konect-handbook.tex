@@ -195,7 +195,7 @@ TU Berlin to the University of Koblenz--Landau in Koblenz (Germany) the
 project was renamed \emph{Web Store}, in line with Koblenz' Institute
 for Web Science and Technologies (WeST).  The name \emph{KONECT --
   \underline{Ko}blenz \underline{Ne}twork
-  \underline{C}ollec\underline{t}ion} was adopted sometime in 2011.  The
+  \underline{C}ollec\underline{t}ion} was adopted sometime in 2011.  A
 KONECT website was created in 2011 at \texttt{konect.uni-koblenz.de}.
 In this phase of the project, extraction of datasets and maintenance of the
 KONECT website was performed in collaboration with Daniel Dünker and
@@ -213,7 +213,7 @@ as part of the Web Observatory Workshop \citep{kunegis:konect}\footnote{
 and remains the primary publication to cite when using KONECT. 
 In 2015 and 2016, various parts of the KONECT project were placed on
 GitHub, again under the GNU
-General Public License version 3, including this handbook.  
+General Public License version~3, including this handbook.  
 
 From 2017 on, the KONECT project continued to be developed at the University of
 Namur (Belgium), with web hosting provided by the Institute for Web
@@ -224,7 +224,7 @@ powerful computation server was acquired.  The domain name
 \href{http://konect.cc/}{\texttt{konect.cc}} was adopted in October
 2017, with hosting now switched to the University of Namur. 
 A tutorial on the use of large network dataset collections, largely based
-on KONECT, was given at CIKM~2017 under the name \emph{Network Analysis
+on KONECT, was given in the same year at the Conference on Information and Knowledge Management (CIKM~2017) under the name \emph{Network Analysis
   in the Age of Large Network Dataset Collections -- Challenges,
   Solutions and Applications}.\footnote{\href{http://xn.unamur.be/network-collection-tutorial-cikm2017/}{http://xn.unamur.be/network-collection-tutorial-cikm2017/}}
 
@@ -233,7 +233,7 @@ tool\footnote{\href{https://github.com/kunegis/stu}{https://github.com/kunegis/s
 was developed in parallel with KONECT.  KONECT used \texttt{make(1)} in
 the first years of its operation.  The Stu build system was initiated in
 2014, and KONECT was gradually switched to it, serving as its main use
-case.  Stu was essentially completed in August 2017 with version 2.5. 
+case.  Stu was essentially completed in August 2017 with publication of version 2.5. 
 
 \subsection{Structure of this Handbook}
 This handbook serves both as a compendium of mathematical definitions
@@ -245,7 +245,9 @@ used in KONECT.
   many different variants such as directed, bipartite, signed, etc., the
   exact definitions are often overlooked, but can be crucial for
   understanding individual relations. The taxonomy of networks given in
-  this section serves for the rest of the project. 
+  this section serves for the rest of the project.  This section also
+  attempts to illustrate the breadth of the concept of \emph{network},
+  bridging many different disciplines. 
 \item Section \ref{sec:definitions} \textbf{Graph Theory} gives the
   graph-theoretical definitions underlying all topics of network analysis.  Again,
   the devil is in the details and the graph theory literature is often
@@ -256,15 +258,26 @@ used in KONECT.
 \item Section \ref{sec:statistics} \textbf{Network Statistics} is devoted to
   network statistics, i.e., numerical measures that characterize a
   network as a whole.  These are central to network analysis, and most
-  common network statistics are covered. 
+  common network statistics are covered.  The section is structured by
+  the type of analysis underlying the different statistics, roughly
+  order from simple to complex.  Each subsection serves as an
+  introduction to the underlying topic, although not all subsections
+  (yet) contain enough exposition to server as a general introduction to
+  these topics. 
 \item Section \ref{sec:matrix} \textbf{Graph Matrices and Decompositions} reviews
   characteristic matrices used to analyse graphs, with a focus on their
   decompositions.  These are crucial in various types of analyses,
   include pairwise node measures such as distances and similarities, as
-  well as node-based measures such as centralities. 
+  well as node-based measures such as centralities.  Due to the focus of
+  the KONECT project on such decompositions, this section quite detailed
+  and complete, although the emphasis is mainly on the eigenvalue and
+  singular value decompositions, and matrix to which they can be
+  applied. 
 \item Section \ref{sec:plots} \textbf{Network Plots} reviews common ways to
   visualize properties of a network.  Some of those, such as the degree
-  distribution, are ubiquitous in the literature. 
+  distribution, are ubiquitous in the literature.  Since KONECT plots
+  are extensively used by the authors in published research, the plots
+  cover quite distinct areas of network analysis. 
 \item Section \ref{sec:other} \textbf{Other definitions} covers other
   definitions used in KONECT, including node features,
   i.e., numerical measures that characterize individual nodes in a
@@ -273,7 +286,7 @@ used in KONECT.
 \item Section \ref{sec:toolbox} \textbf{The KONECT Toolbox} describes the GNU
   Octave and Matlab toolbox that is part of the KONECT project. 
 \item Section \ref{sec:format} \textbf{File Formats} finally documents the
-  file formats used by KONECT. 
+  different file formats used by KONECT. 
 \end{itemize}
 Throughout the handbook, we use margin notes to give the internal 
 \marginpar{\textlangle{}\texttt{name}\textrangle}
@@ -411,8 +424,7 @@ Table~\ref{tab:weights}.
   temporal. Individual edges are not weighted. 
 \end{itemize}
 
-Metadata of networks are further properties that go beyond the formats
-and weights listed above. 
+Furthermore, networks can one one more property: 
 \begin{itemize}
 \item \textbf{Temporal networks} (\Clocklogo) include a timestamp for each
   edge, and thus the network can be reconstructed for any moment in the
@@ -424,9 +436,9 @@ and weights listed above.
   When the tag
   \texttt{\#unspecifiedtime} is set, the timestamps are not in Unix
   time, but rather in an unspecified monotonous time scale. 
-\item \textbf{Networks with loops} ($\circlearrowright$) are unipartite networks in
-  which edges of the form $\{u,u\}$ are allowed, i.e., edges connecting
-  a node with itself. 
+  The fact that a network is temporal is not saved in any special
+  location, but is determined by the fact that timestamps are present in
+  the TSV file, as will be described later. 
 \end{itemize}
 
 \begin{table}
@@ -3750,7 +3762,7 @@ the three cases:
 
 \subsection{TSV Format}
 In the following, we describe KONECT's TSV format.  Each network
-\texttt{\$NETWORK} is represented by the file \texttt{out.\$NETWORK}. 
+texttt{\$network} is represented by the file \texttt{out.\$network}. 
 
 The edges stored as tab-separated values (TSV).  The file is a text
 file, and each line contains information about one edge.  Each line
@@ -3784,7 +3796,7 @@ line is mandatory; the second line is optional.
 
 \subsection{Meta File}
 In addition to the data files (TSV, etc.), each network in KONECT has a
-file \texttt{meta.\$NETWORK} associated with it.  This is a short text
+file \texttt{meta.\$network} associated with it.  This is a short text
 file that contains all information about the dataset that are not
 structural.  In other words, all structural information is stored in the
 TSV and other data formats, while meta information is stored in this
@@ -3794,7 +3806,7 @@ network that is independent of the mathematical structure of the
 network.  
 The file is a text file coded in UTF-8.  Each line
 contains one key/value pair, written as the key, a colon and the
-value.  The following metadata are used:
+value.  Whitespace is allowed everywhere, and is ignored.  The following metadata fields are used:
 \begin{itemize}
 \item \texttt{name}: (obligatory) The name of the dataset.  This contains only the
   name of the source, without description the type or category,
@@ -3820,14 +3832,19 @@ value.  The following metadata are used:
   source.  The last character, if present, usually distinguishes
   the different networks from one source.  The code is unique across all
   of KONECT, although it is not an error if they are not:  It will only
-  lead to certain plots being confusing. 
+  lead to certain plots being confusing.  As KONECT grows, have become
+  less and less unique; we may thus allow identical codes in the
+  future. 
 \item \texttt{category}: (obligatory) The internal name of the category, as given in the
   column ``Internal name'' in Table~\ref{tab:categories}.
+  It is important that this field is present, and corresponds to a valid
+  category. 
 \item \texttt{long-description}: (optional, recommended) A long descriptive
   text consisting of full sentences, and describing the dataset in
-  a verbose way.  HTML markup may be used sparingly (tags: I,
+  a verbose way.  HTML markup may be used sparingly (tags: \texttt{<I>}, \texttt{<CODE>},
   etc.), usually only for absolutely necessary typography, such as
-  setting species names in italics.  Hyperlinks are not used. 
+  setting species names in italics.  Hyperlinks are not used, but URLs
+  may be shown insode a \texttt{<CODE>} tags. 
 \item \texttt{entity-names}: (optional, recommended) A comma-seperated list of
   entity names (e.g., ``user, movie'' or ``protein'').  Unipartite networks give
   a single name; bipartite networks give two.
@@ -3842,16 +3859,23 @@ value.  The following metadata are used:
   in ``tag assignment''.  If there are multiple relationship types, they
   are separated by a slash, e.g. ``answer/comment''.
 \item \texttt{extr}: (optional, recommended) The name of the
-  subdirectory of \texttt{konect-extr/extr/} that
+  subdirectory under the directory \texttt{konect-extr/extr/} that
   contains the extraction code for this dataset in the KONECT
   Extraction package.\footnote{See
     \href{https://github.com/kunegis/konect-extr/tree/master/extr}{https://github.com/kunegis/konect-extr/tree/master/extr}} 
+  If not given, it usually means that the dataset does not have
+  extraction code, which is only the case with very old datasets.  These
+  were added to KONECT by hand without making the extraction
+  reproducible; Stu was a long way off then. 
 \item \texttt{url}: (optional, recommended for almost all networks) The
   URL(s) of the data sources, as a comma 
-  separated list.  Most datasets have a single URL.
+  separated list.  Most datasets have a single URL.  
+  The field is not present when datasets where given to us privately. 
 \item \texttt{description}: (deprecated) A short description of the form
   ``User–movie ratings''.  Note that the file should contain an
   actual en dash, coded in UTF-8.
+  The field is now deprecated as this information is now covered by the
+  \texttt{entity-names} and \texttt{relationship-names} fields. 
 \item \texttt{cite}: (optional, recommended for almost all networks) The
   bibtex key of the citation(s) for this dataset, as a  
   comma separated list.  The given bibtex keys must correspond to the
@@ -3866,9 +3890,16 @@ value.  The following metadata are used:
   slash (/) for a time range. The format is:
   \texttt{YYYY[-MM[-DD]][/YYYY[-MM[-DD]]]}, e.g., \texttt{2005-10-08/2006-11-03}
   or \texttt{2007}.
+  In general, this should denote when the actual edges where created,
+  but it often denotes only the date of data aggregation by the source
+  from which KONECT gets the data.  It does not denote the date at which
+  the data is added to KONECT. 
 \item \texttt{tags}: (optional) A space-separated list of hashtags
   describing the network.  The list of tags is given in
   Section~\ref{sec:tags}.  
+  Properly chosen tags are important to define the unit tests that
+  KONECT will perform, in order to detect erroneously detected
+  datasets. 
 \item \texttt{fullname}: (optional, semi-deprecated) A longer name to disambiguate
   different datasets from the same source, e.g., ``Youtube
   ratings'' and ``Youtube friendships''.  Uses sentence case.  These
@@ -3942,21 +3973,22 @@ particular by the extraction code.
 
 This data format is semantic in the sense that it is able to represent
 almost all types of data in a structured fashion.  It should not be
-confused with \emph{semantic web} formats.  This format is closer in
+confused with \emph{semantic web} formats.  This format is close in
 spirit to relational databases, only that it systematically
 distinguishes between entity types and relationship types. 
 
-As all KONECT data format, the goal is to enable batch processing, and
+As all KONECT data formats, the goal is to enable batch processing, and
 to allow reading and writing from many different programming languages,
 and to allow multiple programming languages and libraries to be composed
 easily.  This goes at the price of compactness (no binary
 representation) and updatability (all IDs are continuous). 
 
 In this format, a dataset consists of an arbitrary number of entities
-types and entity types.  All entity types has integer ID going from one
+types and relationship types.  For each entity types, all entities have
+an integer ID ranging from one
 to the number of entities of that type.  All information about entities
 (i.e., what would be contained in the corresponding entity table in a
-relational database) is contain in individual text file, separated by
+relational database) is contained in individual text files, separated by
 entity type and attribute.  All information about relationships is
 stored in text files with one line per relationship, with one file per
 relationship type.  
@@ -4014,10 +4046,10 @@ stored as strings).
 \section*{Acknowledgments}
 The KONECT project would not have been possible without the
 effort of many people who have made datasets available and also helped
-the project in other ways.   
-KONECT is maintained by Jérôme Kunegis (University of Namur). 
+the project in many different ways.   
+KONECT is maintained by Jérôme Kunegis at the University of Namur, Belgium. 
 In the past, KONECT was also maintained by Daniel Dünker, Holger Heinz,
-and Martina Sekulla (University of Koblenz--Landau). 
+and Martina Sekulla at the University of Koblenz--Landau in Koblenz, Germany. 
 
 We owe much of the datasets in KONECT to researchers of many different
 fields of science from all around the world who contributed datasets to
