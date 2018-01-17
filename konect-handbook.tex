@@ -541,7 +541,9 @@ An overview of the categories is given in Table~\ref{tab:categories}.
   \marginpar{\texttt{Citation}}
   other.  The primary example are scientific publications, but the
   category also allow patents and other types of documents that
-  reference each other. 
+  reference each other.  The category does not include hyperlink
+  networks, i.e., web pages that reference each other.  Those are in the
+  category \texttt{Hyperlink}. 
 
 \item[Co-authorship networks] are unipartite networks connecting authors
   \marginpar{\texttt{Coauthorship}}
@@ -898,10 +900,12 @@ notation chosen in KONECT represents a compromise between familiarity
 with the most common conventions, and the need to use an unambigous
 choice of letters and symbols.  This section gives an overview of the
 basic definitions used within KONECT, including in the rest of this handbook. 
+A general mathematical reference for basic definitions used in graph
+theory is given by a book by Bollobás \citeyearpar{b116}.  
 
 \subsection{Graphs}
 Graphs will be denoted as $G=(V,E)$, in which $V$ is the set of
-vertices, and $E$ is the set of edges \citep{b116}. Without loss of
+vertices, and $E$ is the set of edges. Without loss of
 generality, we assume that the vertices $V$ are consecutive natural
 numbers starting at one, i.e.,
 \begin{align}
@@ -1263,7 +1267,7 @@ independently of the chosen edge orientations.
 Finally, the line matrix $\mathbf F \in \{0,1\}^{|E|\times|E|}$ of a graph is the edge-by-edge
 matrix given by 
 \begin{align*}
-  \mathbf F &= \mathbf F^{\mathrm T} \mathbf F.
+  \mathbf F &= [\mathbf E^{\pm}]^{\mathrm T} \mathbf E^{\pm}.
 \end{align*}
 This matrix denotes which pairs of edges are incident, i.e., share an
 endpoint.  This matrix is sometimes also denoted $\mathbf G$.  It shares
