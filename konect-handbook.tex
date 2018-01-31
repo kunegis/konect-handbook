@@ -1245,14 +1245,14 @@ nodes of the graph, but by edges.  The incidence matrix $\mathbf E \in
 \{0,1\}^{|V|\times|E|}$ is a nodes-by-edges matrix, and it contains the
 value one when a node is incident to an edge, hence the name:
 \begin{align*}
-  \mathbf E_{u \{u,v\}} &= 1 \\
+  \mathbf E_{u \{u,v\}} &= 1 \;\text{for edges $\{u,v\} \in E$} \\
   \mathbf E_{u \{v,w\}} &= 0 \;\text{when $u \neq v$ and $u \neq w$}
 \end{align*}
 The incidence matrix is ordinarily noted $\mathbf B$, but we use the name
 $\mathbf E$ in KONECT to avoid confusion with the biadjacency matrix,
 which we note $\mathbf B$. 
 To be precise, the exact definition of $\mathbf E$ requires one to
-define a number of the edges, just as a number of the nodes is necessary
+define a numbering for the edges, just as a number of the nodes is necessary
 to define the adjacency matrix. 
 
 The incidence matrix $\mathbf E$ is highly sparse:  Only a proportion
