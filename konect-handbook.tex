@@ -1288,9 +1288,9 @@ independently of the chosen edge orientations.
 
 Finally, the line matrix $\mathbf F \in \{0,1\}^{|E|\times|E|}$ of a graph is the edge-by-edge
 matrix given by 
-\begin{align*}
+\begin{align}
   \mathbf F &= [\mathbf E^{\pm}]^{\mathrm T} \mathbf E^{\pm}.
-\end{align*}
+\end{align}
 This matrix denotes which pairs of edges are incident, i.e., share an
 endpoint.  This matrix is sometimes also denoted $\mathbf G$.  It shares
 its spectrum with the signless Laplacian matrix $\mathbf K = \mathbf D +
@@ -1756,9 +1756,9 @@ As mentioned before, counting cycles is a complex problem.  Counting
 tours is however much easier.  The number of tours of length $k$ can be
 expressed as the trace of a power of the graph's adjacency matrix, and
 thus also as a moment of the adjacency matrix's spectrum when $k > 2$.  
-\begin{align*}
+\begin{align}
   T_k &= \mathrm{Tr}(\mathbf A^k) = \sum_i \lambda_i[\mathbf A]^k
-\end{align*}
+\end{align}
 This remains true when the graph includes loops.  
 
 \subsection{Degree Distribution Statistics}
@@ -2043,9 +2043,9 @@ smallest eccentricity
 
 The diameter is bounded from below by the radius, and from above by
 twice the radius.  
-\begin{align*}
+\begin{align}
   r \leq \delta \leq 2r
-\end{align*}
+\end{align}
 The first inequality follows directly from the definitions of $r$ and
 $\delta$ as the minimal and maximal eccentricity.  The second inequality
 follows from the fact that between any two nodes, the path joining them
@@ -2275,9 +2275,9 @@ triangles that are in conflict, i.e., that are unbalanced.
 \end{align}
 This is also known as the triangle index.
 It is also related to the relative signed clustering coefficient by
-\begin{align*}
+\begin{align}
 \tau &= 2 c_{\mathrm r} - 1.
-\end{align*}
+\end{align}
 
 \subsection{Preferential Attachment Statistics}
 The term \emph{preferential attachment} refers to the observation that
@@ -2457,10 +2457,10 @@ smallest and largest eigenvalues have the same absolute value.
 
 \subsubsection{Laplacian Matrix ($\mathbf L$)}
 The Laplacian matrix of an undirected graph is defined as
-\begin{align*}
+\begin{align}
   \mathnote{\texttt{lap}}
   \mathbf L &= \mathbf D - \mathbf A,
-\end{align*}
+\end{align}
 i.e., the diagonal degree matrix from which we subtract the adjacency
 matrix.  The Laplacian matrix is also called the Kirchhoff matrix. 
 The Laplacian matrix is the discrete analogue of the Laplace operator
@@ -2472,9 +2472,9 @@ Due to this equivalence, the Laplacian matrix $\mathbf L$
 has many uses in network analysis. 
 
 We consider the eigenvalue decomposition of the Laplacian:
-\begin{align*}
+\begin{align}
   \mathbf L &= \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T}
-\end{align*}
+\end{align}
 The Laplacian matrix of positive-semidefinite, i.e., all eigenvalues are
 nonnegative.  
 When the graph is unsigned, the smallest eigenvalue is zero and its
@@ -2494,9 +2494,9 @@ graphs \citep{kunegis:signed-kernels}.
 
 The Laplacian matrix $\mathbf L$ can be expressed in terms of the signed
 incidence matrix $\mathbf E^{\pm}$:
-\begin{align*}
+\begin{align}
   \mathbf L &= \mathbf E^{\pm} [\mathbf E^{\pm}]^{\mathrm T}
-\end{align*}
+\end{align}
 From this equality follows that $\mathbf L$ is positive-semidefinite.   
 Note that while the matrix $\mathbf E^{\pm}$ is called the signed
 incidence matrix, it is not related to signed graphs.  In fact, the
@@ -2505,10 +2505,10 @@ equality only holds for unsigned, unweighted graphs.
 \subsubsection{Normalized Adjacency Matrix ($\mathbf N$)}
 The normalized adjacency matrix $\mathbf N$ of an undirected graph is
 defined as 
-\begin{align*}
+\begin{align}
   \mathnote{\texttt{sym-n}}
   \mathbf N &= \mathbf D^{-1/2} \mathbf A \mathbf D^{-1/2},
-\end{align*}
+\end{align}
 where we remind the reader that the diagonal matrix $\mathbf D$
 contains the node degrees, i.e., $\mathbf D_{uu} = d(u)$. 
 The matrix $\mathbf N$ is symmetric and its eigenvalue decomposition can
@@ -2536,9 +2536,9 @@ the graph is bipartite.
 When the graph is connected, 
 the eigenvector corresponding to eigenvalue one has entries proportional
 to the square root of node degrees, i.e.,
-\begin{align*}
+\begin{align}
   \mathbf U_{u1} &= \sqrt{\frac{d(u)}{2m}}.
-\end{align*}
+\end{align}
 Note that this equivalence only holds for undirected graphs.  For
 directed graphs, there is no such equivalence. 
 
@@ -2550,9 +2550,9 @@ to each other:  They share the same set of eigenvectors, and their
 eigenvalues are reflections of each other.  
 
 The normalized Laplacian matrix of an undirected graph is defined as 
-\begin{align*}
+\begin{align}
   \mathbf Z &= \mathbf D^{-1/2} \mathbf L \mathbf D^{-1/2}.
-\end{align*}
+\end{align}
 As opposed to $\mathbf A$, $\mathbf L$ and $\mathbf N$, there is no
 standardized notation of the normalized Laplacian.  The notation
 $\mathbf Z$ is specific to KONECT, and was chosen as the letter Z
@@ -2561,10 +2561,10 @@ letters share eigenvectors and have flipped eigenvalues.
 
 The normalized Laplacian is related to the normalized adjacency matrix
 by 
-\begin{align*}
+\begin{align}
   \mathbf Z &= \mathbf I - \mathbf N = \mathbf I - \mathbf D^{-1/2}
   \mathbf A \mathbf D^{-1/2}, 
-\end{align*}
+\end{align}
 as can be derived directly from their definitions. 
 It follows that $\mathbf Z$ and $\mathbf N$ have the same set of
 eigenvectors, and that their eigenvalues are related by the
@@ -2587,10 +2587,10 @@ the nodes of a graph, who can walk from node to node by following
 edges.  If, at each edge, the probability that the random walker will go
 to each neighboring node with equal probability, then the random walk
 can be described be the transition probability matrix defined as
-\begin{align*}
+\begin{align}
   \mathnote{\texttt{stoch1}}
   \mathbf P &= \mathbf D^{-1} \mathbf A.
-\end{align*}
+\end{align}
 This matrix is called the stochastic adjacency matrix.  It is asymmetric,
 even when the graph is undirected, except when the graph is regular,
 i.e., when all degrees are the same.  
@@ -2607,9 +2607,9 @@ matrix $\mathbf A \mathbf D^{-1}$.  Note the subtle terminology here:
 $\mathbf D^{-1} \mathbf A$ is left-normalized but right-stochastic. 
 
 The matrix $\mathbf P$ is related to the normalized adjacency matrix $\mathbf N$ by
-\begin{align*}
+\begin{align}
   \mathbf P &= \mathbf D^{-1/2} \mathbf N \mathbf D^{1/2}
-\end{align*}
+\end{align}
 and therefore both matrices have the same set of eigenvalues.
 Thus, the eigenvalues of $\mathbf P$ are all real, even though
 $\mathbf P$ is asymmetric, and they are contained in the range $[-1,+1]$. 
@@ -2637,9 +2637,9 @@ on the graph, and thus its largest eigenvector is one if the graph is
 The matrix $\mathbf P$ is also related to the PageRank matrix $\mathbf
 G$ (``Google matrix''), which
 equals 
-\begin{align*}
+\begin{align}
   \mathbf G &= (1-\alpha) \mathbf P + \alpha\mathbf J
-\end{align*}
+\end{align}
 where $0 < \alpha < 1$ is a damping factor (the teleportation
 probability), and $\mathbf J$ is the matrix containing all ones.  The
 left 
@@ -2664,12 +2664,12 @@ The matrix $\mathbf P$ is further related to the mean first-passage time
 \subsubsection{Stochastic Laplacian Matrix ($\mathbf S$)}
 A further variant of the Laplacian exists, based on the stochastic
 adjacency matrix:
-\begin{align*}
+\begin{align}
   \mathbf S &= \mathbf I - \mathbf P = \mathbf I - \mathbf D^{-1}
   \mathbf A = \mathbf I - \mathbf D^{-1/2} \mathbf N \mathbf D^{1/2} =
   \mathbf D^{-1/2} \mathbf Z \mathbf D^{1/2}
   = \mathbf D^{-1} \mathbf L
-\end{align*}
+\end{align}
 This matrix shares much properties with $\mathbf P$ and thus with
 $\mathbf N$ and $\mathbf Z$.  The eigenvalues of $\mathbf S$ are
 contained in the interval $[0, 2]$.  The eigenvalue zero has a
@@ -2769,9 +2769,9 @@ smallest eigenvalue is zero if and only if there is at least one
 balanced component in the signed network.  Alternatively, using the sum
 of edge weights instead results in a different matrix, which may have
 negative eigenvalues:
-\begin{align*}
+\begin{align}
   \mathbf{\hat L} &= \mathbf{\hat D} - \mathbf A,
-\end{align*}
+\end{align}
 where the diagonal matrix $\mathbf{\hat D}$ is defined as
 \begin{align*}
   [\mathbf{\hat D}]_{uu} &= \sum_{v \sim u} \mathbf A_{uv}.
@@ -2896,10 +2896,10 @@ singular value decomposition of $\mathbf A$, even if the form of the
 decomposition is the same. 
 
 In some cases, we may be interested in the matrix
-\begin{align*}
+\begin{align}
   \mathnote{\texttt{skewi}}
   i \mathbf Y &= i ( \mathbf A - \mathbf A^{\mathrm T} ),
-\end{align*}
+\end{align}
 which has purely real eigenvalues distributed symmetrically around
 zero. 
 
@@ -2951,10 +2951,11 @@ instance by \cite{toedtli:ctqw}.
 
 \subsubsection{Normalized Hermitian Matrix}
 The normalized Hermitian matrix is
-\begin{align*}
+\begin{align}
   \mathnote{\texttt{hermn}}
   \frac 1{\sqrt 2} \mathbf D^{-1/2} \mathbf H \mathbf D^{-1/2}. 
-\end{align*}
+\end{align}
+(We currently do not have a symbol for this matrix.)
 
 \subsubsection{Directed Laplacian (Chung)}
 This variant of a Laplacian matrix for directed graphs is given by
@@ -2970,29 +2971,45 @@ The matrix
 \end{align}
 is the magnetic Laplacian \citep{b903}.  It is Hermitian and positive-semidefinite.   
 
-For symmetric graphs, it does not reduce to the ordinary Laplacian
-$\mathbf L$ (when $\theta \neq 0$). 
+For the case $\theta = 0$, this reduces to the ordinary undirected
+Laplacian, effectively ignoring the edge directions.
+\begin{align}
+  \mathbf T_{0} &= \mathbf D - \mathbf H_{0} = \mathbf D - (\mathbf A + \mathbf A^{\mathrm T}) = \mathbf L
+\end{align}
+
+In the case $\theta \neq 0$, the magnetic Laplacian $T_{\theta}$ is
+distinct from the ordinary Laplacian, even if the directed graph is
+symmatric, i.e., when all edges are reciprocated. 
 
 For the case $\theta = \pi/4$, this can be called the Hermitian
 Laplacian, and is simply denoted $\mathbf T$, in the same way that
 $\mathbf H_{\pi/4}$ is denoted $\mathbf H$:
-\begin{align*}
+\begin{align}
   \mathnote{\texttt{lapherm}}
-  \mathbf T = \mathbf T_{\pi/4} &= \mathbf D - \mathbf H
-\end{align*}
+  \mathbf T &= \mathbf T_{\pi/4} = \mathbf D - \mathbf H
+\end{align}
+Note that we define a bare $\mathbf T$ to be $\mathbf T_{\pi/4}$ rather
+than $\mathbf T_0$ -- this is the reason why use the distinct symbol
+$\mathbf T$, as otherwise we could just use $\mathbf L_{\theta}$ and define
+$\mathbf L_0 = \mathbf L$. 
 
 For $\theta = \pi/2$ this is called the skew Laplacian:
-\begin{align*}
+\begin{align}
   \mathnote{\texttt{lapskew}}
   \mathbf T_{\pi/2} &= \mathbf D - i (\mathbf A - \mathbf A^{\mathrm T})
-\end{align*}
+\end{align}
+
+For any value of $\theta$, the matrix $\mathbf T_{\theta}$ is Hermitian,
+and therefore has real spectrum.  As is the ordinary Laplacian matrix,
+the magnetic Laplacian matrix is positive-semidefinite, i.e., all
+eigenvalues are nonnegative, for all values of $\theta$. 
 
 \subsubsection{Alternative Directed Laplacian}
 This is the generally non-normal matrix
-\begin{align*}
+\begin{align}
   \mathnote{\texttt{lapdiag}}
   \mathbf{\hat L} &= \mathbf D - \mathbf A, 
-\end{align*}
+\end{align}
 where $\mathbf D$ is the usual diagonal degree matrix, and $\mathbf A$
 is the generally asymmetric adjacency matrix of the given directed
 graph. 
@@ -3036,9 +3053,9 @@ decomposition-like methods for generally asymmetric matrices is given by
 
 The \textbf{Schur decomposition}
 \marginpar{\texttt{schur}} reduces a matrix to cycle-free form
-\begin{align*}
+\begin{align}
   \mathbf A = \mathbf U \mathbf R \mathbf U^{\mathrm T},
-\end{align*}
+\end{align}
 with $\mathbf U$ orthogonal and $\mathbf R$ triangular.  
 This is the preferred method used in \citep{b136}. 
 The Octave/Matlab function \texttt{schur()} only takes dense a matrix and
@@ -3046,9 +3063,9 @@ computes a full decomposition.
 
 The \textbf{orthogonal Hessenberg decomposition} \citep{b139} is defined
 as
-\begin{align*}
+\begin{align}
   \mathbf A = \mathbf U \mathbf H \mathbf U^{\mathrm T},
-\end{align*}
+\end{align}
 where $\mathbf U$ is orthogonal and $\mathbf H$ is an upper Hessenberg
 matrix, i.e., an upper triangular matrix in which additionally the
 subdiagonal contains non-zeroes.  This corresponds to the function
@@ -3056,9 +3073,9 @@ subdiagonal contains non-zeroes.  This corresponds to the function
 is only implemented for dense matrices. 
 
 The \textbf{Jordan decomposition} is defined as
-\begin{align*}
+\begin{align}
   \textbf{U} \textbf{F} \textbf{U}^{-1}.
-\end{align*}
+\end{align}
 This decomposition is not stable, i.e., it is not robust against
 multiple eigenvalues. 
 An implementation exists in Matlab only in the symbolic toolbox; due to its
@@ -3067,9 +3084,9 @@ work.
 
 The \textbf{companion decomposition} or Frobenius normal form
 \citep[p.\ 19]{b136} is given by
-\begin{align*}
+\begin{align}
   \mathbf A = \mathbf Y \mathbf C \mathbf Y^{\mathrm T},
-\end{align*} 
+\end{align} 
 in which $\mathbf C$ is a companion matrix.
 
 \section{Network Plots}
