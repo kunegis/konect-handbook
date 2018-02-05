@@ -395,15 +395,15 @@ Table~\ref{tab:weights}.
   zero. 
 \item In a \textbf{signed network} ($\pm$), 
   \marginpar{\texttt{signed}}
-  both positive and negative
-  edges are 
+  both positive and negative edges are 
   allowed. Positive and negative edges are represented by positive and
   negative edge weights. Many networks of this type have only the
-  weights $\pm 1$, but in the general case we allow any nonzero weight.
+  weights $\pm 1$, but in the general case we allow any nonzero weight;
+  this distinction is not made. 
 \item \textbf{Networks with multiple signed edges} ($\stackrel{+}{=}$) 
   \marginpar{\texttt{multisigned}}
   allow multiple edges between two nodes, which may have the same values
-  as edges in a signed network.
+  as edges in a signed network.  
 \item \textbf{Rating networks} ($*$) 
   \marginpar{\texttt{weighted}}
   have arbitrary real edge weights.  They
@@ -937,9 +937,19 @@ notation may confusing and we avoid it.
 We also allow loops, i.e., edges of the form $\{u,u\}=\{u\}$.  Loops
 appear for instance in email networks, where it is possible to send an
 email to oneself, and therefore an edge may connect a vertex with
-itself.  Most networks however do not contain loops, and therefore
+itself.  Loops are also called \emph{self loops} in the literature, but
+in KONECT, we use the simple term \emph{loop}, as there are no other
+loops to consider -- cycles of multiple nodes and edges are called
+\emph{cycles}. 
+Most networks do not contain loops, and therefore
 networks that allow loops are annotated in KONECT with the 
-\texttt{\#loop} tag, as described in Section~\ref{sec:format}. 
+\texttt{\#loop} tag, as described in Section~\ref{sec:format}.  
+Loops are special in networks because they often need special treatment:
+For instance, when defining the degree of a node, do we count a loop
+once (defining the degree as the number of edges that are incident to a
+node), twice (definining the degree as the number of half-edges attached
+to it) or none at all (counting the number other nodes that are
+neighbours).  
 
 Most of the time, we work with only one given graph, and therefore it is
 unambigous with node and edge set are meant by $V$ and $E$.  When
@@ -4213,6 +4223,9 @@ to reflect best practices and to avoid confusion.
     code, the half-adjacency matrix is denoted \texttt{A}.  The term
     \emph{half-adjacency matrix} is specific to KONECT, but the use of
     such a representation is widespread. 
+  \item[Loop] 
+    A loop is an edge that connects a node with itself.  A loop may be
+    directed or undirected.  
   \item[Measure]
     A measure of the accuracy of link prediction methods, for instance
     the area under the curve or the mean average precision.  
