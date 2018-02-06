@@ -1098,14 +1098,14 @@ number of edges, i.e.,
   \sum_{v\in V} d(u) &= 2|E|. 
 \end{align}
 
-In a directed graph we define the outdegree $d_1$ of a node as the number of
-outgoing edges, and the indegree $d_2$ as the number of ingoing edges.
+In a directed graph we define the outdegree $d^+$ of a node as the number of
+outgoing edges, and the indegree $d^-$ as the number of ingoing edges.
 \begin{align}
-  d_1(u) &= \{ v \in V \mid (u,v) \in E \} \\
-  d_2(u) &= \{ v \in V \mid (v,u) \in E \}
+  d^+(u) &= \{ v \in V \mid (u,v) \in E \} \\
+  d^-(u) &= \{ v \in V \mid (v,u) \in E \}
 \end{align}
-The outdegree and indegree are often also denoted $d^+(u)$ and
-$d^-(u)$, respectively.  Note that the indices $1$ and $2$ used for out-
+Within source code in KONECT, the outdegree and indegree are also often denoted $d_1(u)$ and
+$d_2(u)$, respectively -- the indices $1$ and $2$ used for out-
 and indegree respectively can be thought as referring to rows and
 columns of a matrix, and are consistent with the usage in bipartite
 graphs, where the nodes in the first set of nodes correspond to rows of
@@ -1114,7 +1114,7 @@ matrices, and nodes in the second set to columns.
 The sum of all outdegrees, and likewise the sum of all indegrees always
 equals the number of nodes in the network.  
 \begin{align}
-  \sum_{u\in V} d_1(u) = \sum_{u \in V} d_2(u) = |E|
+  \sum_{u\in V} d^+(u) = \sum_{u \in V} d^-(u) = |E|
 \end{align}
 Thus, the sum of all outdegrees always equals the sum of all indegrees,
 and therefore the average outdegree always equals the average indegree.  
@@ -1226,6 +1226,9 @@ specifically for outdegrees and indegrees as follows:
   [\mathbf D_1]_{uu} &= |w_1(u)| \\
   [\mathbf D_2]_{uu} &= |w_2(u)| 
 \end{align}
+Note that while the outdegree and indegree is denoted $d^+$ and $d^-$, we
+avoid superscripts for matrices, as they can be confused with powers or
+matrix inverses, etc. 
 
 The normalized adjacency matrix $\mathbf N$ is a $|V|$-by-$|V|$ matrix
 given by
@@ -1450,6 +1453,13 @@ by any node.
   \mathnote{\texttt{maxdegree}}
   d_{\max} &= \max_{u\in V} d(u)
 \end{align}
+This is can be applied to directed and bipartite networks in the obvious way:
+\begin{align*}
+  d^+_{\max} &= \max_{u \in V} d^+(u) \\
+  d^-_{\max} &= \max_{u \in V} d^-(u) \\
+  d_{1 \max} &= \max_{u \in V_1} d(u) \\
+  d_{2 \max} &= \max_{v \in V_2} d(u) \\
+\end{align*}
 
 The maximum degree can be divided by the average degree to normalize it.
 \begin{align}
