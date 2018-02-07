@@ -47,9 +47,9 @@ echo "$file"
 #
 
 <"$file" sed -E -e '
-/\\bibliography\{/!d
-s,^[^{]*{([^}]*).*$,\1,
-' | tr ',' '
+/\\bibliography\{/!d;
+s,^[^{]*\{([^}]*).*$,\1,' | 
+tr ',' '
 ' |
 sed -E -e 's,$,.bib,'
 
@@ -97,8 +97,7 @@ done
 <"$file" sed -E -e '
 s,^[^%]*\\(input|include)([^a-zA-Z0-9].*)?\{([^}]+)\}.*$,\3,
 t
-d
-' |
+d' |
 while IFS= read -r name ; do
 	if [ -z "$name" ] ; then
 		continue
