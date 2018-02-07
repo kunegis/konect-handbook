@@ -1829,13 +1829,17 @@ attains the limit value of zero when all edges attach to a single node
 
 Another statistic for \marginpar{\texttt{own}} measuring the inequality
 in the degree distribution is associated with the Lorenz curve (see
-Section~\ref{sec:plot:degree}), and is given by the intersection point
+Section~\ref{sec:plot:degree}).  Even though it often does appear
+indirectly in discussions of skewed distributions, it does not have a
+common name.  In KONECT, we call it the balanced inequality ratio. 
+It is given by the intersection point
 of the Lorenz curve with the antidiagonal given by $y = 1 - x$
 \citep{kunegis:power-law}.  By construction, this point equals $(1-P, P)$
 for some $0<P<1$, where the value $P$ corresponds exactly to the number
 ``25\%'' in the statement ``25\% of all users account for 75\% of all
 friendship links on Facebook''.  By construction, we can expect $P$ to
-be smaller when $G$ is large.
+be smaller when $G$ is larger, but there is no precise relationship
+between the two.
 
 Another statistic, which has been called the ``hubiness'' is given by
 the variance of the degree distribution \cite[e.g. by][]{b883,b884}.
