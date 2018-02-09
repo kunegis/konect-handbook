@@ -1407,6 +1407,9 @@ the adjacency matrix for these networks.
   w &= \sum_{e \in E} |w(e)|
 \end{align}
 
+The number of loops is also a statistic, and is denoted
+$l$. \marginpar{\texttt{loops}} 
+
 The average degree is defined as
 \begin{align}
   \mathnote{\texttt{avgdegree}}
@@ -1490,55 +1493,6 @@ that are connected by at least one edge.
   \tilde{m} = \frac m {\bar{\bar m}} 
 \end{align}
 
-\subsection{Connectivity Statistics}
-Connectivity statistics measure to what extent a network is
-connected. 
-Two nodes are said to be connected when they are either directly
-connected through an edge, or indirectly through a path of several
-edges. 
-A connected component is a set of vertices all of which are connected,
-and unconnected to the other nodes in the network.  
-The largest connected component in a network is usually very large and
-called the giant connected component. When it contains all nodes, the
-network is connected. 
-
-The size of the largest connected component is denoted 
-$N$.  
-\begin{align}
-  \mathnote{\texttt{coco}}
-  N &= \max_{F \subseteq \mathcal C} |F|  \\
-  \mathcal C &= \{ C \subseteq V \mid \forall u, v \in C:  \exists w_1,
-  w_2, \ldots \in V:  u \leftrightarrow w_1 \leftrightarrow w_2 \leftrightarrow \cdots \leftrightarrow v \} \nonumber
-\end{align}
-
-In bipartite networks, the number of left and right nodes in the largest
-connected components are denoted $N_1$ and $N_2$,
-with $N_1 + N_2 = N$. 
-
-The relative size of the largest connected component equals the
-size of the largest connected component divided by the size of the
-network
-\begin{align}
-  \mathnote{\texttt{cocorel}}
-  N_{\mathrm{rel}} &= \frac N n. 
-\end{align}
-
-We also use an inverted variant of the relative size of the largest
-connected component, which makes it easier to plot the values on a
-logarithmic scale.
-\begin{align}
-  \mathnote{\texttt{cocorelinv}}
-  N_{\mathrm{inv}} &= 1 - \frac N n 
-\end{align}
-
-In directed networks, we additionally define the size of the largest
-\marginpar{\texttt{cocos}}
-strongly connected component $N_{\mathrm s}$.  A strongly
-connected component is a 
-set of vertices in a directed graph such that any node is reachable from
-any other node using a path following only directed edges in the forward
-direction.   We always have $N_{\mathrm s} \leq N$. 
-
 \subsection{Subgraph Count Statistics}
 \label{sec:count-statistics}
 \begin{wrapfigure}{r}{0.40\textwidth}
@@ -1574,8 +1528,8 @@ networks, and their corresponding count statistics.
     \toprule
     \textbf{Pattern} & \textbf{Name(s)} & \textbf{Statistic} &
     \textbf{Internal name} \\
-    \midrule
 
+    \midrule
     \begin{tikzpicture}
       [scale=.4,every node/.style={circle,fill=blue!40}]
       \node (n1) at (1,1) {};
@@ -1583,8 +1537,9 @@ networks, and their corresponding count statistics.
     & Node, 0-star, 0-path, 1-clique
     & $n$ & \texttt{size} \\
 
-    \vspace{0.25cm} \\
+%%    \vspace{0.25cm} \\
 
+    \midrule
     \begin{tikzpicture}
       [scale=.3,every node/.style={circle,fill=blue!40}]
       \node (n1) at (1,1) {};
@@ -1594,6 +1549,11 @@ networks, and their corresponding count statistics.
     & Edge, 1-star, 1-path, 2-clique
     & $m$ & \texttt{volume} \\
 
+    \midrule
+    & Loop 
+    & $l$ & \texttt{loops} \\
+
+    \midrule
     \begin{tikzpicture}
       [scale=.3,every node/.style={circle,fill=blue!40}]
       \node (n1) at (2,2.73) {};
@@ -1605,6 +1565,7 @@ networks, and their corresponding count statistics.
     & Wedge, 2-star, 2-path
     & $s$ & \texttt{twostars} \\
 
+    \midrule
     \begin{tikzpicture}
       [scale=.3,every node/.style={circle,fill=blue!40}]
       \node (n1) at (2,2.73) {};
@@ -1617,6 +1578,7 @@ networks, and their corresponding count statistics.
     & Triangle, 3-cycle, 3-clique 
     & $t$ & \texttt{triangles} \\
 
+    \midrule
     \begin{tikzpicture}
       [scale=.3,every node/.style={circle,fill=blue!40}]
       \node (n1) at (1,1) {};
@@ -1630,6 +1592,7 @@ networks, and their corresponding count statistics.
     & Claw, 3-star 
     & $z$ & \texttt{threestars} \\
 
+    \midrule
     \begin{tikzpicture}
       [scale=.3,every node/.style={circle,fill=blue!40}]
       \node (n1) at (1,1) {};
@@ -1644,6 +1607,7 @@ networks, and their corresponding count statistics.
     & Square, 4-cycle 
     & $q$ & \texttt{squares} \\
 
+    \midrule
     \begin{tikzpicture}
       [scale=.3,every node/.style={circle,fill=blue!40}]
       \node (n1) at (2,2) {};
@@ -1771,223 +1735,54 @@ thus also as a moment of the adjacency matrix's spectrum when $k > 2$.
 \end{align}
 This remains true when the graph includes loops.  
 
-\subsection{Degree Distribution Statistics}
-The distribution of degree values $d(u)$ over all nodes $u$ is often
-taken to characterize a network.  Thus, a certain number of network
-statistics are based solely on this distribution, regardless of overall
-network structure.  
-The simplest network statistics that depend only on the degree
-distribution are the number of nodes $n$, the number of edges $m$ and
-the average degree $d=2m/n$, as described previously.  More elaborative
-statistics however reveal information about the detailed shape of the
-degree distribution. 
+\subsection{Connectivity Statistics}
+Connectivity statistics measure to what extent a network is
+connected. 
+Two nodes are said to be connected when they are either directly
+connected through an edge, or indirectly through a path of several
+edges. 
+A connected component is a set of vertices all of which are connected,
+and unconnected to the other nodes in the network.  
+The largest connected component in a network is usually very large and
+called the giant connected component. When it contains all nodes, the
+network is connected. 
 
-The power law exponent is a number that characterizes the degrees of the
-nodes in the network.  In many circumstances, networks are modeled to
-follow a degree distribution power law, i.e., the number of nodes with
-degree $n$ is taken to be proportional to the power $n^{-\gamma}$, for a
-constant $\gamma$ larger than one \citep{b439}.  This constant $\gamma$
-is called the power law exponent.  Given a network, its degree
-distribution can be used to estimate a value $\gamma$.  There are
-multiple ways of estimating $\gamma$, and thus a network does not have a
-single definite value of it. In KONECT, we estimate $\gamma$ using the
-robust method given in \citep[Eq.~5]{b408}
+The size of the largest connected component is denoted 
+$N$.  
 \begin{align}
-  \mathnote{\texttt{power}} \gamma &= 1 + n \left( \sum_{u\in V} \ln
-  \frac {d(u)} {d_{\min}} \right) ^{-1},
-\end{align}
-in which $d_{\min}$ is the minimal degree.  This calculation of $\gamma$
-takes into account the entire distribution.   Another way to calculate
-the power law exponent takes only into account the tail, and it is based
-on code by Aaron Clauset.\footnote{\href{http://tuvalu.santafe.edu/~aaronc/powerlaws/}{http://tuvalu.santafe.edu/~aaronc/powerlaws/}}  We call that
-variant $\gamma_{\mathrm t}$. \marginpar{\texttt{power2}}
-
-The Gini coefficient is a measure of inequality from economics,
-typically applied to distributions of wealth or income.  In KONECT, we
-apply it to the degree distribution, as described in
-\citep{kunegis:power-law}.  The Gini coefficient can either be defined in
-terms of the Lorenz curve, a type of plot that visualizes the inequality
-of a distribution, or using the following expression.  Let $d_1 \leq d_2
-\leq \dotsb \leq d_{n}$ be the sorted list of degrees in the
-network. Then, the Gini coefficient is defined as
-\begin{align}
-  \mathnote{\texttt{gini}} G &= \frac {2 \sum_{i=1}^{n} i d_i} {n
-    \sum_{i-1}^{n} d_i} - \frac {n+1} {n}.
-\end{align}
-The Gini coefficient takes values between zero and one, with zero
-denoting total equality between degrees, and one denoting the dominance
-of a single node.
-
-The relative edge distribution entropy is a measure of the equality of
-the degree distribution, and equals one when all degrees are equal, and
-attains the limit value of zero when all edges attach to a single node
-\citep{kunegis:power-law}.  It is defined as
-\begin{align}
-  \mathnote{\texttt{dentropyn}} H_{\mathrm{er}} &= \frac 1 {\ln n}
-  \sum_{u \in V} - \frac{d(u)}{2m} \ln \frac{d(u)}{2m}.
+  \mathnote{\texttt{coco}}
+  N &= \max_{F \subseteq \mathcal C} |F|  \\
+  \mathcal C &= \{ C \subseteq V \mid \forall u, v \in C:  \exists w_1,
+  w_2, \ldots \in V:  u \leftrightarrow w_1 \leftrightarrow w_2 \leftrightarrow \cdots \leftrightarrow v \} \nonumber
 \end{align}
 
-Another statistic for \marginpar{\texttt{own}} measuring the inequality
-in the degree distribution is associated with the Lorenz curve (see
-Section~\ref{sec:plot:degree}).  Even though it often does appear
-indirectly in discussions of skewed distributions, it does not have a
-common name.  In KONECT, we call it the balanced inequality ratio. 
-It is given by the intersection point
-of the Lorenz curve with the antidiagonal given by $y = 1 - x$
-\citep{kunegis:power-law}.  By construction, this point equals $(1-P, P)$
-for some $0<P<1$, where the value $P$ corresponds exactly to the number
-``25\%'' in the statement ``25\% of all users account for 75\% of all
-friendship links on Facebook''.  By construction, we can expect $P$ to
-be smaller when $G$ is larger, but there is no precise relationship
-between the two.
+In bipartite networks, the number of left and right nodes in the largest
+connected components are denoted $N_1$ and $N_2$,
+with $N_1 + N_2 = N$. 
 
-Another statistic, which has been called the ``hubiness'' is given by
-the variance of the degree distribution \cite[e.g. by][]{b883,b884}.
-
-Statistics such as the power law exponent $\gamma$, the Gini coefficient
-$G$, the relative edge distribution entropy $H_{\mathrm{er}}$, as well
-as the ratio $P$ all correlate with each other, as they measure the
-inequality, skewness or ``hubiness'' of the degree distribution. 
-
-The analysis of degrees can be generalized to pairs of nodes:  What is
-the distribution of degrees for pairs of connected edges?  In some
-networks, high-degree nodes are connected to other high-degree nodes,
-while low-degree nodes are connected to low-degree nodes.  This property
-is called the degree assortativity \citep{b854}, or, very often, simply the
-assortativity.  Inversely, in a network with dissortativity,  
-high-degree nodes are typically connected to low-degree and vice versa.
-The amount of assortativity can be measured by the Pearson correlation
-$\rho$ between the degree of connected nodes.  
+The relative size of the largest connected component equals the
+size of the largest connected component divided by the size of the
+network
 \begin{align}
-  \mathnote{\texttt{assortativity}} 
-  \rho &= \frac
-  {\sum_{\{u,v\} \in E} (d(u) - d)(d(v) - d)}
-  {\sum_{\{u,v\} \in E} (d(u) - d)^2}
-\end{align}
-The assortativity is
-undefined whenever the Pearson correlation is undefined, for instance,
-if all nodes have the same degree (i.e., when the graph is regular), and
-when the graph does not contain any edges. 
-
-\marginpar{\texttt{inoutassort}}
-In directed networks, we define the in-out assortativity as the Pearson
-correlation coefficient between in-degree and the out-degree of nodes,
-taking the logarithm of one plus the degree.
-
-\subsection{Clustering Statistics}
-\label{sec:statistic:clustering}
-The term \emph{clustering} refers to the observation that in almost all
-networks, nodes tend to form small groups within which many edges are
-present, and such that only few edges connected different clusters with
-each other.  In a social network for instance, people form groups in
-which almost every member known the other members.  Clustering thus
-forms one of the primary characteristics of real-world networks, and
-thus many statistics for measuring it have been defined.  The main
-method for measuring clustering numerically is the clustering
-coefficient, of which there exist several variants. As a general rule,
-the clustering coefficient measures to what extent edges in a network
-tend to form triangles. Since it is based on triangles, it can only be
-applied to unipartite networks, because bipartite networks do not
-contain triangles.
-
-The number of triangles $t$ itself as defined in
-Section~\ref{sec:count-statistics} is however not a statistic that can
-be used to measure the clustering in a network, since it correlates with
-the size and volume of the network.  Instead, the clustering
-coefficients in all its variants can be understood as a count of
-triangles, normalized in different ways in order to compare several
-networks with it.
-
-The local clustering coefficient $c(u)$ of a node $u$ is defined as the
-probability that two randomly chosen (but distinct) neighbors of $u$ are
-connected \citep{b228}.
-\begin{align}
-  c(u) &= \left\{ \begin{array}{ll} \frac { \{ v, w \in V \mid u \leftrightarrow v
-      \leftrightarrow w \leftrightarrow u \} } { \{ v, w \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}
-    } & \text{when } d(u) > 1 \\ 0 & \text{when } d(u) \leq 1
-          \end{array} \right. 
+  \mathnote{\texttt{cocorel}}
+  N_{\mathrm{rel}} &= \frac N n. 
 \end{align}
 
-The global clustering of a network can be computed in two ways.  The
-first way defines it as the probability that two incident edges are
-completed by a third edge to form a triangle \citep{b736}. This is also
-called the transitivity ratio, or simply the transitivity.
+We also use an inverted variant of the relative size of the largest
+connected component, which makes it easier to plot the values on a
+logarithmic scale.
 \begin{align}
-  \mathnote{\texttt{clusco}} c &= 
-  \frac {|\{ u, v, w \in V \mid u \leftrightarrow v \leftrightarrow w \leftrightarrow u \}|} 
-        {|\{ u, v, w \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}|} 
-        = \frac {3t} s
-\end{align}
-This variant of the global clustering coefficient has values between
-zero and one, with a value of one denoting that all possible triangles
-are formed (i.e., the network consists of disconnected cliques), and
-zero when it is triangle free.  Note that the clustering coefficient is
-trivially zero for bipartite graphs.  This clustering coefficient is
-however not defined when each node has degree zero or one, i.e., when
-the graph is a disjoint union of edges and unconnected nodes.  This is
-however not a problem in practice.
-
-The second variant variant of the clustering coefficient uses the
-average of the local clustering coefficients. This second variant was
-historically the first to be defined.  In was defined in
-1998 \citep{b228} and precedes the first variant by four years.
-\begin{align}
-  \mathnote{\texttt{clusco2}} c_2 &= \frac 1 {|V|} \sum_{u \in V} c(u)
-\end{align}
-This second variant of the global clustering coefficient is zero when a
-graph is triangle-free, and one when the graph is a disjoint union of
-cliques of size at least three.  This variant of the global clustering
-coefficient is defined for all graphs, except for the empty graph, i.e.,
-the graph with zero nodes.  A slightly different definition of the
-second variant computes the average only over nodes with a degree of at
-least two, as seen for instance in \citep{b845}.
-
-Because of the arbitrary decision to define $c(u)$ as zero when the
-degree of $c$ is zero or one, we recommend to use the first variant of
-the clustering coefficient.  In the following, the extensions to the
-clustering coefficient we present are all based on the first variant,
-$c$.
-
-For signed graphs, we may define the clustering coefficient to take into
-account the sign of edges.  The signed clustering coefficient is based
-on balance theory \citep{kunegis:slashdot-zoo}.  In a signed network,
-edges can be positive or negative.  For instance in a signed social
-network, positive edges represent friendship, while negative edges
-represent enmity.  In such networks, balance theory stipulates than
-triangles tend to be balanced, i.e., that three people are either all
-friends, or two of them are friends with each other, and enemies with
-the third.  On the other hand, a triangle with two positive and one
-negative edge, or a triangle with three negative edges is unbalanced.
-In other words, we can define the sign of a triangle as the product of
-the three edge signs, which then leads to the stipulation that triangles
-tend to have positive weight.  To extend the clustering coefficient to
-signed networks, we thus distinguis between balanced and unbalanced
-triangles, in a way that positive triangles contribute positively to the
-signed clustering coefficient, and negative triangles contribute
-negatively to it.  For a triangle $\{u,v,w\}$, let
-$\sigma(u,v,w)=w(u,v)w(v,w)w(w,u)$ be the sign of the triangle, then the
-following definition captures the idea:
-\begin{align}
-  c_{\mathrm s} &= \frac {\sum_{u,v,w\in V} \sigma(u,v,w)} {|\{ u, v, w
-    \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}|}
-\end{align}
-Here, the sum is over all triangles $\{u,v,w\}$, but can also be taken
-over all triples of vertices, since $w(u,v)=0$ when $\{u,v\}$ is not an
-edge.
-
-The signed clustering coefficient is bounded by the clustering
-coefficient:
-\begin{align}
-  | c_{\mathrm s} | \leq c
+  \mathnote{\texttt{cocorelinv}}
+  N_{\mathrm{inv}} &= 1 - \frac N n 
 \end{align}
 
-The relative signed clustering coefficient can then be defined as
-\begin{align}
-  c_{\mathrm r} = \frac {c_{\mathrm s}} c = \frac {\sum_{u,v,w\in V}
-    \sigma(u,v,w)} {|\{ u, v, w \in V \mid u \leftrightarrow v \leftrightarrow w \leftrightarrow u \}|}
-\end{align}
-which also equals the proportion of all triangles that are balanced,
-minus the proportion of edges that are unbalanced.
+In directed networks, we additionally define the size of the largest
+\marginpar{\texttt{cocos}}
+strongly connected component $N_{\mathrm s}$.  A strongly
+connected component is a 
+set of vertices in a directed graph such that any node is reachable from
+any other node using a path following only directed edges in the forward
+direction.   We always have $N_{\mathrm s} \leq N$. 
 
 \subsection{Distance Statistics}
 \label{sec:distance-statistics}
@@ -2098,11 +1893,303 @@ A related statistic is the 90-percentile effective diameter
 $\delta_{0.9}$, which equals the number of edges needed on average to
 reach 90\% of all other nodes.
 
-\subsection{Algebraic Statistics}
+\subsection{Degree Distribution Statistics}
+The distribution of degree values $d(u)$ over all nodes $u$ is often
+taken to characterize a network.  Thus, a certain number of network
+statistics are based solely on this distribution, regardless of overall
+network structure.  
+The simplest network statistics that depend only on the degree
+distribution are the number of nodes $n$, the number of edges $m$ and
+the average degree $d=2m/n$, as described previously.  More elaborative
+statistics however reveal information about the detailed shape of the
+degree distribution. 
 
+The power law exponent is a number that characterizes the degrees of the
+nodes in the network.  In many circumstances, networks are modeled to
+follow a degree distribution power law, i.e., the number of nodes with
+degree $n$ is taken to be proportional to the power $n^{-\gamma}$, for a
+constant $\gamma$ larger than one \citep{b439}.  This constant $\gamma$
+is called the power law exponent.  Given a network, its degree
+distribution can be used to estimate a value $\gamma$.  There are
+multiple ways of estimating $\gamma$, and thus a network does not have a
+single definite value of it. In KONECT, we estimate $\gamma$ using the
+robust method given in \citep[Eq.~5]{b408}
+\begin{align}
+  \mathnote{\texttt{power}} \gamma &= 1 + n \left( \sum_{u\in V} \ln
+  \frac {d(u)} {d_{\min}} \right) ^{-1},
+\end{align}
+in which $d_{\min}$ is the minimal degree.  This calculation of $\gamma$
+takes into account the entire distribution.   Another way to calculate
+the power law exponent takes only into account the tail, and it is based
+on code by Aaron Clauset.\footnote{\href{http://tuvalu.santafe.edu/~aaronc/powerlaws/}{http://tuvalu.santafe.edu/~aaronc/powerlaws/}}  We call that
+variant $\gamma_{\mathrm t}$. \marginpar{\texttt{power2}}
+
+The Gini coefficient is a measure of inequality from economics,
+typically applied to distributions of wealth or income.  In KONECT, we
+apply it to the degree distribution, as described in
+\citep{kunegis:power-law}.  The Gini coefficient can either be defined in
+terms of the Lorenz curve, a type of plot that visualizes the inequality
+of a distribution, or using the following expression.  Let $d_1 \leq d_2
+\leq \dotsb \leq d_{n}$ be the sorted list of degrees in the
+network. Then, the Gini coefficient is defined as
+\begin{align}
+  \mathnote{\texttt{gini}} G &= \frac {2 \sum_{i=1}^{n} i d_i} {n
+    \sum_{i-1}^{n} d_i} - \frac {n+1} {n}.
+\end{align}
+The Gini coefficient takes values between zero and one, with zero
+denoting total equality between degrees, and one denoting the dominance
+of a single node.
+
+The relative edge distribution entropy is a measure of the equality of
+the degree distribution, and equals one when all degrees are equal, and
+attains the limit value of zero when all edges attach to a single node
+\citep{kunegis:power-law}.  It is defined as
+\begin{align}
+  \mathnote{\texttt{dentropyn}} H_{\mathrm{er}} &= \frac 1 {\ln n}
+  \sum_{u \in V} - \frac{d(u)}{2m} \ln \frac{d(u)}{2m}.
+\end{align}
+
+Another statistic for \marginpar{\texttt{own}} measuring the inequality
+in the degree distribution is associated with the Lorenz curve (see
+Section~\ref{sec:plot:degree}).  Even though it often does appear
+indirectly in discussions of skewed distributions, it does not have a
+common name.  In KONECT, we call it the balanced inequality ratio. 
+It is given by the intersection point
+of the Lorenz curve with the antidiagonal given by $y = 1 - x$
+\citep{kunegis:power-law}.  By construction, this point equals $(1-P, P)$
+for some $0<P<1$, where the value $P$ corresponds exactly to the number
+``25\%'' in the statement ``25\% of all users account for 75\% of all
+friendship links on Facebook''.  By construction, we can expect $P$ to
+be smaller when $G$ is larger, but there is no precise relationship
+between the two.
+
+Another statistic, which has been called the ``hubiness'' is given by
+the variance of the degree distribution \cite[e.g. by][]{b883,b884}.
+
+Statistics such as the power law exponent $\gamma$, the Gini coefficient
+$G$, the relative edge distribution entropy $H_{\mathrm{er}}$, as well
+as the ratio $P$ all correlate with each other, as they measure the
+inequality, skewness or ``hubiness'' of the degree distribution. 
+
+The analysis of degrees can be generalized to pairs of nodes:  What is
+the distribution of degrees for pairs of connected edges?  In some
+networks, high-degree nodes are connected to other high-degree nodes,
+while low-degree nodes are connected to low-degree nodes.  This property
+is called the degree assortativity \citep{b854}, or, very often, simply the
+assortativity.  Inversely, in a network with dissortativity,  
+high-degree nodes are typically connected to low-degree and vice versa.
+The amount of assortativity can be measured by the Pearson correlation
+$\rho$ between the degree of connected nodes.  
+\begin{align}
+  \mathnote{\texttt{assortativity}} 
+  \rho &= \frac
+  {\sum_{\{u,v\} \in E} (d(u) - d)(d(v) - d)}
+  {\sum_{\{u,v\} \in E} (d(u) - d)^2}
+\end{align}
+The assortativity is
+undefined whenever the Pearson correlation is undefined, for instance,
+if all nodes have the same degree (i.e., when the graph is regular), and
+when the graph does not contain any edges. 
+
+\marginpar{\texttt{inoutassort}}
+In directed networks, we define the in-out assortativity as the Pearson
+correlation coefficient between in-degree and the out-degree of nodes,
+taking the logarithm of one plus the degree.
+
+\subsection{Preferential Attachment Statistics}
+The term \emph{preferential attachment} refers to the observation that
+in networks that grow over time, the probability that an edge is added
+to a node with $d$ neighbors is proportional to $d$.  This linear
+relationship lies at the heart of Barabási and Albert's
+\emph{scale-free} network model \citep{b439}, and has been used in a vast
+number of subsequent work to model networks, online and offline. The
+scale-free network model results in a distribution of degrees, i.e.,
+number of neighbors of individual nodes, that follows a power law with
+negative exponent. In other words, the number of nodes with degree $d$ is
+proportional to $d^{-\gamma}$ in these networks, for a constant
+$\gamma>1$.
+
+In basic preferential attachment, the probability that an edge
+attached to a vertex $u$ is propertional to its degree $d(u)$.  An
+extension of this basic model uses a probability that is a power of the
+degree, i.e., $d(u)^\beta$.  The exponent $\beta$ is a positive number,
+and can be measured empirically from a dataset
+\citep{kunegis:preferential-attachment}.  The value of $\beta$ then
+determines the type of preferential attachment:
+\begin{enumerate}
+\item \textbf{Constant case $\beta=0$}.  
+This case is equivalent to a constant probability of attachment, 
+and thus this graph growth model results in networks in which each edge
+is equally likely and independent from other edges.  This is the
+Erdős--Rényi model of random graphs \citep{b569}. 
+
+\item \textbf{Sublinear case $0 < \beta < 1$}. 
+In this case, the preferential attachment function is sublinear.  This
+model gives rise to a stretched exponential degree distribution
+\citep{b764}, whose exact 
+expression is complex and given in \citep[Eq. 94]{b773}. 
+
+\item \textbf{Linear case $\beta=1$}.
+This is the scale-free network model of Barabási and Albert
+\citep{b439}, in which attachment is proportional to the degree. This gives a
+power law degree distribution.  
+
+\item \textbf{Superlinear case $\beta > 1$}.
+In this case, a single node will acquire 100\% of all edges
+asymptotically \citep{b765}. Networks with this behavior will however display
+power law degree distributions in the pre-asymptotic regime
+\citep{b769}. 
+\end{enumerate}
+
+The following minimization problem gives an estimate for the exponent
+$\beta$ \citep{kunegis:preferential-attachment}.
+\marginpar{\texttt{prefatt}}
+\begin{align}
+  \min_{\alpha,\beta} \sum_{u\in V} \left( \alpha + \beta \ln[1 + d_1(u)]
+  - \ln[\lambda + d_2(u)]  \right)^2
+  \label{eq:min}
+\end{align}
+The resulting value of $\beta$ is the estimated preferential attachment
+exponent. 
+
+To measure the error of the fit, the root-mean-square
+logarithmic error $\epsilon$ can be defined in the following way: 
+\begin{align*}
+    \epsilon &= \exp\left\{ \sqrt{ \frac 1 {|V|} \sum_{u \in V}
+      \left(\alpha + \beta \ln[1 
+        + d_1(u)] - \ln[\lambda + d_2(u)]\right)^2  }  \right\}
+\end{align*}
+This gives the average factor by which the actual new number of edges
+differs from the predicted value, computed logarithmically. 
+The value of $\epsilon$ is larger or equal to one by construction. 
+
+\subsection{Clustering Statistics}
+\label{sec:statistic:clustering}
+The term \emph{clustering} refers to the observation that in almost all
+networks, nodes tend to form small groups within which many edges are
+present, and such that only few edges connected different clusters with
+each other.  In a social network for instance, people form groups in
+which almost every member known the other members.  Clustering thus
+forms one of the primary characteristics of real-world networks, and
+thus many statistics for measuring it have been defined.  The main
+method for measuring clustering numerically is the clustering
+coefficient, of which there exist several variants. As a general rule,
+the clustering coefficient measures to what extent edges in a network
+tend to form triangles. Since it is based on triangles, it can only be
+applied to unipartite networks, because bipartite networks do not
+contain triangles.
+
+The number of triangles $t$ itself as defined in
+Section~\ref{sec:count-statistics} is however not a statistic that can
+be used to measure the clustering in a network, since it correlates with
+the size and volume of the network.  Instead, the clustering
+coefficients in all its variants can be understood as a count of
+triangles, normalized in different ways in order to compare several
+networks with it.
+
+The local clustering coefficient $c(u)$ of a node $u$ is defined as the
+probability that two randomly chosen (but distinct) neighbors of $u$ are
+connected \citep{b228}.
+\begin{align}
+  c(u) &= \left\{ \begin{array}{ll} \frac { \{ v, w \in V \mid u \leftrightarrow v
+      \leftrightarrow w \leftrightarrow u \} } { \{ v, w \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}
+    } & \text{when } d(u) > 1 \\ 0 & \text{when } d(u) \leq 1
+          \end{array} \right. 
+\end{align}
+
+The global clustering of a network can be computed in two ways.  The
+first way defines it as the probability that two incident edges are
+completed by a third edge to form a triangle \citep{b736}. This is also
+called the transitivity ratio, or simply the transitivity.
+\begin{align}
+  \mathnote{\texttt{clusco}} c &= 
+  \frac {|\{ u, v, w \in V \mid u \leftrightarrow v \leftrightarrow w \leftrightarrow u \}|} 
+        {|\{ u, v, w \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}|} 
+        = \frac {3t} s
+\end{align}
+This variant of the global clustering coefficient has values between
+zero and one, with a value of one denoting that all possible triangles
+are formed (i.e., the network consists of disconnected cliques), and
+zero when it is triangle free.  Note that the clustering coefficient is
+trivially zero for bipartite graphs.  This clustering coefficient is
+however not defined when each node has degree zero or one, i.e., when
+the graph is a disjoint union of edges and unconnected nodes.  This is
+however not a problem in practice.
+
+The second variant variant of the clustering coefficient uses the
+average of the local clustering coefficients. This second variant was
+historically the first to be defined.  In was defined in
+1998 \citep{b228} and precedes the first variant by four years.
+\begin{align}
+  \mathnote{\texttt{clusco2}} c_2 &= \frac 1 {|V|} \sum_{u \in V} c(u)
+\end{align}
+This second variant of the global clustering coefficient is zero when a
+graph is triangle-free, and one when the graph is a disjoint union of
+cliques of size at least three.  This variant of the global clustering
+coefficient is defined for all graphs, except for the empty graph, i.e.,
+the graph with zero nodes.  A slightly different definition of the
+second variant computes the average only over nodes with a degree of at
+least two, as seen for instance in \citep{b845}.
+
+Because of the arbitrary decision to define $c(u)$ as zero when the
+degree of $c$ is zero or one, we recommend to use the first variant of
+the clustering coefficient.  In the following, the extensions to the
+clustering coefficient we present are all based on the first variant,
+$c$.
+
+For directed graphs, the directed clustering $c^{\pm}$ can be considered.  It is
+\marginpar{\texttt{cluscoasym}}
+defined in analogy to $c$, but only considering directed 2-paths closed
+by a directed edge that has the same orientation as the path. 
+
+For signed graphs, we may define the clustering coefficient to take into
+account the sign of edges.  The signed clustering coefficient is based
+on balance theory \citep{kunegis:slashdot-zoo}.  In a signed network,
+edges can be positive or negative.  For instance in a signed social
+network, positive edges represent friendship, while negative edges
+represent enmity.  In such networks, balance theory stipulates than
+triangles tend to be balanced, i.e., that three people are either all
+friends, or two of them are friends with each other, and enemies with
+the third.  On the other hand, a triangle with two positive and one
+negative edge, or a triangle with three negative edges is unbalanced.
+In other words, we can define the sign of a triangle as the product of
+the three edge signs, which then leads to the stipulation that triangles
+tend to have positive weight.  To extend the clustering coefficient to
+signed networks, we thus distinguis between balanced and unbalanced
+triangles, in a way that positive triangles contribute positively to the
+signed clustering coefficient, and negative triangles contribute
+negatively to it.  For a triangle $\{u,v,w\}$, let
+$\sigma(u,v,w)=w(u,v)w(v,w)w(w,u)$ be the sign of the triangle, then the
+following definition captures the idea:
+\begin{align}
+  c_{\mathrm s} &= \frac {\sum_{u,v,w\in V} \sigma(u,v,w)} {|\{ u, v, w
+    \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}|}
+\end{align}
+Here, the sum is over all triangles $\{u,v,w\}$, but can also be taken
+over all triples of vertices, since $w(u,v)=0$ when $\{u,v\}$ is not an
+edge.
+
+The signed clustering coefficient is bounded by the clustering
+coefficient:
+\begin{align}
+  | c_{\mathrm s} | \leq c
+\end{align}
+
+The relative signed clustering coefficient can then be defined as
+\begin{align}
+  c_{\mathrm r} = \frac {c_{\mathrm s}} c = \frac {\sum_{u,v,w\in V}
+    \sigma(u,v,w)} {|\{ u, v, w \in V \mid u \leftrightarrow v \leftrightarrow w \leftrightarrow u \}|}
+\end{align}
+which also equals the proportion of all triangles that are balanced,
+minus the proportion of edges that are unbalanced.
+
+\subsection{Algebraic Statistics}
 Algebraic statistics are based on a network's characteristic matrices.
 They are motivated by the broader field of spectral graph theory, which
 characterizes graphs using the spectra of these matrices \citep{b285}.
+This section only describes algebraic statistics that do not fall under
+another category, such as bipartivity statistics, or signed graph
+statistics. 
 
 In the following we will denote by $\lambda_k[\mathbf X]$ the
 $k$\textsuperscript{th} dominant eigenvalue of the matrix $\mathbf X$.
@@ -2117,12 +2204,23 @@ The spectral norm of a network equals the spectral norm (i.e., the
 largest absolute eigenvalue) of the network's adjacency matrix
 \begin{align}
   \mathnote{\texttt{snorm}} 
-  \left\| \mathbf A \right\|_2
-  &= 
+  \alpha &= 
+  \left\| \mathbf A \right\|_2 = 
   | \lambda_1[\mathbf A] | .
 \end{align}
 The spectral norm can be understood as an alternative measure of the
 size of a network.
+
+For directed graphs, we consider the largest singular value of the
+\marginpar{\texttt{opnorm}}
+graph's (generally) asymmetric adjacency matrix.  This is called the
+operator 2-norm or the Ky Fan 1-norm.  We denote it $\nu$.
+
+Also for directed graphs only, the largest absolute eigenvalue of the
+(generally asymmetric) adjacency matrix $\mathbf A$ can be considered.  
+\marginpar{\texttt{maxdiag}} 
+We denote it $\pi$ and call it the cyclic eigenvalue in KONECT.  It is zero if and
+only if the graph is acyclic. 
 
 The algebraic connectivity equals the second smallest nonzero eigenvalue
 of $\mathbf L$ \citep{b652}
@@ -2134,17 +2232,6 @@ this is one reason why we restrict the matrix $\mathbf L$ to each
 network's giant connected component.  The algebraic connectivity is
 larger the better the network's largest connected component is
 connected.
-
-In signed and ratings networks, i.e., networks in which the weights of
-node pairs can be negative, the smallest eigenvalue of $\mathbf L$ can
-be larger than zero.  (In other networks, it is always zero.) The
-algebraic conflict equals this smallest eigenvalue
-\begin{align}
-  \mathnote{\texttt{conflict}} \xi &= \lambda_1[\mathbf L].
-\end{align}
-The algebraic conflict measures the amount of conflict in the network,
-i.e., the tendency of the network to contain cycles with an odd number
-of negatively weighted edges.
 
 \subsection{Bipartivity Statistics}
 Some unipartite networks are almost bipartite.  Almost-bipartite
@@ -2218,7 +2305,7 @@ eigenvalue of a matrix equals its minimal Rayleigh quotient.
 \end{align*}
 We can thus approximate the previous measure of non-bipartivity by
 \begin{align}
-  \mathnote{\texttt{anticonflict}} \tilde F &= \frac {|V|} {8 |E[\bar
+  \mathnote{\texttt{anticonflict}} b_{\mathrm K} &= \frac {|V|} {8 |E[\bar
       G]|} \lambda_{\min}[\mathbf K[\bar G]]
 \end{align}
 The eigenvalue $\lambda_{\min}[\mathbf K[\bar G]]$ can also be
@@ -2293,72 +2380,27 @@ It is also related to the relative signed clustering coefficient by
 \tau &= 2 c_{\mathrm r} - 1.
 \end{align}
 
-\subsection{Preferential Attachment Statistics}
-The term \emph{preferential attachment} refers to the observation that
-in networks that grow over time, the probability that an edge is added
-to a node with $d$ neighbors is proportional to $d$.  This linear
-relationship lies at the heart of Barabási and Albert's
-\emph{scale-free} network model \citep{b439}, and has been used in a vast
-number of subsequent work to model networks, online and offline. The
-scale-free network model results in a distribution of degrees, i.e.,
-number of neighbors of individual nodes, that follows a power law with
-negative exponent. In other words, the number of nodes with degree $d$ is
-proportional to $d^{-\gamma}$ in these networks, for a constant
-$\gamma>1$.
-
-In basic preferential attachment, the probability that an edge
-attached to a vertex $u$ is propertional to its degree $d(u)$.  An
-extension of this basic model uses a probability that is a power of the
-degree, i.e., $d(u)^\beta$.  The exponent $\beta$ is a positive number,
-and can be measured empirically from a dataset
-\citep{kunegis:preferential-attachment}.  The value of $\beta$ then
-determines the type of preferential attachment:
-\begin{enumerate}
-\item \textbf{Constant case $\beta=0$}.  
-This case is equivalent to a constant probability of attachment, 
-and thus this graph growth model results in networks in which each edge
-is equally likely and independent from other edges.  This is the
-Erdős--Rényi model of random graphs \citep{b569}. 
-
-\item \textbf{Sublinear case $0 < \beta < 1$}. 
-In this case, the preferential attachment function is sublinear.  This
-model gives rise to a stretched exponential degree distribution
-\citep{b764}, whose exact 
-expression is complex and given in \citep[Eq. 94]{b773}. 
-
-\item \textbf{Linear case $\beta=1$}.
-This is the scale-free network model of Barabási and Albert
-\citep{b439}, in which attachment is proportional to the degree. This gives a
-power law degree distribution.  
-
-\item \textbf{Superlinear case $\beta > 1$}.
-In this case, a single node will acquire 100\% of all edges
-asymptotically \citep{b765}. Networks with this behavior will however display
-power law degree distributions in the pre-asymptotic regime
-\citep{b769}. 
-\end{enumerate}
-
-The following minimization problem gives an estimate for the exponent
-$\beta$ \citep{kunegis:preferential-attachment}.
-\marginpar{\texttt{prefatt}}
+The smallest eigenvalue of the adjacency matrix $\mathbf L$ can
+be larger than zero.  (In other networks, it is always zero.) The
+algebraic conflict equals this smallest eigenvalue
 \begin{align}
-  \min_{\alpha,\beta} \sum_{u\in V} \left( \alpha + \beta \ln[1 + d_1(u)]
-  - \ln[\lambda + d_2(u)]  \right)^2
-  \label{eq:min}
+  \mathnote{\texttt{conflict}} 
+  \xi &= \lambda_1[\mathbf L].
 \end{align}
-The resulting value of $\beta$ is the estimated preferential attachment
-exponent. 
-
-To measure the error of the fit, the root-mean-square
-logarithmic error $\epsilon$ can be defined in the following way: 
-\begin{align*}
-    \epsilon &= \exp\left\{ \sqrt{ \frac 1 {|V|} \sum_{u \in V}
-      \left(\alpha + \beta \ln[1 
-        + d_1(u)] - \ln[\lambda + d_2(u)]\right)^2  }  \right\}
-\end{align*}
-This gives the average factor by which the actual new number of edges
-differs from the predicted value, computed logarithmically. 
-The value of $\epsilon$ is larger or equal to one by construction. 
+The algebraic conflict measures the amount of conflict in the network,
+i.e., the tendency of the network to contain cycles with an odd number
+of negatively weighted edges.  It is applied in KONECT only to the
+network's largest connected component. 
+A normalized version of the algebraic conflict is an approximation to
+the number of edges whose sign must be switched for the graph to become
+balanced.  We call it the spectral signed frustration $\phi$, defined as
+\begin{align}
+  \mathnote{\texttt{fconflict}}
+  \phi &= \frac{n \xi}{8 m} = \frac{n \lambda_1[\mathbf L]}{8m}.
+\end{align}
+The normalization factor can be derived in analogous way as for the
+corresponding measure of bipartivity that is based on the signless
+Laplacian matrix. 
 
 \section{Graph Matrices and Decompositions}
 \label{sec:matrix}
@@ -2405,9 +2447,12 @@ which case edge directions are ignored.  A directed graph that contains
 reciprocal edges (the majority) will thus result in an undirected graph
 with multiple parallel edges, even if the original directed graph did
 not contain parallel directed edges.  As a result, one must be careful:
-Expressions involving the number of edges $m$ in this chapter may refer
+Expressions involving the number of edges $m$ in this chapter refer
 to the number of unique edges, which gives a different result for
-directed and undirected graphs.  
+directed and undirected graphs.  In the same way, the matrix $\mathbf A$
+in this section refers to the symmetric adjacency matrix; in the case of
+directed graphs, this thus equals the matrix normally written as
+$\mathbf A + \mathbf A^{\mathrm T}$. 
 
 \subsubsection{Symmetric Adjacency Matrix ($\mathbf A$)}
 The symmetric adjacency matrix $\mathbf A$ is the most basic graph
@@ -2427,10 +2472,10 @@ eigenvalues of $\mathbf A$, i.e., $\mathbf \Lambda_{ii} =
 $\mathbf U$ is an $n \times n$ orthogonal matrix having the
 corresponding eigenvectors as columns. 
 
-The largest absolute eigenvalue of $\mathbf A$ is the networks spectral norm,
-i.e.,
+The largest absolute eigenvalue of $\mathbf A$ is the networks spectral
+norm $\alpha$, i.e.,
 \begin{align*}
-  \max_i |\mathbf \Lambda_{ii}| &= \left\| \mathbf A \right\|_2.
+  \alpha = \max_i |\mathbf \Lambda_{ii}| = \left\| \mathbf A \right\|_2.
 \end{align*}
 
 The sum of all eigenvalues $\lambda_i$ equal the trace of $\mathbf A$,
@@ -2719,6 +2764,10 @@ In signed graphs, the multiplicity of the eigenvalue zero equals the
 number of connected components that are balanced after all their edges
 have been negated (i.e., switch between positive and negative). 
 
+In connected graphs (that are not necessarily bipartite), the smallest
+eigenvalue of $\mathbf K$ is a measure of the non-bipartivity of the
+graph. 
+
 \subsection{Decompositions of Signed Graphs}
 In this subsection, we review matrices and decompositions that apply to
 signed graphs.  
@@ -2821,6 +2870,9 @@ This decomposition corresponds to the eigenvalue decomposition of the
 directed graph's bipartite double cover. 
 It also corresponds to HITS \citep[Hyperlink-Induced Topic Search, ][]{b27}.
 
+The largest singular value, i.e., $\Sigma_{11}$, equals the graphs
+operator 2-norm $\nu$. 
+
 \subsubsection{Normalized Adjacency Matrix}
 The adjacency matrix can be normalized for directed network, in the same
 way as for undirected networks.
@@ -2852,6 +2904,10 @@ the diagonal matrix of corresponding eigenvalues.
 
 Note that while left and right eigenvectors differ, their eigenvalues
 are identical. 
+
+The largest absolute eigenvalue $\pi=|\Lambda_{11}|$ is zero if and only
+if the directed graph is acyclic.  We call it the cyclic eigenvalue in
+KONECT. 
 
 \subsubsection{Eigenvectors (Normalized)}
 This corresponds to finding the eigenvectors of the asymmetric matrix
@@ -4378,7 +4434,8 @@ measures. \\
   $x$ & cross count \\
   $y$ & reciprocity \\
   $z$ & claw count \\
-\midrule
+  \midrule
+  $\alpha$ & spectral norm \\
   $\beta$  & preferential attachment exponent \\
   $\gamma$ & power law exponent \\
   $\delta$ & diameter \\
@@ -4387,11 +4444,13 @@ measures. \\
   $\eta$ & dyadic conflict \\
   $\lambda$ & eigenvalue \\
   $\mu$  & average edge weight \\
-  $\rho$ & assortativity \\
-  $\rho$ & spectral radius \\
-  $\tau$ & triadic conflict \\
+  $\nu$  & operator 2-norm \\
   $\xi$  & algebraic conflict \\
+  $\pi$  & cyclic eigenvalue \\
+  $\rho$ & assortativity \\
   $\sigma$ & singular value \\
+  $\tau$ & triadic conflict \\
+  $\phi$ & spectral signed frustration \\
 \midrule
   $C_k$ & $k$-cycle count \\
   $E$ & edge set \\
