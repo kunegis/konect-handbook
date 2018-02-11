@@ -657,8 +657,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
 \item[Neural networks] are networks reprensentating the structure of the
   brain.  Nodes are neurons are higher-level groupings of the brain,
   while edges are connections between them.  The field concerned with
-  the network analysis of such structures is called \emph{network
-  neuroscience}. 
+  the network analysis of such structures is called \emph{network neuroscience}. 
   
 \item[Online contact networks] consist of people and interactions between
   \marginpar{\texttt{OnlineContact}} them.  Contact networks are
@@ -2308,6 +2307,13 @@ We can thus approximate the previous measure of non-bipartivity by
   \mathnote{\texttt{anticonflict}} b_{\mathrm K} &= \frac {|V|} {8 |E[\bar
       G]|} \lambda_{\min}[\mathbf K[\bar G]]
 \end{align}
+The eigenvalue itself,
+\begin{align}
+  \mathnote{\texttt{nonbipal}}
+  \chi &= \lambda_{\min}[\mathbf K[\bar G]],
+\end{align}
+as the algebraic non-bipartivity of the graph. 
+
 The eigenvalue $\lambda_{\min}[\mathbf K[\bar G]]$ can also be
 interpreted as the algebraic conflict in $G$ interpreted as a signed
 graph in which all edges have negative weight.
@@ -2756,7 +2762,9 @@ $\mathbf L$ of the graph with inverted edge weights, i.e., $\mathbf K[G] =
 
 This matrix is positive-semidefinite, and its smallest eigenvalue is
 zero if and only if at least one connected component of the graph is bipartite.  Thus, $\mathbf K$ is used
-in measures of bipartivity \citep[see e.g.][]{kunegis:bipartivity}. 
+in measures of bipartivity \citep[see e.g.][]{kunegis:bipartivity}.   We
+call this smallest eigenvalue the algebraic non-bipartivity $\chi =
+\lambda_{\min}[\mathbf K]$. 
 
 In unsigned graphs, the multiplicity of the eigenvalue zero equals the
 number of connected component that are bipartite.  
@@ -4451,6 +4459,7 @@ measures. \\
   $\sigma$ & singular value \\
   $\tau$ & triadic conflict \\
   $\phi$ & spectral signed frustration \\
+  $\chi$ & algebraic non-bipartivity \\
 \midrule
   $C_k$ & $k$-cycle count \\
   $E$ & edge set \\
