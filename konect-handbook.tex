@@ -31,6 +31,8 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage{wrapfig}
 \usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
 
 \newcommand{\wPlot}{0.45\textwidth}
 \newcommand{\wFull}{0.95\textwidth}
@@ -44,6 +46,16 @@
 }
 
 \input{colors}
+
+\definecolor{InternalLinkColor}{rgb}{0.0, 0.35, 0.0}
+\definecolor{ExternalLinkColor}{rgb}{0.0, 0.0, 0.69}
+\hypersetup{ 
+    colorlinks=true, 
+    citecolor=InternalLinkColor, 
+    urlcolor=ExternalLinkColor, 
+    linkcolor=InternalLinkColor
+} 
+
 
 \begin{document}
 
@@ -235,6 +247,49 @@ the first years of its operation.  The Stu build system was initiated in
 2014, and KONECT was gradually switched to it, serving as its main use
 case.  Stu was essentially completed in August 2017 with publication of version 2.5. 
 
+\subsection{Status of this Handbook}
+This handbook is constantly updated.  The most up to date version can
+always be found on
+GitHub.\footnote{\href{https://github.com/kunegis/konect-handbook/raw/master/konect-handbook.pdf}{https://github.com/kunegis/konect-handbook/raw/master/konect-handbook.pdf}}  
+Approximately every year, a version of the handbook is published on
+arXiv, as a new version of the existing arXiv
+entry.\footnote{\href{http://arxiv.org/abs/1402.5500}{http://arxiv.org/abs/1402.5500}} 
+The handbook is explicitly \emph{not} peer reviewed, as we update it as
+needed.  Since the handbook serves as the central place in which we add
+new definitions, the reader will notice that the prose may vary greatly
+from section to section.  Also, some notation used may be very establish
+and will not change, but other choices in notation are not set in stone,
+and we reserve the possibility to change our notation to suit our
+needs.  However, any change in notation will be reflected in KONECT
+source code and on the KONECT world wide web site.  While it is
+perfectly acceptable to cite this handbook, we urge readers not to refer
+to any equation or section number as these \emph{will} change
+constantly.  
+
+What will \emph{not} change, by design, are all internal
+names.  For instance, the clustering coefficient will always be denoted
+as \texttt{clusco}.  Thus, when citing statistics, decompositions or
+other items defined in this handbook, please use internal names; these
+are always given in a non-proportional font. 
+Throughout the handbook, we use margin notes to give the internal 
+\marginpar{\textlangle{}\texttt{name}\textrangle}
+names of various parameters, as shown here on the side of this text.  
+In KONECT, almost everything has an \emph{internal name}, i.e., a
+systematic name that is used throughout code, and which is stable.
+Internal names are never changed.  Therefore, some internal names may be
+slightly inaccurate or inconsistent.  For purposes of backward
+compatibility, this is preferred over changing names.  For instance,
+KONECT's Enron email network is called \texttt{enron}, the edge weights
+of networks with negative edges is called \texttt{signed}, the set
+of all unipartite networks is called \texttt{SQUARE}, and the category
+of online social networks is called \texttt{Social}.  Internal names are
+case-sensitive. 
+
+Certain parts of the handbook are based on previous work, and certain
+parts have been published as papers by the authors.  These works are
+always cited in the relevant sections, and should be cited in preference
+when using the corresponding methods. 
+
 \subsection{Structure of this Handbook}
 This handbook serves both as a compendium of mathematical definitions
 used in the KONECT project, as well as documentation of the software
@@ -255,7 +310,7 @@ used in KONECT.
   terms.  This sections presents the terminology and definitions as used
   in KONECT, which represents a compromise that has been proven useful
   in practice. 
-\item Section \ref{sec:statistics} \textbf{Network Statistics} is devoted to
+\item Section \ref{sec:statistics} \textbf{Statistics} is devoted to
   network statistics, i.e., numerical measures that characterize a
   network as a whole.  These are central to network analysis, and most
   common network statistics are covered.  The section is structured by
@@ -264,7 +319,7 @@ used in KONECT.
   introduction to the underlying topic, although not all subsections
   (yet) contain enough exposition to server as a general introduction to
   these topics. 
-\item Section \ref{sec:matrix} \textbf{Graph Matrices and Decompositions} reviews
+\item Section \ref{sec:matrix} \textbf{Matrices and Decompositions} reviews
   characteristic matrices used to analyse graphs, with a focus on their
   decompositions.  These are crucial in various types of analyses,
   include pairwise node measures such as distances and similarities, as
@@ -273,12 +328,12 @@ used in KONECT.
   and complete, although the emphasis is mainly on the eigenvalue and
   singular value decompositions, and matrix to which they can be
   applied. 
-\item Section \ref{sec:plots} \textbf{Network Plots} reviews common ways to
+\item Section \ref{sec:plots} \textbf{Plots} reviews common ways to
   visualize properties of a network.  Some of those, such as the degree
   distribution, are ubiquitous in the literature.  Since KONECT plots
   are extensively used by the authors in published research, the plots
   cover quite distinct areas of network analysis. 
-\item Section \ref{sec:other} \textbf{Other definitions} covers other
+\item Section \ref{sec:other} \textbf{Other Definitions} covers other
   definitions used in KONECT, including node features,
   i.e., numerical measures that characterize individual nodes in a
   network, and error measures.  These are often used as measures of centrality or
@@ -288,19 +343,6 @@ used in KONECT.
 \item Section \ref{sec:format} \textbf{File Formats} finally documents the
   different file formats used by KONECT. 
 \end{itemize}
-Throughout the handbook, we use margin notes to give the internal 
-\marginpar{\textlangle{}\texttt{name}\textrangle}
-names of various parameters, as shown here on the side of this text.  
-In KONECT, almost everything has an \emph{internal name}, i.e., a
-systematic name that is used throughout code, and which is stable.
-Internal names are never changed.  Therefore, some internal names may be
-slightly inaccurate or inconsistent.  For purposes of backward
-compatibility, this is preferred over changing names.  For instance,
-KONECT's Enron email network is called \texttt{enron}, the edge weights
-of networks with negative edges is called \texttt{signed}, the set
-of all unipartite networks is called \texttt{SQUARE}, and the category
-of online social networks is called \texttt{Social}.  Internal names are
-case-sensitive. 
 
 \section{Networks}
 \label{sec:taxonomy}
@@ -385,7 +427,7 @@ Table~\ref{tab:weights}.
   \marginpar{\texttt{positive}}
   two nodes can be
   connected by any number of edges, and all edges are unweighted. This
-  type of network is also called a multigraph.  
+  type of network is also called a multi  
 \item In a \textbf{positive network} ($+$), 
   \marginpar{\texttt{posweighted}}
   edges are annotated
@@ -1232,7 +1274,7 @@ matrix inverses, etc.
 The normalized adjacency matrix $\mathbf N$ is a $|V|$-by-$|V|$ matrix
 given by
 \begin{align}
-  \mathbf N &= \mathbf D^{-1/2} \mathbf A \mathbf D^{-1/2}. 
+  \mathbf N &= \mathbf D^{-\frac 12} \mathbf A \mathbf D^{-\frac 12}. 
 \end{align}
 
 Finally the Laplacian matrix $\mathbf L$ is an $|V|$-by-$|V|$ matrix
@@ -1304,7 +1346,7 @@ component that is bipartite.
 The line matrix $\mathbf F$ is also the adjacency matrix of the original
 graph's line graph. 
 
-\section{Network Statistics}
+\section{Statistics}
 \label{sec:statistics}
 A network statistic is a numerical value that characterizes a network.
 Examples of network statistics are the number of nodes and the number of
@@ -1414,7 +1456,7 @@ The average degree is defined as
   \mathnote{\texttt{avgdegree}}
   d &= \frac 1 {|V|} \sum_{u\in V} d(u) = \frac {2m} n . 
 \end{align}
-The average degree is sometimes called the density.  We avoid the term
+The average degree is sometimes called the \emph{density} or \emph{node density}.  We avoid the term
 \emph{density} in KONECT as it is sometimes used for the fill, which
 denotes the probability that an edge exists.  The average degree is also
 called the expected degree.  
@@ -1445,7 +1487,7 @@ notation we also use in KONECT.
 \end{align}
 In the undirected case, the expression is explained by the fact that the
 total number of possible edges is $n(n-1)/2$ excluding loops.  
-The fill is sometimes also called the density of the network, in
+The fill is sometimes also called the density or edge density of the network, in
 particular in a mathematical context, or the connectance of the
 network\footnote{Used for instance in this blog entry:  \href{https://proopnarine.wordpress.com/2010/02/11/graphs-and-food-webs/}{proopnarine.wordpress.com/2010/02/11/graphs-and-food-webs}}. 
 
@@ -1788,6 +1830,9 @@ direction.   We always have $N_{\mathrm s} \leq N$.
 The distance between two nodes in a network is defined as the number of
 edges needed to reach one node from another, and serves as the basis for
 a class of network statistics.
+For instance, the well-known characterisation of networks as having the
+\emph{small-world} property by Watts and Strogatz \citeyearpar{b228}
+implies that distances between nodes in networks are typically short. 
 
 A path in a network is a sequence of incident edges, or equivalently, a
 sequence of nodes $P = (u_0, u_2, \dotsc, u_k)$, such that $(u_i,
@@ -2070,7 +2115,12 @@ present, and such that only few edges connected different clusters with
 each other.  In a social network for instance, people form groups in
 which almost every member known the other members.  Clustering thus
 forms one of the primary characteristics of real-world networks, and
-thus many statistics for measuring it have been defined.  The main
+thus many statistics for measuring it have been defined.  
+As an example, the well-known characterisation of networks as having the
+\emph{small-world} property by Watts and Strogatz \citeyearpar{b228}
+uses the clustering coefficient as one network statistic, and states
+that it will be particularly small. 
+The main
 method for measuring clustering numerically is the clustering
 coefficient, of which there exist several variants. As a general rule,
 the clustering coefficient measures to what extent edges in a network
@@ -2088,7 +2138,7 @@ networks with it.
 
 The local clustering coefficient $c(u)$ of a node $u$ is defined as the
 probability that two randomly chosen (but distinct) neighbors of $u$ are
-connected \citep{b228}.
+connected.
 \begin{align}
   c(u) &= \left\{ \begin{array}{ll} \frac { \{ v, w \in V \mid u \leftrightarrow v
       \leftrightarrow w \leftrightarrow u \} } { \{ v, w \in V \mid u \leftrightarrow v \neq w \leftrightarrow u \}
@@ -2408,7 +2458,69 @@ The normalization factor can be derived in analogous way as for the
 corresponding measure of bipartivity that is based on the signless
 Laplacian matrix. 
 
-\section{Graph Matrices and Decompositions}
+\subsection{Miscellaneous}
+This section lists miscellaneous statistics that do not fit any of the
+other sections
+
+\subsubsection{Controllability}
+A less-known way to assess the structure of a network consists in
+measuring how well it can be controlled.  For instance, assume that we
+want to influence opinions in a social network, but are only able to
+directly influence $k$ persons in the network. Assuming that opinions
+will spread through the network, how big has $k$ to be in order for us
+to be able to influence all nodes in a network, in a way that any
+arbitrary opinion can be given to any node?  A solution to this problem
+is given in \citep{b673}, in which such \emph{driver nodes} are
+identified and, surprisingly, they are not necessarily the nodes with
+highest degree.  In fact, the authors of that article state that driver
+nodes tend to \emph{avoid the hubs} of the network. 
+
+The resulting computational model uses differential equations to model
+diffusion and can be reduced to finding a maximal matching in the
+bipartite double cover of the network \citep{b673}. The maximal matching
+in a bipartite graph can be computed efficiently because of Kőnig's
+theorem. It states that perfect matchings and minimal vertex covers have
+equal size in bipartite graphs, and thus the corresponding integer
+program formulations are equivalent to their relaxations.
+
+The number of driver nodes $C$ needed to control a graph $G=(V,E)$
+equals $|V|$ minus the size of the maximum
+matching in the bipartite cover of the network, which equals the
+maximal directed 2-matching in the network.
+The bipartite double cover of a network $G=(V,E)$ is constructed by
+mapping each vertex $u\in V$ to two vertices $(u,1)$ and $(u,2)$, and
+mapping each edge $\{u,v\}$ to the edges $\{(u,1),(v,2)\}$ and
+$\{(u,2),(v,1)\}$.  Equivalently this corresponds
+to the size of the maximal directed 2-matching.  A 2-matching is a set
+of edges such that each vertex is incident to at most two edges.  A
+directed 2-matching is a set of directed edges, such that each vertex is
+incident to at most one ingoing and one outgoing edge.  Here, we
+interpret an undirected graph as a directed graph where each edge
+corresponds to two directed edges:
+\begin{align*}
+  \mathnote{\texttt{controllability}}
+  C = |V| - & \max |M| \\
+  & \text{s.t.} \quad \left| \left\{ (i,j) \in M \mid i = u, \{i,j\}\in E\right\} \right| \leq 1 
+  & \text{for all } u \in V, \\
+  & \phantom{\text{s.t.}} \quad \left| \left\{ (i,j) \in M \mid j = u, \{i,j\}\in E  \right\} \right| \leq 1
+  & \text{for all } u \in V. 
+\end{align*}
+The result is the number $C$ of vertices needed to control a given
+network.  
+A maximal matching in a bipartite graph can be found in runtime
+$O(|V|^{1/2}|E|)$ \citep{b673}, and thus can be computed efficiently even for large
+networks. 
+
+We also define the relative controllability as
+\begin{align*}
+  \mathnote{\texttt{controllabilityn}}
+  C_{\mathrm r} &= \frac C n 
+\end{align*}
+
+This statistic has been used by the authors of KONECT in
+\citep{kunegis:network-rank}. 
+
+\section{Matrices and Decompositions}
 \label{sec:matrix}
 In order to analyse graphs, algebraic graph theory is a common
 approach.  In algebraic graph theory, a graph with $n$ vertices is
@@ -2443,10 +2555,141 @@ given in a subsequent subsection shares an internal name with one given
 in the first subsection.  In that case, KONECT will do the obvious
 generalization when a signed or directed graph is given. 
 
+Table~\ref{tab:matcross} gives a more concise overview. 
+
+\begin{table}
+  \caption{
+    \label{tab:matcross} Matrices that characterize networks.  All shown
+    cases include weighted and signed graphs. 
+  }
+  \makebox[\textwidth]{
+  \begin{tabular}{ l l c@{\;}l c@{\;}l c }
+    \toprule
+    & \textbf{Name} 					& \multicolumn{2}{l}{\textbf{Plain}}      & \multicolumn{2}{l}{\textbf{Normalized}} & \textbf{Stochastic} \\
+    \midrule
+    \multirow{6}{*}{\textbf{Undirected}} 
+    & Adjacency matrix    				& $\mathbf A$         && $\mathbf N$ && $\mathbf P$ \\
+    & Laplacian 					& $\mathbf L$         && $\mathbf Z$ && $\mathbf S$ \\
+    & Signless Laplacian				& $\mathbf K$         && $\mathbf C$ && $\mathbf J$ \\
+    \cmidrule(lr){2-7}
+    & Repulsive adjacency matrix\textsuperscript{1} 	& $\mathbf{\hat A}$   && $\mathbf{\hat N}$ && $\mathbf{\hat P}$ \\
+    & Repulsive Laplacian$\dagger$\textsuperscript{2}	& $\mathbf{\hat L}$   && $\mathbf{\hat Z}$ && $\mathbf{\hat S}$\\
+    & Repulsive signless Laplacian$\dagger$\textsuperscript{2}& $\mathbf{\hat K}$   && $\mathbf{\hat C}$ && $\mathbf{\hat J}$\\
+    \midrule
+    \multirow{15}{*}{\textbf{Directed}} 
+    & Symmetric adjacency matrix			& $\mathbf A$         && $\mathbf N$       && $\mathbf P$ \\
+    & Symmetric Laplacian		  		& $\mathbf L$         && $\mathbf Z$       && $\mathbf S$ \\
+    & Symmetric signless Laplacian			& $\mathbf K$         && $\mathbf C$       && $\mathbf J$ \\
+    \cmidrule(lr){2-7}
+    & Hermitian adjacency matrix  			& $\mathbf{\check A}$&$=\mathbf H$ & $\mathbf{\check N}$ \\
+    & Hermitian Laplacian         			& $\mathbf{\check L}$&$=\mathbf T$ & $?$ \\
+    & Hermitian signless Laplacian                      & & &\\
+    \cmidrule(lr){2-7}
+    & Skew-Hermitian adjacency matrix       		& $\mathbf{\acute A}$&$=i\mathbf Y$ & $\mathbf{\acute N}$ \\
+    & Skew-Hermitian Laplacian    			& $\mathbf{\acute L}$ && $?$ \\
+    & Skew-Hermitian signless Laplacian 		& & &\\
+    \cmidrule(lr){2-7}
+    & Magnetic adjacency matrix 			& $\mathbf A_{\theta}$  && $?$ \\
+    & Magnetic Laplacian				& $\mathbf L_{\theta}$  && \\
+    & Magnetic signless Laplacian			& $\mathbf K_{\theta}$  && \\
+    \cmidrule(lr){2-7}
+    & Unidirectional adjacency matrix$\dagger$		& $\vec{\mathbf A}$   && $\vec{\mathbf N}$ && $\vec{\mathbf P}$ \\
+    & Unidirectional Laplacian$\dagger$			& $\vec{\mathbf L}$   && $\vec{\mathbf Z}$ && $\vec{\mathbf S}$ \\
+    & Unidirectional signless Laplacian$\dagger$		& $\vec{\mathbf K}$   && \\
+    \midrule
+    \multirow{1}{*}{\textbf{Bipartite}} 
+    & Biadjacency matrix*				& $\mathbf{\breve A}$&$=\mathbf B$ & $\mathbf{\breve N}$&$=\mathbf M$ & $\times$ \\
+    \bottomrule
+  \end{tabular}
+  }
+  * Non-square. As a general rule, bipartite graphs are a special case
+  of unipartite graphs and thus all variants apply; we only show the two
+  cases here in which the matrix has the bipartite form $[\mathbf 0
+    \mathbf X; \mathbf X^{\mathrm T} \mathbf 0]$. \\
+  $\dagger$ Non-normal.  These matrices allow both the singular value
+  decomposition, as well as considering their eigenvalues.  \\
+  \textsuperscript{1} Accent usually omitted because the matrix is the natural extension of the non-accented matrix \\
+  \textsuperscript{2} Identical to the non-accented matrix for unsigned networks 
+\end{table}
+
 \subsection{Decompositions of Undirected Graphs}
-These matrices and decompositions apply to undirected graphs.  In this
-subsection, the matrix $\mathbf A$ always denotes the symmetric
-adjacency matrix. 
+This section covers the case of unipartite unsigned undirected graphs.
+Weighted graphs and graphs with multiple edges are included, as their
+treatment is usually simple. 
+We define nine basic matrices in this section, which can be thought of
+spanning the two dimensions of matrix type (adjacency/Laplacian/signless
+Laplacian) and normalization type (none, symmetric normalization,
+stochastic).  These matrices have the names $\mathbf A$, $\mathbf L$,
+$\mathbf K$, $\mathbf N$, $\mathbf Z$, $\mathbf C$, $\mathbf P$,
+$\mathbf S$ and $\mathbf J$.  
+A tabular overview is given in Table~\ref{tab:matov}. 
+These matrices serve as the ``basic nine'' matrices
+in KONECT, and derivatives with similar names are used for other types
+of graphs.  Of these, $\mathbf A$, $\mathbf L$, $\mathbf N$ and $\mathbf
+P$ are
+ubiquitous in network analysis; $\mathbf K$ is
+used from time to time; $\mathbf Z$, $\mathbf C$, $\mathbf S$,
+and $\mathbf J$ can be derived by shifts of eigenvalues from $\mathbf N$
+and $\mathbf P$, and thus don't usually need to be considered
+separately.  $\mathbf N$ and $\mathbf P$ share eigenvalues, but not
+eigenvectors.  Only the names $\mathbf A$ and $\mathbf L$ can be
+expected to be understood without explanation -- the other names are
+specific to KONECT, although the notation $\mathbf N$, $\mathbf K$ and
+$\mathbf P$ are used in the literature from time to time. 
+
+\begin{table}
+  \caption{
+    \label{tab:matov}
+    The nine base matrices of KONECT for undirected, unipartite graphs,
+    including unweighted, weighted, and signed cases.  
+    The transpose of the stochastic matrices are not shown; they are
+    left-stochastic and are analogous to the shown right-stochastic
+    variants. 
+  }
+  \makebox[\textwidth]{
+    \scalebox{0.8}{
+  \begin{tabular}{ l l c@{\;}l l l l }
+    \toprule
+    & \textbf{Int.\ name} & \multicolumn{2}{l}{\textbf{Expression}} &
+    \textbf{Name} & \textbf{Properties} & \textbf{Eigenvalues} \\
+    \midrule
+
+    \ref{sec:matrix.A} & \texttt{sym} & $\mathbf A$ && Adjacency m. &
+    Symmetric             			& $\alpha$ \\
+    \ref{sec:matrix.L} & \texttt{lap} & $\mathbf L$&$ = \mathbf D - \mathbf A$ & Laplacian m. &
+    Symmetric, positive-semidefinite  		& $\xi, a$ \\ 
+    \ref{sec:matrix.K} & \texttt{lapq} & $\mathbf K$&$ = \mathbf D + \mathbf A$ & Signless Laplacian m. &
+    Symmetric, positive-semidefinite            & $\chi$ \\
+
+    \midrule
+
+    \ref{sec:matrix.N} & \texttt{sym-n} & $\mathbf N$&$ = \mathbf D^{-\frac 12}\mathbf A\mathbf D^{-\frac 12}$ & Norm.\ adjacency m. &
+    Symmetric, eigenvalues in $[-1,+1]$		& $1$  \\
+    \ref{sec:matrix.Z} & * & $\mathbf Z$&$ = \mathbf I - \mathbf N$ & Norm.\ Laplacian m. &
+    Symmetric, eigenvalues in $[0,2]$		& $?,?$ \\
+    \ref{sec:matrix.C} & * & $\mathbf C$&$ = \mathbf I + \mathbf N$ & Norm.\ signless Laplacian m. &
+    Symmetric, eigenvalues in $[0,2]$		& $?$ \\
+
+    \midrule
+
+    \ref{sec:matrix.P} & \texttt{stoch1} & $\mathbf P$&$=\mathbf D^{-1}\mathbf A$ & Stoch.\ adjacency m. &
+    Right-stochastic, eigenvalues in $[-1,+1]$	& $\dagger$ \\
+    \ref{sec:matrix.S} & * & $\mathbf S$&$ =\mathbf I - \mathbf P$ & Stoch.\ Laplacian m. &
+    Eigenvalues in $[0,2]$			& $\dagger$ \\
+    \ref{sec:matrix.J} & * & $\mathbf J$&$ = \mathbf I + \mathbf P$ & Stoch.\ signless Laplacian m. &
+    Eigenvalues in $[0,2]$ 			& $\dagger$ \\
+    
+    \bottomrule
+  \end{tabular}
+    }
+  }
+  * These decompositions can be derived from \texttt{sym-n} and
+  \texttt{stoch1} by a transformation of eigenvalues.  \\
+  $\dagger$ The eigenvalues of the stochastic matrices are identical to
+  the eigenvalues of their normalized analogues.  \\
+  (A) The largest absolute eigenvalues are considered. \\
+  (0) The smallest absolute eigenvalues are considered. 
+\end{table}
 
 In KONECT, these decompositions can be applied to directed graphs as well, in
 which case edge directions are ignored.  A directed graph that contains
@@ -2461,6 +2704,7 @@ directed graphs, this thus equals the matrix normally written as
 $\mathbf A + \mathbf A^{\mathrm T}$. 
 
 \subsubsection{Symmetric Adjacency Matrix ($\mathbf A$)}
+\label{sec:matrix.A}
 The symmetric adjacency matrix $\mathbf A$ is the most basic graph
 characteristic matrix.  It is a symmetric $n \times n$ matrix defined as
 $\mathbf A_{uv}=1$ when the nodes $u$ and $v$ are connected, and
@@ -2521,6 +2765,7 @@ is not symmetric.  It follows that when the graph is bipartite, the
 smallest and largest eigenvalues have the same absolute value. 
 
 \subsubsection{Laplacian Matrix ($\mathbf L$)}
+\label{sec:matrix.L}
 The Laplacian matrix of an undirected graph is defined as
 \begin{align}
   \mathnote{\texttt{lap}}
@@ -2567,12 +2812,44 @@ Note that while the matrix $\mathbf E^{\pm}$ is called the signed
 incidence matrix, it is not related to signed graphs.  In fact, the
 equality only holds for unsigned, unweighted graphs. 
 
+\subsubsection{Signless Laplacian ($\mathbf K$)}
+\label{sec:signless-laplacian}
+\label{sec:matrix.K}
+The signless Laplacian of a graph is defined as the Laplacian of the
+corresponding graph in which all edges are interpreted as negative \citep{b900}.  It
+thus equals
+\begin{align}
+  \mathnote{\texttt{lapq}}
+  \mathbf K &= \mathbf D + \mathbf A.
+\end{align}
+The signless Laplacian is also denoted $\mathbf Q$. 
+It corresponds to the ordinary Laplacian
+$\mathbf L$ of the graph with inverted edge weights, i.e., $\mathbf K[G] =
+\mathbf L[-G]$. 
+
+This matrix is positive-semidefinite, and its smallest eigenvalue is
+zero if and only if at least one connected component of the graph is bipartite.  Thus, $\mathbf K$ is used
+in measures of bipartivity \citep[see e.g.][]{kunegis:bipartivity}.   We
+call this smallest eigenvalue the algebraic non-bipartivity $\chi =
+\lambda_{\min}[\mathbf K]$. 
+
+In unsigned graphs, the multiplicity of the eigenvalue zero equals the
+number of connected component that are bipartite.  
+In signed graphs, the multiplicity of the eigenvalue zero equals the
+number of connected components that are balanced after all their edges
+have been negated (i.e., switch between positive and negative). 
+
+In connected graphs (that are not necessarily bipartite), the smallest
+eigenvalue of $\mathbf K$ is a measure of the non-bipartivity of the
+graph. 
+
 \subsubsection{Normalized Adjacency Matrix ($\mathbf N$)}
+\label{sec:matrix.N}
 The normalized adjacency matrix $\mathbf N$ of an undirected graph is
 defined as 
 \begin{align}
   \mathnote{\texttt{sym-n}}
-  \mathbf N &= \mathbf D^{-1/2} \mathbf A \mathbf D^{-1/2},
+  \mathbf N &= \mathbf D^{-\frac 1 2} \mathbf A \mathbf D^{-\frac 1 2},
 \end{align}
 where we remind the reader that the diagonal matrix $\mathbf D$
 contains the node degrees, i.e., $\mathbf D_{uu} = d(u)$. 
@@ -2608,6 +2885,7 @@ Note that this equivalence only holds for undirected graphs.  For
 directed graphs, there is no such equivalence. 
 
 \subsubsection{Normalized Laplacian Matrix ($\mathbf Z$)}
+\label{sec:matrix.Z}
 The Laplacian matrix too, can be normalized.  It turns out that the
 normalized Laplacian and the normalized adjacency matrix
 are tighly related
@@ -2616,7 +2894,7 @@ eigenvalues are reflections of each other.
 
 The normalized Laplacian matrix of an undirected graph is defined as 
 \begin{align}
-  \mathbf Z &= \mathbf D^{-1/2} \mathbf L \mathbf D^{-1/2}.
+  \mathbf Z &= \mathbf D^{-\frac 1 2} \mathbf L \mathbf D^{-\frac 1 2}.
 \end{align}
 As opposed to $\mathbf A$, $\mathbf L$ and $\mathbf N$, there is no
 standardized notation of the normalized Laplacian.  The notation
@@ -2627,8 +2905,8 @@ letters share eigenvectors and have flipped eigenvalues.
 The normalized Laplacian is related to the normalized adjacency matrix
 by 
 \begin{align}
-  \mathbf Z &= \mathbf I - \mathbf N = \mathbf I - \mathbf D^{-1/2}
-  \mathbf A \mathbf D^{-1/2}, 
+  \mathbf Z &= \mathbf I - \mathbf N = \mathbf I - \mathbf D^{-\frac 1 2}
+  \mathbf A \mathbf D^{-\frac 1 2}, 
 \end{align}
 as can be derived directly from their definitions. 
 It follows that $\mathbf Z$ and $\mathbf N$ have the same set of
@@ -2646,6 +2924,7 @@ included, since it can be derived from that of the normalized adjacency
 matrix. 
 
 \subsubsection{Stochastic Adjacency Matrix ($\mathbf P$)}
+\label{sec:matrix.P}
 The consideration of random walks on a graph leads to the definition of
 the stochastic adjacency matrix $\mathbf P$.  Imagine a random walker on
 the nodes of a graph, who can walk from node to node by following
@@ -2673,14 +2952,14 @@ $\mathbf D^{-1} \mathbf A$ is left-normalized but right-stochastic.
 
 The matrix $\mathbf P$ is related to the normalized adjacency matrix $\mathbf N$ by
 \begin{align}
-  \mathbf P &= \mathbf D^{-1/2} \mathbf N \mathbf D^{1/2}
+  \mathbf P &= \mathbf D^{-\frac 1 2} \mathbf N \mathbf D^{\frac 1 2}
 \end{align}
 and therefore both matrices have the same set of eigenvalues.
 Thus, the eigenvalues of $\mathbf P$ are all real, even though
 $\mathbf P$ is asymmetric, and they are contained in the range $[-1,+1]$. 
 Also, the relationship between $\mathbf P$ and $\mathbf N$ implies that that
 eigenvectors of $\mathbf P$ are related to those of 
-$\mathbf N$ by factors of the diagonal elements of $\mathbf D^{1/2}$,
+$\mathbf N$ by factors of the diagonal elements of $\mathbf D^{\frac 1 2}$,
 i.e., the square roots of node degrees. 
 Since $\mathbf P$ is asymmetric, its left eigenvectors differ from its
 right eigenvectors.  When the graph is undirected, the left eigenvector
@@ -2703,10 +2982,10 @@ The matrix $\mathbf P$ is also related to the PageRank matrix $\mathbf
 G$ (``Google matrix''), which
 equals 
 \begin{align}
-  \mathbf G &= (1-\alpha) \mathbf P + \alpha\mathbf J
+  \mathbf G &= (1-\alpha) \mathbf P + \alpha\mathbf 1
 \end{align}
 where $0 < \alpha < 1$ is a damping factor (the teleportation
-probability), and $\mathbf J$ is the matrix containing all ones.  The
+probability), and $\mathbf 1$ is the matrix containing all ones.  The
 left 
 eigenvalues of the PageRank matrix give the PageRank values, and thus
 we see that (ignoring the teleportation term), the PageRank of nodes in
@@ -2727,12 +3006,13 @@ The matrix $\mathbf P$ is further related to the mean first-passage time
 (MFPT) on the network \citep{b880}.
 
 \subsubsection{Stochastic Laplacian Matrix ($\mathbf S$)}
+\label{sec:matrix.S}
 A further variant of the Laplacian exists, based on the stochastic
 adjacency matrix:
 \begin{align}
   \mathbf S &= \mathbf I - \mathbf P = \mathbf I - \mathbf D^{-1}
-  \mathbf A = \mathbf I - \mathbf D^{-1/2} \mathbf N \mathbf D^{1/2} =
-  \mathbf D^{-1/2} \mathbf Z \mathbf D^{1/2}
+  \mathbf A = \mathbf I - \mathbf D^{-\frac 1 2} \mathbf N \mathbf D^{\frac 1 2} =
+  \mathbf D^{-\frac 1 2} \mathbf Z \mathbf D^{\frac 1 2}
   = \mathbf D^{-1} \mathbf L
 \end{align}
 This matrix shares much properties with $\mathbf P$ and thus with
@@ -2745,36 +3025,6 @@ proportional to the node degrees.  For connected graphs, the largest
 eigenvalue of $\mathbf S$ is two if and only if the graph is bipartite.
 In the general case, the eigenvalue two has a multiplicity equal to the
 number of connected components that are bipartite. 
-
-\subsubsection{Signless Laplacian ($\mathbf K$)}
-\label{sec:signless-laplacian}
-The signless Laplacian of a graph is defined as the Laplacian of the
-corresponding graph in which all edges are interpreted as negative \citep{b900}.  It
-thus equals
-\begin{align}
-  \mathnote{\texttt{lapq}}
-  \mathbf K &= \mathbf D + \mathbf A.
-\end{align}
-The signless Laplacian is also denoted $\mathbf Q$. 
-It corresponds to the ordinary Laplacian
-$\mathbf L$ of the graph with inverted edge weights, i.e., $\mathbf K[G] =
-\mathbf L[-G]$. 
-
-This matrix is positive-semidefinite, and its smallest eigenvalue is
-zero if and only if at least one connected component of the graph is bipartite.  Thus, $\mathbf K$ is used
-in measures of bipartivity \citep[see e.g.][]{kunegis:bipartivity}.   We
-call this smallest eigenvalue the algebraic non-bipartivity $\chi =
-\lambda_{\min}[\mathbf K]$. 
-
-In unsigned graphs, the multiplicity of the eigenvalue zero equals the
-number of connected component that are bipartite.  
-In signed graphs, the multiplicity of the eigenvalue zero equals the
-number of connected components that are balanced after all their edges
-have been negated (i.e., switch between positive and negative). 
-
-In connected graphs (that are not necessarily bipartite), the smallest
-eigenvalue of $\mathbf K$ is a measure of the non-bipartivity of the
-graph. 
 
 \subsection{Decompositions of Signed Graphs}
 In this subsection, we review matrices and decompositions that apply to
@@ -2829,7 +3079,7 @@ In signed graphs consisting of multiple connected components, the
 smallest eigenvalue of $\mathbf L$ is zero if and only if at least one
 connected component is balanced.  
 
-\subsubsection{Alternative Signed Laplacian}
+\subsubsection{Repulsive Matrices}
 The Laplacian matrix $\mathbf L = \mathbf D - \mathbf A$ as defined
 earlier is based on the the degree matrix $\mathbf D$, whose diagonal
 elements equal the sum of absolute weights of all edges incident to each
@@ -2852,7 +3102,33 @@ $\mathbf{\hat L}$ has also been called simply the \emph{signed Laplacian
 \mathbf D - \mathbf A$ as defined in
 Section~\ref{sec:decomposition:lap:signed}. 
 The matrix $\mathbf{\hat L}$ appears in various contexts; see e.g.\ the
-examples given by \cite{b875}.  
+examples given by \cite{b875}.  We call it the \emph{repulsive
+  Laplacian} due to its applications; the name is not standard.  The
+matrix $\mathbf{\hat D}$ as defined above will be called the
+\emph{repulsive degree matrix}. 
+
+The matrix $\mathbf{\hat D}$ may have zero entries on the diagonal even
+when no node has degree zero -- this happens when a node has an equal
+number of positive and negative edges.  As a result, $\mathbf{\hat D}$
+must be considered non-invertible.  Thus, variants of the repulsive
+Laplacian are defined using the ordinary degree matrix for
+normalization.
+
+Other matrices that can be labeled \emph{repulsive} are given in the
+following. 
+When applied to ajacency matrices the hat may be regarded as a no-op.
+Thus, $\mathbf{\hat A}=\mathbf A$, $\mathbf{\hat N}=\mathbf N$, and $\mathbf{\hat P}=\mathbf P$.
+The repulsive Laplacian matrices are 
+\begin{align}
+  \mathbf{\hat L} &= \mathbf{\hat D} - \mathbf A \\
+  \mathbf{\hat Z} &= \mathbf D^{-\frac 12} (\mathbf{\hat D} - \mathbf A) \mathbf D^{-\frac 12} \\
+  \mathbf{\hat S} &= \mathbf D^{-1} \mathbf{\hat D} - \mathbf P = \mathbf D^{-1}(\mathbf{\hat D} - \mathbf A) \\
+  \mathbf{\hat K} &= \mathbf{\hat D} + \mathbf A \\
+  \mathbf{\hat C} &= \mathbf D^{-\frac 12} (\mathbf{\hat D} + \mathbf A) \mathbf D^{-\frac 12} \\
+  \mathbf{\hat J} &= \mathbf D^{-1} \mathbf{\hat D} + \mathbf P = \mathbf D^{-1}(\mathbf{\hat D} + \mathbf A) 
+\end{align}
+The use of the repulsive matrices is rare, and we have not seen uses of
+any beyond $\mathbf{\hat L}$ in the wild.  
 
 \subsection{Decompositions of Directed Graphs}
 In directed graphs, the adjacency matrix $\mathbf A$ is itself
@@ -2885,9 +3161,9 @@ operator 2-norm $\nu$.
 The adjacency matrix can be normalized for directed network, in the same
 way as for undirected networks.
 \begin{align}
-  \mathbf N &= \mathbf D_1^{-1/2} \mathbf A \mathbf D_2^{-1/2}
+  \mathbf N &= \mathbf D_1^{-\frac 1 2} \mathbf A \mathbf D_2^{-\frac 1 2}
 \end{align}
-Here, $\mathbf D_1^{-1/2}$ and $\mathbf D_2^{-1/2}$
+Here, $\mathbf D_1^{-\frac 1 2}$ and $\mathbf D_2^{-\frac 1 2}$
 are the diagonal matrices of out- and indegrees. 
 
 The normalized adjacency matrix $\mathbf N$ can be used in the singular
@@ -2986,8 +3262,8 @@ This corresponds to the matrix
 \begin{align}
   \mathnote{\texttt{skewn}}
   \mathbf N - \mathbf N^{\mathrm T} = 
-  \mathbf D_1^{-1/2} \mathbf A \mathbf D_2^{-1/2} - 
-  \mathbf D_2^{-1/2} \mathbf A^{\mathrm T} \mathbf D_1^{-1/2} 
+  \mathbf D_1^{-\frac 1 2} \mathbf A \mathbf D_2^{-\frac 1 2} - 
+  \mathbf D_2^{-\frac 1 2} \mathbf A^{\mathrm T} \mathbf D_1^{-\frac 1 2} 
 \end{align}
 
 \subsubsection{Hermitian Adjacency Matrix ($\mathbf H$)}
@@ -3031,7 +3307,7 @@ instance by \cite{toedtli:ctqw}.
 The normalized Hermitian matrix is
 \begin{align}
   \mathnote{\texttt{hermn}}
-  \frac 1{\sqrt 2} \mathbf D^{-1/2} \mathbf H \mathbf D^{-1/2}. 
+  \frac 1{\sqrt 2} \mathbf D^{-\frac 1 2} \mathbf H \mathbf D^{-\frac 1 2}. 
 \end{align}
 (We currently do not have a symbol for this matrix.)
 
@@ -3074,7 +3350,8 @@ $\mathbf L_0 = \mathbf L$.
 For $\theta = \pi/2$ this is called the skew Laplacian:
 \begin{align}
   \mathnote{\texttt{lapskew}}
-  \mathbf T_{\pi/2} &= \mathbf D - i (\mathbf A - \mathbf A^{\mathrm T})
+  \mathbf T_{\pi/2} &= \mathbf D - i (\mathbf A - \mathbf A^{\mathrm T}) 
+  = \mathbf D - i \mathbf Y
 \end{align}
 
 For any value of $\theta$, the matrix $\mathbf T_{\theta}$ is Hermitian,
@@ -3167,7 +3444,7 @@ The \textbf{companion decomposition} or Frobenius normal form
 \end{align} 
 in which $\mathbf C$ is a companion matrix.
 
-\section{Network Plots}
+\section{Plots}
 \label{sec:plots}
 Plots are drawn to visualize a certain aspect of a dataset. These plots
 can be used to compare several network visually, or to illustrate the
@@ -3558,7 +3835,7 @@ outdegree, notes \texttt{degreediff}).
 Certain features are spectral, i.e., they are defined as the
 eigenvectors of certain matrices.  For instance, the PageRank vector
 \marginpar{\texttt{pagerank}} is defined as the dominant eigenvector of
-the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf J$, and the
+the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf 1$, and the
 eigenvector centrality as the component in the dominant eigenvector of
 the adjacency matrix $\mathbf A$. 
 
@@ -4223,7 +4500,8 @@ to reflect best practices and to avoid confusion.
     it is symmetric. 
   \item[All] The term \emph{all} in KONECT is the name of a group used when a certain method
     is applied to all KONECT networks individually.  When a method is
-    applied to all networks at once, we use \emph{everything}. 
+    applied to all networks at once, we use \emph{everything}, which is
+    a class rather than a group. 
   \item[Arc] A directed edge.  In general, we consider arcs to be a
     special cases of edges, and thus we rarely use the term \emph{arc}
     in favor of \emph{directed edge}.  (In other texts, an edge is taken
@@ -4290,7 +4568,7 @@ to reflect best practices and to avoid confusion.
     Examples are the degree, PageRank and the eccentricity. 
     Equivalently, a node vector.
   \item[Fill] The probability that two randomly chosen nodes are
-    connected.  Also called the \emph{density}, in particular in a
+    connected.  Also called the \emph{density} or \emph{edge density}, in particular in a
     mathematical context.  The fill is the sole parameter of the
     Erdős--Rényi random graph model.  The word \emph{fill} is specific
     to KONECT. 
@@ -4320,20 +4598,43 @@ to reflect best practices and to avoid confusion.
     such a representation is widespread. 
   \item[Loop] 
     A loop is an edge that connects a node with itself.  A loop may be
-    directed or undirected.  
+    directed or undirected.  They are often called \emph{self-loops} in
+    the literature, but that expression is quite redundant. 
   \item[Measure]
     A measure of the accuracy of link prediction methods, for instance
     the area under the curve or the mean average precision.  
   \item[Method]
     A link prediction method. 
+  \item[Normalization]
+    In KONECT, \emph{normalization} is defined in its broad sense, in
+    which some quantity is, at some level, divided by another to result
+    in quantities that can be compared.  This may be performed on the
+    level of individual numbers, in which case we call it
+    \emph{relativization}, but also at higher levels such as on entire
+    matrices.  For instance, the matrix $\mathbf N = \mathbf D^{-\frac 1 2}
+    \mathbf A \mathbf D^{-\frac 1 2}$ is called the normalized adjacency
+    matrix.  Normalization and relativization can often be contrasted.
+    As an example, the largest absolute eigenvalue of the normalized
+    matrix $\mathbf N$ is always one while the relative largest
+    eigenvalue of the non-normalized adjacency matrix would be $\alpha /
+    n$, a value in general not equal to one.  
   \item[PageRank] 
     A node-based feature of a directed network, defined as the dominant
     eigenvector of the matrix $\mathbf G = (1-\alpha) \mathbf P +
-    \alpha\mathbf J$, with eigenvalue one. 
+    \alpha\mathbf 1$, with eigenvalue one. 
   \item[Path]
     A sequence of connected nodes, in which each node can appear only
     once.  The extension that allows multiple nodes is called a walk.  A
     path with identical start and end nodes is called a \emph{cycle}. 
+  \item[Relative]
+    The adjective \emph{relative} is applied to statistics when they are
+    derived by dividing a given statistic by a reference value, often
+    the maximally possible attainable value.  For instance, the relative
+    size of the largest connected component equals the size of the
+    largest connected component divided by the number of nodes.  Such
+    statistics have values in the range $[0,1]$ and are useful for
+    comparing networks of different sizes.  Relative statistics are a
+    form of normalization. 
   \item[Score]
     A numerical value given to a node pair.  Usually used for link
     prediction, but can also measure distance or similary between
@@ -4460,9 +4761,10 @@ measures. \\
   $\tau$ & triadic conflict \\
   $\phi$ & spectral signed frustration \\
   $\chi$ & algebraic non-bipartivity \\
-\midrule
+  \midrule
+  $C$   & controllability \\
   $C_k$ & $k$-cycle count \\
-  $E$ & edge set \\
+  $E$   & edge set \\
   $F$ & frustration \\
   $G$ & graph \\
   $G$ & Gini coefficient \\
@@ -4474,8 +4776,9 @@ measures. \\
   $T_k$ & $k$-tour count \\
   $V$   & vertex set \\
   $W_k$ & $k$-walk count \\
-\midrule
+  \midrule
   $\mathbf 0$ & zeroes matrix \\
+  $\mathbf 1$ & ones matrix \\
   $\mathbf A$ & adjacency matrix \\
   $\mathbf B$ & biadjacency matrix \\
   $\mathbf D$ & degree matrix \\
@@ -4484,7 +4787,6 @@ measures. \\
   $\mathbf G$ & PageRank matrix (``Google matrix'') \\
   $\mathbf H$ & Hermitian adjacency matrix \\
   $\mathbf I$ & identity matrix \\
-  $\mathbf J$ & ones matrix \\
   $\mathbf K$ & signless Laplacian matrix \\
   $\mathbf L$ & Laplacian matrix \\
   $\mathbf M$ & normalized biadjacency matrix \\
@@ -4493,12 +4795,13 @@ measures. \\
   $\mathbf S$ & stochastic Laplacian matrix \\
   $\mathbf T$ & magnetic Laplacian matrix \\
   $\mathbf U, \mathbf V$ & eigenvector matrices \\
+  $\mathbf X$ & central matrix \\
   $\mathbf Y$ & skew-symmetric adjacency matrix \\
   $\mathbf Z$ & normalized Laplacian matrix \\
-\midrule
+  \midrule
   $\mathbf \Lambda$ & eigenvalue matrix \\
   $\mathbf \Sigma$ & singular value matrix \\
-\midrule
+  \midrule
   $\bar G$ & unweighted graph \\
   $\bar{\bar G}$ & graph with unique edges \\
   $|G|$ & unsigned graph \\ 
