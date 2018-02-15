@@ -181,8 +181,8 @@ Kunegis' work on collaborative filtering
 earliest networks include MovieLens, Jester, BookCrossing, and the Netflix Prize
 dataset. 
 
-What later became known as the KONECT project's collection of networks properly started out in December
-2008,
+What later became known as the KONECT project's collection of networks
+properly started out in December 2008,
 as evaluation for Jérôme Kunegis' ICML 2009
 paper \emph{Learning Spectral Graph Transformations for Link Prediction}
 \citep{kunegis:spectral-transformation}, codenamed \emph{Spectral
@@ -193,7 +193,7 @@ The first unipartite networks appeared at this time, one of the earliest
 being the trust network of Advogato. 
 The first dataset crawled specifically for KONECT was the Slashdot Zoo,
 for which crawling began in 2008, with the corresponding paper published
-in 2009 \citep{kunegis:slashdot-zoo}. 
+a year later \citep{kunegis:slashdot-zoo}. 
 
 Later, more datasets
 were added and the codebase was called the \emph{Graph Store}.  This was
@@ -207,11 +207,18 @@ TU Berlin to the University of Koblenz--Landau in Koblenz (Germany) the
 project was renamed \emph{Web Store}, in line with Koblenz' Institute
 for Web Science and Technologies (WeST).  The name \emph{KONECT --
   \underline{Ko}blenz \underline{Ne}twork
-  \underline{C}ollec\underline{t}ion} was adopted sometime in 2011.  A
-KONECT website was created in 2011 at \texttt{konect.uni-koblenz.de}.
+  \underline{C}ollec\underline{t}ion} was adopted sometime in 2011.  
+Jérôme wrote his PhD thesis at the University of Koblenz--Landau in the
+same year. 
+In that phase, most of the mathematical notation of KONECT was
+settled.  In particular, Jérôme Kunegis' PhD thesis contains a
+mathematical glossary that contains many of the symbol in the present
+document.  That PhD thesis was also the first time that a list of all
+networks was generated, before the website went online. 
+The first KONECT website was created in 2011 at \texttt{konect.uni-koblenz.de}.
 In this phase of the project, extraction of datasets and maintenance of the
-KONECT website was performed in collaboration with Daniel Dünker and
-Holger Heinz. 
+KONECT website was performed in collaboration with Daniel Dünker, Holger
+Heinz, and Martina Sekulla. 
 
 Code for dataset extraction and the Matlab Toolbox were first published
 on the KONECT website as downloadable tarballs.  All published code was
@@ -1578,8 +1585,6 @@ networks, and their corresponding count statistics.
     & Node, 0-star, 0-path, 1-clique
     & $n$ & \texttt{size} \\
 
-%%    \vspace{0.25cm} \\
-
     \midrule
     \begin{tikzpicture}
       [scale=.3,every node/.style={circle,fill=blue!40}]
@@ -2538,7 +2543,6 @@ systematically within KONECT, but not necessarily in the literature.
 Among established matrix names, there is the adjacency matrix ($\mathbf
 A$) and the Laplacian ($\mathbf L$), but we must note that even the
 adjacency matrix is not always called $\mathbf A$ in the literature.
-
 Each matrix resp.\ decomposition has an internal name in KONECT, which
 is given in the margin.  Using the KONECT Toolbox, the corresponding
 matrices can be generated using the \texttt{konect\_matrix()} function,
@@ -2555,7 +2559,10 @@ given in a subsequent subsection shares an internal name with one given
 in the first subsection.  In that case, KONECT will do the obvious
 generalization when a signed or directed graph is given. 
 
-Table~\ref{tab:matcross} gives a more concise overview. 
+Table~\ref{tab:matcross} gives a tabular overview. 
+A more detailed overview is given in Table~\ref{tab:matov}, including
+the internal names of corresponding decompositions and eigenvalue
+statistics. 
 
 \begin{table}
   \caption{
@@ -2577,9 +2584,9 @@ Table~\ref{tab:matcross} gives a more concise overview.
     & Repulsive signless Laplacian$\dagger$\textsuperscript{2}& $\mathbf{\hat K}$   && $\mathbf{\hat C}$ && $\mathbf{\hat J}$\\
     \midrule
     \multirow{15}{*}{\textbf{Directed}} 
-    & Symmetric adjacency matrix			& $\mathbf A$         && $\mathbf N$       && $\mathbf P$ \\
-    & Symmetric Laplacian		  		& $\mathbf L$         && $\mathbf Z$       && $\mathbf S$ \\
-    & Symmetric signless Laplacian			& $\mathbf K$         && $\mathbf C$       && $\mathbf J$ \\
+    & Symmetric adjacency matrix			& $\mathbf{\bar A}$         && $\mathbf{\bar N}$   && $\mathbf{\bar P}$ \\
+    & Symmetric Laplacian		  		& $\mathbf{\bar L}$         && $\mathbf{\bar Z}$   && $\mathbf{\bar S}$ \\
+    & Symmetric signless Laplacian			& $\mathbf{\bar K}$         && $\mathbf{\bar C}$   && $\mathbf{\bar J}$ \\
     \cmidrule(lr){2-7}
     & Hermitian adjacency matrix  			& $\mathbf{\check A}$&$=\mathbf H$ & $\mathbf{\check N}$ \\
     & Hermitian Laplacian         			& $\mathbf{\check L}$&$=\mathbf T$ & $?$ \\
@@ -2593,9 +2600,9 @@ Table~\ref{tab:matcross} gives a more concise overview.
     & Magnetic Laplacian				& $\mathbf L_{\theta}$  && \\
     & Magnetic signless Laplacian			& $\mathbf K_{\theta}$  && \\
     \cmidrule(lr){2-7}
-    & Unidirectional adjacency matrix$\dagger$		& $\vec{\mathbf A}$   && $\vec{\mathbf N}$ && $\vec{\mathbf P}$ \\
-    & Unidirectional Laplacian$\dagger$			& $\vec{\mathbf L}$   && $\vec{\mathbf Z}$ && $\vec{\mathbf S}$ \\
-    & Unidirectional signless Laplacian$\dagger$		& $\vec{\mathbf K}$   && \\
+    & Unidirectional adjacency matrix$\dagger$		& $\mathbf A$   && $\mathbf N$ && $\mathbf P$ \\
+    & Unidirectional Laplacian$\dagger$			& $\mathbf L$   && $\mathbf Z$ && $\mathbf S$ \\
+    & Unidirectional signless Laplacian$\dagger$	& $\mathbf K$   && \\
     \midrule
     \multirow{1}{*}{\textbf{Bipartite}} 
     & Biadjacency matrix*				& $\mathbf{\breve A}$&$=\mathbf B$ & $\mathbf{\breve N}$&$=\mathbf M$ & $\times$ \\
@@ -2612,6 +2619,122 @@ Table~\ref{tab:matcross} gives a more concise overview.
   \textsuperscript{2} Identical to the non-accented matrix for unsigned networks 
 \end{table}
 
+\begin{table}
+  \caption{
+    \label{tab:matov}
+    The nine base matrices of KONECT for undirected, unipartite graphs,
+    including unweighted, weighted, and signed cases.  
+    The transpose of the stochastic matrices are not shown; they are
+    left-stochastic and are analogous to the shown right-stochastic
+    variants. 
+  }
+  \makebox[\textwidth]{
+    \scalebox{0.8}{
+  \begin{tabular}{ l c@{\;}l l l l l }
+    \toprule
+    & \multicolumn{2}{l}{\textbf{Expression}} & \textbf{Int.} &
+    \textbf{Name} & \textbf{Prop.} & \textbf{Eigenvalues} \\
+    \midrule \midrule
+
+    \ref{sec:matrix.A} & $\mathbf A$ && \texttt{sym} & Adjacency m. &
+    Sym 		& $\ldots, \alpha$ \texttt{snorm} \\
+    \ref{sec:matrix.N} & $\mathbf N$&$ = \mathbf D^{-\frac 12}\mathbf A\mathbf D^{-\frac 12}$ & \texttt{sym-n} & Norm.\ adjacency m. &
+    Sym 		& $-1+?, \ldots, 1-?, 1-?$  \\
+    \ref{sec:matrix.P} & $\mathbf P$&$ = \mathbf D^{-1}\mathbf A$ & \texttt{stoch1} & Stoch.\ adjacency m. &
+    Right-stoch\textsuperscript{1} 	& $\lambda[\mathbf N]$ \\
+
+    \midrule
+
+    \ref{sec:matrix.L} & $\mathbf L$&$ = \mathbf D - \mathbf A$ & \texttt{lap} & Laplacian &
+    Sym 		& $0\leq \xi$ \texttt{conflict}, $a$ \texttt{alcon}, $\ldots, ?$ \\ 
+    \ref{sec:matrix.Z} & $\mathbf Z$&$ = \mathbf I - \mathbf D^{-\frac 12}\mathbf A\mathbf D^{-\frac 12}$ & \texttt{*} $\mathbf N$ & Norm.\ Laplacian &
+    Sym 		& $1-\lambda[\mathbf N]$ \\
+    \ref{sec:matrix.S} & $\mathbf S$&$ = \mathbf I - \mathbf D^{-1}\mathbf A$ & \texttt{*} $\mathbf P$ & Stoch.\ Laplacian &
+    Row sum = 0\textsuperscript{1}    	& $1-\lambda[\mathbf N]$ \\
+
+    \midrule
+
+    \ref{sec:matrix.K} & $\mathbf K$&$ = \mathbf D + \mathbf A$ & \texttt{lapq} & Signless Laplacian &
+    Sym      		& $0\leq \chi$ \texttt{nonbipal}$, ?, \ldots, ?$ \\
+    \ref{sec:matrix.C} & $\mathbf C$&$ = \mathbf I + \mathbf D^{-\frac 12}\mathbf A\mathbf D^{-\frac 12}$ & \texttt{*} $\mathbf N$ & Norm.\ signless Laplacian &
+    Sym 		& $1+\lambda[\mathbf N]$ \\
+    \ref{sec:matrix.J} & $\mathbf J$&$ = \mathbf I + \mathbf D^{-1}\mathbf A$ & \texttt{*} $\mathbf P$ & Stoch.\ signless Laplacian &
+    Row sum = 2\textsuperscript{1} & $1+\lambda[\mathbf N]$ \\
+    
+    \midrule \midrule
+
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat A}$ &$=\mathbf A$& \texttt{*} $\mathbf A$ & Repulsive adjacency m. &
+    Sym 		& $\lambda[\mathbf A]$ \\
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat N}$&$= \mathbf N$ & \texttt{*} $\mathbf N$ & Repulsive norm.\ adjacency m. &
+    Sym 		& $\lambda[\mathbf N]$  \\
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat P}$&$ = \mathbf P$ & \texttt{*} $\mathbf P$ & Repulsive stoch.\ adjacency m. &
+    Right-stoch\textsuperscript{1} 	& $\lambda[\mathbf N]$ \\
+
+    \midrule
+
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat L}$&$=\mathbf{\hat D}-\mathbf A$ &
+    \texttt{?} & Repulsive Laplacian & Sym & ? \\
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat Z}$&$=\mathbf D^{-\frac 12}(\mathbf{\hat D}-\mathbf A)\mathbf D^{-\frac 12}$ &
+    \texttt{?} & Repulsive norm.\ Laplacian & Sym & ? \\
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat S}$&$=\mathbf D^{-1}(\mathbf{\hat D}-\mathbf A)$ &
+    \texttt{*} $\mathbf{\hat Z}$ & Repulsive stoch.\ Laplacian & & $\lambda[\mathbf{\hat Z}]$ \\
+    
+    \midrule
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat K}$&$=\mathbf{\hat D}+\mathbf A$ &
+    \texttt{?} & Repulsive signless Laplacian & Sym & ? \\
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat C}$&$=\mathbf D^{-\frac 12}(\mathbf{\hat D}+\mathbf A)\mathbf D^{-\frac 12}$ &
+    \texttt{?} & Repulsive norm.\ signless Laplacian & Sym & ? \\
+    \ref{sec:matrix.repulsive} & $\mathbf{\hat J}$&$=\mathbf D^{-1}(\mathbf{\hat D}+\mathbf A)$ &
+    \texttt{*} $\mathbf{\hat C}$ & Repulsive stoch.\ signless Laplacian & & $\lambda[\mathbf{\hat C}]$ \\
+
+    \midrule \midrule
+
+    \ref{sec:matrix.A} & $\mathbf{\bar A}$&$=\mathbf A+\mathbf A^{\mathrm T}$ & \texttt{sym} & Symmetric adjacency m. &
+    Sym 		& $\ldots, \alpha$ \texttt{snorm} \\
+    \ref{sec:matrix.N} & $\mathbf{\bar N}$&$=\mathbf D^{-\frac 12}(\mathbf A+\mathbf A^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{sym-n} & Norm.\ adjacency m. &
+    Sym 		& $-1+?, \ldots, 1-?, 1-?$  \\
+    \ref{sec:matrix.P} & $\mathbf{\bar P}$&$=\mathbf D^{-1}(\mathbf A+\mathbf A^{\mathrm T})$ & \texttt{stoch1} & Symmetric stoch.\ adjacency m. &
+    Right-stoch\textsuperscript{1} 	& $\lambda[\mathbf{\bar N}]$ \\
+
+    \midrule
+
+    \ref{sec:matrix.L} & $\mathbf{\bar L}$&$ = \mathbf D - (\mathbf A+\mathbf A^{\mathrm T})$ & \texttt{lap} & Symmetric Laplacian &
+    Sym 		& $0\leq \xi$ \texttt{conflict}, $a$ \texttt{alcon}, $\ldots, ?$ \\ 
+    \ref{sec:matrix.Z} & $\mathbf{\bar Z}$&$ = \mathbf I - \mathbf D^{-\frac 12}(\mathbf A+\mathbf A^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{*} $\mathbf{\bar N}$ & Symmetric norm.\ Laplacian &
+    Sym 		& $1-\lambda[\mathbf{\bar N}]$ \\
+    \ref{sec:matrix.S} & $\mathbf{\bar S}$&$ = \mathbf I - \mathbf D^{-1}(\mathbf A+\mathbf A^{\mathrm T})$ & \texttt{*} $\mathbf{\bar P}$ & Stoch.\ Laplacian &
+    Row sum = 0\textsuperscript{1}    	& $1-\lambda[\mathbf{\bar N}]$ \\
+
+    \midrule
+
+    \ref{sec:matrix.K} & $\mathbf{\bar K}$&$ = \mathbf D + \mathbf A+\mathbf A^{\mathrm T}$ & \texttt{lapq} & Symmetric signless Laplacian &
+    Sym      		& $0\leq \chi$ \texttt{nonbipal}$, ?, \ldots, ?$ \\
+    \ref{sec:matrix.C} & $\mathbf{\bar C}$&$ = \mathbf I + \mathbf D^{-\frac 12}(\mathbf A+\mathbf A^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{*} $\mathbf{\bar N}$ & Symmetric norm.\ signless Laplacian &
+    Sym 		& $1+\lambda[\mathbf{\bar N}]$ \\
+    \ref{sec:matrix.J} & $\mathbf{\bar J}$&$ = \mathbf I + \mathbf D^{-1}(\mathbf A+\mathbf A^{\mathrm T})$ & \texttt{*} $\mathbf{\bar P}$ & Symmetric stoch.\ signless Laplacian &
+    Row sum = 2\textsuperscript{1} & $1+\lambda[\mathbf{\bar N}]$ \\
+
+    \midrule \midrule
+    
+    \ref{sec:matrix.skew} & $\mathbf{\acute A}$&$=i\mathbf Y=i(\mathbf A-\mathbf A^{\mathrm T})$& \texttt{skewi} & Skew-Hermitian Adjacency m. &
+    Skew-Herm. 		& ? \\
+    \ref{sec:matrix.skewn} & $\mathbf{\acute N}$&$=i\mathbf D^{-\frac 12}(\mathbf A-\mathbf A^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{skewin} & Skew-Hermitian norm.\ adjacency m. &
+    Skew-Herm., ? 		& ?  \\
+    ? & $\mathbf{\acute P}$&$ = i\mathbf D^{-1}(\mathbf A-\mathbf A^{\mathrm T})$ & \texttt{?} & Skew-Hermitian stoch.\ adjacency m. &
+    ? 	& $\lambda[\mathbf{\acute N}]$ \\
+
+    \bottomrule
+  \end{tabular}
+    }
+  }
+  \texttt{*} These decompositions can be derived by a transformation of eigenvalues of the given decomposition, and thus no internal name is used, and the decompositions are not explicitly computed in KONECT.  \\ 
+%%  $\dagger$ The eigenvalues are a linear transformation of those of the given matrix.   \\
+  \textsuperscript{1} Only valid for unsigned graphs \\
+  When two decomposition names are given, the matrix is non-normal and
+  the first represents eigenvectors and -values and the second is the
+  singular value decomposition.
+\end{table}
+
 \subsection{Decompositions of Undirected Graphs}
 This section covers the case of unipartite unsigned undirected graphs.
 Weighted graphs and graphs with multiple edges are included, as their
@@ -2622,7 +2745,7 @@ Laplacian) and normalization type (none, symmetric normalization,
 stochastic).  These matrices have the names $\mathbf A$, $\mathbf L$,
 $\mathbf K$, $\mathbf N$, $\mathbf Z$, $\mathbf C$, $\mathbf P$,
 $\mathbf S$ and $\mathbf J$.  
-A tabular overview is given in Table~\ref{tab:matov}. 
+An overview is given in Table~\ref{tab:basic-nine}
 These matrices serve as the ``basic nine'' matrices
 in KONECT, and derivatives with similar names are used for other types
 of graphs.  Of these, $\mathbf A$, $\mathbf L$, $\mathbf N$ and $\mathbf
@@ -2639,56 +2762,19 @@ $\mathbf P$ are used in the literature from time to time.
 
 \begin{table}
   \caption{
-    \label{tab:matov}
-    The nine base matrices of KONECT for undirected, unipartite graphs,
-    including unweighted, weighted, and signed cases.  
-    The transpose of the stochastic matrices are not shown; they are
-    left-stochastic and are analogous to the shown right-stochastic
-    variants. 
+    \label{tab:basic-nine}
+    The basic nine matrices of KONECT.
   }
-  \makebox[\textwidth]{
-    \scalebox{0.8}{
-  \begin{tabular}{ l l c@{\;}l l l l }
+  \centering
+  \begin{tabular}{ l @{\qquad\qquad} c @{\qquad\quad} c c }
     \toprule
-    & \textbf{Int.\ name} & \multicolumn{2}{l}{\textbf{Expression}} &
-    \textbf{Name} & \textbf{Properties} & \textbf{Eigenvalues} \\
+    & \textbf{Plain} & \textbf{Normalized} & \textbf{Stochastic} \\
     \midrule
-
-    \ref{sec:matrix.A} & \texttt{sym} & $\mathbf A$ && Adjacency m. &
-    Symmetric             			& $\alpha$ \\
-    \ref{sec:matrix.L} & \texttt{lap} & $\mathbf L$&$ = \mathbf D - \mathbf A$ & Laplacian m. &
-    Symmetric, positive-semidefinite  		& $\xi, a$ \\ 
-    \ref{sec:matrix.K} & \texttt{lapq} & $\mathbf K$&$ = \mathbf D + \mathbf A$ & Signless Laplacian m. &
-    Symmetric, positive-semidefinite            & $\chi$ \\
-
-    \midrule
-
-    \ref{sec:matrix.N} & \texttt{sym-n} & $\mathbf N$&$ = \mathbf D^{-\frac 12}\mathbf A\mathbf D^{-\frac 12}$ & Norm.\ adjacency m. &
-    Symmetric, eigenvalues in $[-1,+1]$		& $1$  \\
-    \ref{sec:matrix.Z} & * & $\mathbf Z$&$ = \mathbf I - \mathbf N$ & Norm.\ Laplacian m. &
-    Symmetric, eigenvalues in $[0,2]$		& $?,?$ \\
-    \ref{sec:matrix.C} & * & $\mathbf C$&$ = \mathbf I + \mathbf N$ & Norm.\ signless Laplacian m. &
-    Symmetric, eigenvalues in $[0,2]$		& $?$ \\
-
-    \midrule
-
-    \ref{sec:matrix.P} & \texttt{stoch1} & $\mathbf P$&$=\mathbf D^{-1}\mathbf A$ & Stoch.\ adjacency m. &
-    Right-stochastic, eigenvalues in $[-1,+1]$	& $\dagger$ \\
-    \ref{sec:matrix.S} & * & $\mathbf S$&$ =\mathbf I - \mathbf P$ & Stoch.\ Laplacian m. &
-    Eigenvalues in $[0,2]$			& $\dagger$ \\
-    \ref{sec:matrix.J} & * & $\mathbf J$&$ = \mathbf I + \mathbf P$ & Stoch.\ signless Laplacian m. &
-    Eigenvalues in $[0,2]$ 			& $\dagger$ \\
-    
-    \bottomrule
+    Adjacency matrix & $\mathbf A$ & $\mathbf N$ & $\mathbf P$ \\
+    Laplacian        & $\mathbf L$ & $\mathbf Z$ & $\mathbf S$ \\
+    Signless Laplacian & $\mathbf K$ & $\mathbf C$ & $\mathbf J$ \\
+    \bottomrule 
   \end{tabular}
-    }
-  }
-  * These decompositions can be derived from \texttt{sym-n} and
-  \texttt{stoch1} by a transformation of eigenvalues.  \\
-  $\dagger$ The eigenvalues of the stochastic matrices are identical to
-  the eigenvalues of their normalized analogues.  \\
-  (A) The largest absolute eigenvalues are considered. \\
-  (0) The smallest absolute eigenvalues are considered. 
 \end{table}
 
 In KONECT, these decompositions can be applied to directed graphs as well, in
@@ -2764,85 +2850,6 @@ symmetrically.  When the graph is not bipartite, then their distribution
 is not symmetric.  It follows that when the graph is bipartite, the
 smallest and largest eigenvalues have the same absolute value. 
 
-\subsubsection{Laplacian Matrix ($\mathbf L$)}
-\label{sec:matrix.L}
-The Laplacian matrix of an undirected graph is defined as
-\begin{align}
-  \mathnote{\texttt{lap}}
-  \mathbf L &= \mathbf D - \mathbf A,
-\end{align}
-i.e., the diagonal degree matrix from which we subtract the adjacency
-matrix.  The Laplacian matrix is also called the Kirchhoff matrix. 
-The Laplacian matrix is the discrete analogue of the Laplace operator
-ubiquitous in physics and other areas employing multivariate calculus.
-This operator is also simply called the Laplacian, and denoted $\Delta$ or
-$\nabla^2$.  In that context, the Laplacian matrix is also called the
-discrete Laplace operator. 
-Due to this equivalence, the Laplacian matrix $\mathbf L$
-has many uses in network analysis. 
-
-We consider the eigenvalue decomposition of the Laplacian:
-\begin{align}
-  \mathbf L &= \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T}
-\end{align}
-The Laplacian matrix of positive-semidefinite, i.e., all eigenvalues are
-nonnegative.  
-When the graph is unsigned, the smallest eigenvalue is zero and its
-multiplicity equals the number of connected components in the graph. 
-
-The second-smallest eigenvalue is called the algebraic connectivity of
-the graph, and is denoted $a = \lambda_2[\mathbf L]$ \citep{b652}.  If the graph is
-unconnected, that value is zero, i.e., an unconnected graph has an
-algebraic connectivity of zero. 
-
-When the graph is connected, the eigenvector corresponding to eigenvalue
-zero is a constant vector, i.e., a vector with all entries equal. The
-eigenvector corresponding the the second-smallest eigenvalue is called
-the Fiedler vector, and can be used to cluster nodes in the
-graph. Together with further eigenvectors, it can be used to draw
-graphs \citep{kunegis:signed-kernels}. 
-
-The Laplacian matrix $\mathbf L$ can be expressed in terms of the signed
-incidence matrix $\mathbf E^{\pm}$:
-\begin{align}
-  \mathbf L &= \mathbf E^{\pm} [\mathbf E^{\pm}]^{\mathrm T}
-\end{align}
-From this equality follows that $\mathbf L$ is positive-semidefinite.   
-Note that while the matrix $\mathbf E^{\pm}$ is called the signed
-incidence matrix, it is not related to signed graphs.  In fact, the
-equality only holds for unsigned, unweighted graphs. 
-
-\subsubsection{Signless Laplacian ($\mathbf K$)}
-\label{sec:signless-laplacian}
-\label{sec:matrix.K}
-The signless Laplacian of a graph is defined as the Laplacian of the
-corresponding graph in which all edges are interpreted as negative \citep{b900}.  It
-thus equals
-\begin{align}
-  \mathnote{\texttt{lapq}}
-  \mathbf K &= \mathbf D + \mathbf A.
-\end{align}
-The signless Laplacian is also denoted $\mathbf Q$. 
-It corresponds to the ordinary Laplacian
-$\mathbf L$ of the graph with inverted edge weights, i.e., $\mathbf K[G] =
-\mathbf L[-G]$. 
-
-This matrix is positive-semidefinite, and its smallest eigenvalue is
-zero if and only if at least one connected component of the graph is bipartite.  Thus, $\mathbf K$ is used
-in measures of bipartivity \citep[see e.g.][]{kunegis:bipartivity}.   We
-call this smallest eigenvalue the algebraic non-bipartivity $\chi =
-\lambda_{\min}[\mathbf K]$. 
-
-In unsigned graphs, the multiplicity of the eigenvalue zero equals the
-number of connected component that are bipartite.  
-In signed graphs, the multiplicity of the eigenvalue zero equals the
-number of connected components that are balanced after all their edges
-have been negated (i.e., switch between positive and negative). 
-
-In connected graphs (that are not necessarily bipartite), the smallest
-eigenvalue of $\mathbf K$ is a measure of the non-bipartivity of the
-graph. 
-
 \subsubsection{Normalized Adjacency Matrix ($\mathbf N$)}
 \label{sec:matrix.N}
 The normalized adjacency matrix $\mathbf N$ of an undirected graph is
@@ -2883,45 +2890,6 @@ to the square root of node degrees, i.e.,
 \end{align}
 Note that this equivalence only holds for undirected graphs.  For
 directed graphs, there is no such equivalence. 
-
-\subsubsection{Normalized Laplacian Matrix ($\mathbf Z$)}
-\label{sec:matrix.Z}
-The Laplacian matrix too, can be normalized.  It turns out that the
-normalized Laplacian and the normalized adjacency matrix
-are tighly related
-to each other:  They share the same set of eigenvectors, and their
-eigenvalues are reflections of each other.  
-
-The normalized Laplacian matrix of an undirected graph is defined as 
-\begin{align}
-  \mathbf Z &= \mathbf D^{-\frac 1 2} \mathbf L \mathbf D^{-\frac 1 2}.
-\end{align}
-As opposed to $\mathbf A$, $\mathbf L$ and $\mathbf N$, there is no
-standardized notation of the normalized Laplacian.  The notation
-$\mathbf Z$ is specific to KONECT, and was chosen as the letter Z
-resembles a turned letter N, and the matrices represented by those
-letters share eigenvectors and have flipped eigenvalues. 
-
-The normalized Laplacian is related to the normalized adjacency matrix
-by 
-\begin{align}
-  \mathbf Z &= \mathbf I - \mathbf N = \mathbf I - \mathbf D^{-\frac 1 2}
-  \mathbf A \mathbf D^{-\frac 1 2}, 
-\end{align}
-as can be derived directly from their definitions. 
-It follows that $\mathbf Z$ and $\mathbf N$ have the same set of
-eigenvectors, and that their eigenvalues are related by the
-transformation $1 - \lambda$. Thus, the properties of $\mathbf Z$ can be
-derived from those of $\mathbf N$. For instance, all eigenvalues of
-$\mathbf Z$ are contained in the range $[0, 2]$, and the multiplicity of
-the eigenvalue zero equals the number of connected components (when the
-graph is unsigned). If the undirected graph is connected, the eigenvector of
-eigenvalue zero contains entries proportional to the square root of the
-node degrees. 
-
-In KONECT, the decomposition of the normalized Laplacian is not
-included, since it can be derived from that of the normalized adjacency
-matrix. 
 
 \subsubsection{Stochastic Adjacency Matrix ($\mathbf P$)}
 \label{sec:matrix.P}
@@ -3005,6 +2973,93 @@ finds itself at node $v$.
 The matrix $\mathbf P$ is further related to the mean first-passage time
 (MFPT) on the network \citep{b880}.
 
+\subsubsection{Laplacian Matrix ($\mathbf L$)}
+\label{sec:matrix.L}
+The Laplacian matrix of an undirected graph is defined as
+\begin{align}
+  \mathnote{\texttt{lap}}
+  \mathbf L &= \mathbf D - \mathbf A,
+\end{align}
+i.e., the diagonal degree matrix from which we subtract the adjacency
+matrix.  The Laplacian matrix is also called the Kirchhoff matrix. 
+The Laplacian matrix is the discrete analogue of the Laplace operator
+ubiquitous in physics and other areas employing multivariate calculus.
+This operator is also simply called the Laplacian, and denoted $\Delta$ or
+$\nabla^2$.  In that context, the Laplacian matrix is also called the
+discrete Laplace operator. 
+Due to this equivalence, the Laplacian matrix $\mathbf L$
+has many uses in network analysis. 
+
+We consider the eigenvalue decomposition of the Laplacian:
+\begin{align}
+  \mathbf L &= \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T}
+\end{align}
+The Laplacian matrix of positive-semidefinite, i.e., all eigenvalues are
+nonnegative.  
+When the graph is unsigned, the smallest eigenvalue is zero and its
+multiplicity equals the number of connected components in the graph. 
+
+The second-smallest eigenvalue is called the algebraic connectivity of
+the graph, and is denoted $a = \lambda_2[\mathbf L]$ \citep{b652}.  If the graph is
+unconnected, that value is zero, i.e., an unconnected graph has an
+algebraic connectivity of zero. 
+
+When the graph is connected, the eigenvector corresponding to eigenvalue
+zero is a constant vector, i.e., a vector with all entries equal. The
+eigenvector corresponding the the second-smallest eigenvalue is called
+the Fiedler vector, and can be used to cluster nodes in the
+graph. Together with further eigenvectors, it can be used to draw
+graphs \citep{kunegis:signed-kernels}. 
+
+The Laplacian matrix $\mathbf L$ can be expressed in terms of the signed
+incidence matrix $\mathbf E^{\pm}$:
+\begin{align}
+  \mathbf L &= \mathbf E^{\pm} [\mathbf E^{\pm}]^{\mathrm T}
+\end{align}
+From this equality follows that $\mathbf L$ is positive-semidefinite.   
+Note that while the matrix $\mathbf E^{\pm}$ is called the signed
+incidence matrix, it is not related to signed graphs.  In fact, the
+equality only holds for unsigned, unweighted graphs. 
+
+\subsubsection{Normalized Laplacian Matrix ($\mathbf Z$)}
+\label{sec:matrix.Z}
+The Laplacian matrix too, can be normalized.  It turns out that the
+normalized Laplacian and the normalized adjacency matrix
+are tighly related
+to each other:  They share the same set of eigenvectors, and their
+eigenvalues are reflections of each other.  
+
+The normalized Laplacian matrix of an undirected graph is defined as 
+\begin{align}
+  \mathbf Z &= \mathbf D^{-\frac 1 2} \mathbf L \mathbf D^{-\frac 1 2}.
+\end{align}
+As opposed to $\mathbf A$, $\mathbf L$ and $\mathbf N$, there is no
+standardized notation of the normalized Laplacian.  The notation
+$\mathbf Z$ is specific to KONECT, and was chosen as the letter Z
+resembles a turned letter N, and the matrices represented by those
+letters share eigenvectors and have flipped eigenvalues. 
+
+The normalized Laplacian is related to the normalized adjacency matrix
+by 
+\begin{align}
+  \mathbf Z &= \mathbf I - \mathbf N = \mathbf I - \mathbf D^{-\frac 1 2}
+  \mathbf A \mathbf D^{-\frac 1 2}, 
+\end{align}
+as can be derived directly from their definitions. 
+It follows that $\mathbf Z$ and $\mathbf N$ have the same set of
+eigenvectors, and that their eigenvalues are related by the
+transformation $1 - \lambda$. Thus, the properties of $\mathbf Z$ can be
+derived from those of $\mathbf N$. For instance, all eigenvalues of
+$\mathbf Z$ are contained in the range $[0, 2]$, and the multiplicity of
+the eigenvalue zero equals the number of connected components (when the
+graph is unsigned). If the undirected graph is connected, the eigenvector of
+eigenvalue zero contains entries proportional to the square root of the
+node degrees. 
+
+In KONECT, the decomposition of the normalized Laplacian is not
+included, since it can be derived from that of the normalized adjacency
+matrix. 
+
 \subsubsection{Stochastic Laplacian Matrix ($\mathbf S$)}
 \label{sec:matrix.S}
 A further variant of the Laplacian exists, based on the stochastic
@@ -3025,6 +3080,45 @@ proportional to the node degrees.  For connected graphs, the largest
 eigenvalue of $\mathbf S$ is two if and only if the graph is bipartite.
 In the general case, the eigenvalue two has a multiplicity equal to the
 number of connected components that are bipartite. 
+
+\subsubsection{Signless Laplacian ($\mathbf K$)}
+\label{sec:signless-laplacian}
+\label{sec:matrix.K}
+\label{sec:matrix.C}
+\label{sec:matrix.J}
+The signless Laplacian of a graph is defined as the Laplacian of the
+corresponding graph in which all edges are interpreted as negative \citep{b900}.  It
+thus equals
+\begin{align}
+  \mathnote{\texttt{lapq}}
+  \mathbf K &= \mathbf D + \mathbf A.
+\end{align}
+The signless Laplacian is also denoted $\mathbf Q$. 
+It corresponds to the ordinary Laplacian
+$\mathbf L$ of the graph with inverted edge weights, i.e., $\mathbf K[G] =
+\mathbf L[-G]$. 
+
+This matrix is positive-semidefinite, and its smallest eigenvalue is
+zero if and only if at least one connected component of the graph is bipartite.  Thus, $\mathbf K$ is used
+in measures of bipartivity \citep[see e.g.][]{kunegis:bipartivity}.   We
+call this smallest eigenvalue the algebraic non-bipartivity $\chi =
+\lambda_{\min}[\mathbf K]$. 
+
+In unsigned graphs, the multiplicity of the eigenvalue zero equals the
+number of connected component that are bipartite.  
+In signed graphs, the multiplicity of the eigenvalue zero equals the
+number of connected components that are balanced after all their edges
+have been negated (i.e., switch between positive and negative). 
+
+In connected graphs (that are not necessarily bipartite), the smallest
+eigenvalue of $\mathbf K$ is a measure of the non-bipartivity of the
+graph. 
+
+The signless Laplacian exists in the following two normalized variants:
+\begin{align}
+  \mathbf C &= \mathbf I + \mathbf D^{-\frac 12}\mathbf A\mathbf D^{-\frac 12} \\
+  \mathbf J &= \mathbf I + \mathbf D^{-1} \mathbf A
+\end{align}
 
 \subsection{Decompositions of Signed Graphs}
 In this subsection, we review matrices and decompositions that apply to
@@ -3080,6 +3174,7 @@ smallest eigenvalue of $\mathbf L$ is zero if and only if at least one
 connected component is balanced.  
 
 \subsubsection{Repulsive Matrices}
+\label{sec:matrix.repulsive}
 The Laplacian matrix $\mathbf L = \mathbf D - \mathbf A$ as defined
 earlier is based on the the degree matrix $\mathbf D$, whose diagonal
 elements equal the sum of absolute weights of all edges incident to each
@@ -3191,7 +3286,10 @@ are identical.
 
 The largest absolute eigenvalue $\pi=|\Lambda_{11}|$ is zero if and only
 if the directed graph is acyclic.  We call it the cyclic eigenvalue in
-KONECT. 
+KONECT.  
+In the general case, the eigenvalues of the asymmetric $\mathbf A$ may
+be complex; if they are, they come in complex conjugate pairs. (This is
+a consequence of the fact that the matrix $\mathbf A$ itself is real.)
 
 \subsubsection{Eigenvectors (Normalized)}
 This corresponds to finding the eigenvectors of the asymmetric matrix
@@ -3200,6 +3298,7 @@ $\mathbf N$.
 The same comments as for the non-normalized case apply. 
 
 \subsubsection{Skew Adjacency Matrix ($\mathbf Y$)}
+\label{sec:matrix.skew}
 While an asymmetric matrix $\mathbf A$ may be transformed to $\mathbf A
 + \mathbf A^{\mathrm T}$ to give a symmetric matrix, we can also use
 $\mathbf Y = \mathbf A - \mathbf A^{\mathrm T}$ to get a skew-symmetric matrix.  A
@@ -3258,6 +3357,7 @@ which has purely real eigenvalues distributed symmetrically around
 zero. 
 
 \subsubsection{Normalized Skew Adjacency Matrix}
+\label{sec:matrix.skewn}
 This corresponds to the matrix
 \begin{align}
   \mathnote{\texttt{skewn}}
