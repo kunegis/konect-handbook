@@ -362,6 +362,7 @@ the types of objects represented by nodes and links.
 The full list of networks is given
 online.\footnote{\href{http://konect.cc/networks/}{http://konect.cc/networks/}}  
 
+\subsection{Format}
 The format of a network is always one of the following.  The network
 formats are summarized in Table~\ref{tab:format}. 
 \begin{itemize}
@@ -420,6 +421,7 @@ formats are summarized in Table~\ref{tab:format}.
 }
 \end{table}
 
+\subsection{Weights}
 The edge weight and multiplicity types of networks are represented by
 one of the following eight types. 
 The types of edge weights and multiplicities are summarized in
@@ -473,23 +475,6 @@ Table~\ref{tab:weights}.
   temporal. Individual edges are not weighted. 
 \end{itemize}
 
-Furthermore, networks can one one more property: 
-\begin{itemize}
-\item \textbf{Temporal networks} (\Clocklogo) include a timestamp for each
-  edge, and thus the network can be reconstructed for any moment in the
-  past.  By default, the timestamp is in Unix time, and gives one
-  timestamp to each edge, denoting when that edge was added, or when the
-  event represented by the edge took place.  
-  It is unspecified whether timestamps include or not leap seconds.  In
-  practice, no dataset has precise enough information for that to matter.
-  When the tag
-  \texttt{\#unspecifiedtime} is set, the timestamps are not in Unix
-  time, but rather in an unspecified monotonous time scale. 
-  The fact that a network is temporal is not saved in any special
-  location, but is determined by the fact that timestamps are present in
-  the TSV file, as will be described later. 
-\end{itemize}
-
 \begin{table}
   \caption{
     The edge weight and multiplicity types allowed in KONECT. Each
@@ -525,6 +510,24 @@ Furthermore, networks can one one more property:
   }
 \end{table}
 
+\subsection{Temporal Networks}
+Furthermore, networks can one one more property: 
+\begin{itemize}
+\item \textbf{Temporal networks} (\Clocklogo) include a timestamp for each
+  edge, and thus the network can be reconstructed for any moment in the
+  past.  By default, the timestamp is in Unix time, and gives one
+  timestamp to each edge, denoting when that edge was added, or when the
+  event represented by the edge took place.  
+  It is unspecified whether timestamps include or not leap seconds.  In
+  practice, no dataset has precise enough information for that to matter.
+  When the tag \texttt{\#unspecifiedtime} is set, the timestamps are not in Unix
+  time, but rather in an unspecified monotonous time scale. 
+  The fact that a network is temporal is not saved in any special
+  location, but is determined by the fact that timestamps are present in
+  the TSV file, as will be described later. 
+\end{itemize}
+
+\subsection{Categories}
 Finally, the network categories classify networks by the type of data they
 represent.  
 An overview of the categories is given in Table~\ref{tab:categories}. 
@@ -785,6 +788,7 @@ An overview of the categories is given in Table~\ref{tab:categories}.
 Note that the category system of KONECT is in flux.  As networks are
 added to the collection, large categories are split into smaller ones. 
 
+\subsection{What Is and Is Not a Network}
 We do not include certain kinds of networks that lack a complex
 structure. This includes networks without a giant connected component,
 in which most nodes are not reachable from each other, and trees, in
@@ -810,9 +814,9 @@ Certain other types of structures are equivalent to networks.  For
 instance, hypergraphs, in which each hyperedge may include any number of
 nodes, can be presented equivalently as bipartite graphs, up to certain
 small differences.  The same holds e.g.\ for partially-ordered sets and
-directed graphs.  In KONECT, we usually chose the ``network'' aspect. 
+directed graphs.  In KONECT, we choose the ``network'' aspect to model those. 
 
-\subsection{List of Groups}
+\subsection{Groups}
 \label{sec:groups}
 Types of networks are separated into groups, as given in
 Table~\ref{tab:groups}. 
@@ -2627,6 +2631,7 @@ statistics.
     The transpose of the stochastic matrices are not shown; they are
     left-stochastic and are analogous to the shown right-stochastic
     variants. 
+    Question marks indicate aspects we have not yet investigated. 
   }
   \makebox[\textwidth]{
     \scalebox{0.8}{
@@ -2689,39 +2694,53 @@ statistics.
 
     \midrule \midrule
 
-    \ref{sec:matrix.A} & $\mathbf{\bar A}$&$=\mathbf A+\mathbf A^{\mathrm T}$ & \texttt{sym} & Symmetric adjacency m. &
+    \ref{sec:matrix.A} & $\mathbf{\bar A}$&$=\vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T}$ & \texttt{sym} & Symmetric adjacency m. &
     Sym 		& $\ldots, \alpha$ \texttt{snorm} \\
-    \ref{sec:matrix.N} & $\mathbf{\bar N}$&$=\mathbf D^{-\frac 12}(\mathbf A+\mathbf A^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{sym-n} & Norm.\ adjacency m. &
+    \ref{sec:matrix.N} & $\mathbf{\bar N}$&$=\mathbf D^{-\frac 12}(\vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{sym-n} & Symmetric norm.\ adjacency m. &
     Sym 		& $-1+?, \ldots, 1-?, 1-?$  \\
-    \ref{sec:matrix.P} & $\mathbf{\bar P}$&$=\mathbf D^{-1}(\mathbf A+\mathbf A^{\mathrm T})$ & \texttt{stoch1} & Symmetric stoch.\ adjacency m. &
+    \ref{sec:matrix.P} & $\mathbf{\bar P}$&$=\mathbf D^{-1}(\vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T})$ & \texttt{stoch1} & Symmetric stoch.\ adjacency m. &
     Right-stoch\textsuperscript{1} 	& $\lambda[\mathbf{\bar N}]$ \\
 
     \midrule
 
-    \ref{sec:matrix.L} & $\mathbf{\bar L}$&$ = \mathbf D - (\mathbf A+\mathbf A^{\mathrm T})$ & \texttt{lap} & Symmetric Laplacian &
+    \ref{sec:matrix.L} & $\mathbf{\bar L}$&$ = \mathbf D - (\vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T})$ & \texttt{lap} & Symmetric Laplacian &
     Sym 		& $0\leq \xi$ \texttt{conflict}, $a$ \texttt{alcon}, $\ldots, ?$ \\ 
-    \ref{sec:matrix.Z} & $\mathbf{\bar Z}$&$ = \mathbf I - \mathbf D^{-\frac 12}(\mathbf A+\mathbf A^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{*} $\mathbf{\bar N}$ & Symmetric norm.\ Laplacian &
+    \ref{sec:matrix.Z} & $\mathbf{\bar Z}$&$ = \mathbf I - \mathbf D^{-\frac 12}(\vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{*} $\mathbf{\bar N}$ & Symmetric norm.\ Laplacian &
     Sym 		& $1-\lambda[\mathbf{\bar N}]$ \\
-    \ref{sec:matrix.S} & $\mathbf{\bar S}$&$ = \mathbf I - \mathbf D^{-1}(\mathbf A+\mathbf A^{\mathrm T})$ & \texttt{*} $\mathbf{\bar P}$ & Stoch.\ Laplacian &
+    \ref{sec:matrix.S} & $\mathbf{\bar S}$&$ = \mathbf I - \mathbf D^{-1}(\vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T})$ & \texttt{*} $\mathbf{\bar P}$ & Symmetric stoch.\ Laplacian &
     Row sum = 0\textsuperscript{1}    	& $1-\lambda[\mathbf{\bar N}]$ \\
 
     \midrule
 
-    \ref{sec:matrix.K} & $\mathbf{\bar K}$&$ = \mathbf D + \mathbf A+\mathbf A^{\mathrm T}$ & \texttt{lapq} & Symmetric signless Laplacian &
+    \ref{sec:matrix.K} & $\mathbf{\bar K}$&$ = \mathbf D + \vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T}$ & \texttt{lapq} & Symmetric signless Laplacian &
     Sym      		& $0\leq \chi$ \texttt{nonbipal}$, ?, \ldots, ?$ \\
-    \ref{sec:matrix.C} & $\mathbf{\bar C}$&$ = \mathbf I + \mathbf D^{-\frac 12}(\mathbf A+\mathbf A^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{*} $\mathbf{\bar N}$ & Symmetric norm.\ signless Laplacian &
+    \ref{sec:matrix.C} & $\mathbf{\bar C}$&$ = \mathbf I + \mathbf D^{-\frac 12}(\vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{*} $\mathbf{\bar N}$ & Symmetric norm.\ signless Laplacian &
     Sym 		& $1+\lambda[\mathbf{\bar N}]$ \\
-    \ref{sec:matrix.J} & $\mathbf{\bar J}$&$ = \mathbf I + \mathbf D^{-1}(\mathbf A+\mathbf A^{\mathrm T})$ & \texttt{*} $\mathbf{\bar P}$ & Symmetric stoch.\ signless Laplacian &
+    \ref{sec:matrix.J} & $\mathbf{\bar J}$&$ = \mathbf I + \mathbf D^{-1}(\vec{\mathbf A}+\vec{\mathbf A}^{\mathrm T})$ & \texttt{*} $\mathbf{\bar P}$ & Symmetric stoch.\ signless Laplacian &
     Row sum = 2\textsuperscript{1} & $1+\lambda[\mathbf{\bar N}]$ \\
 
     \midrule \midrule
     
-    \ref{sec:matrix.skew} & $\mathbf{\acute A}$&$=i\mathbf Y=i(\mathbf A-\mathbf A^{\mathrm T})$& \texttt{skewi} & Skew-Hermitian Adjacency m. &
+    \ref{sec:matrix.skew} & $\mathbf{\acute A}$&$=i\mathbf Y=i(\vec{\mathbf A}-\vec{\mathbf A}^{\mathrm T})$& \texttt{skewi} & Skew-Hermitian Adjacency m. &
     Skew-Herm. 		& ? \\
-    \ref{sec:matrix.skewn} & $\mathbf{\acute N}$&$=i\mathbf D^{-\frac 12}(\mathbf A-\mathbf A^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{skewin} & Skew-Hermitian norm.\ adjacency m. &
+    \ref{sec:matrix.skewn} & $\mathbf{\acute N}$&$=i\mathbf D^{-\frac 12}(\vec{\mathbf A}-\vec{\mathbf A}^{\mathrm T})\mathbf D^{-\frac 12}$ & \texttt{skewin} & Skew-Hermitian norm.\ adjacency m. &
     Skew-Herm., ? 		& ?  \\
-    ? & $\mathbf{\acute P}$&$ = i\mathbf D^{-1}(\mathbf A-\mathbf A^{\mathrm T})$ & \texttt{?} & Skew-Hermitian stoch.\ adjacency m. &
+    ? & $\mathbf{\acute P}$&$ = i\mathbf D^{-1}(\vec{\mathbf A}-\vec{\mathbf A}^{\mathrm T})$ & \texttt{?} & Skew-Hermitian stoch.\ adjacency m. &
     ? 	& $\lambda[\mathbf{\acute N}]$ \\
+
+    \midrule \midrule
+    
+    \ref{sec:matrix.diag}, \ref{sec:matrix.svd} & $\vec{\mathbf A}$ && \texttt{diag;svd} & Unidirectional adjacency m. &
+    &  $\ldots, \pi$ \texttt{maxdiag}; ? \\
+    \ref{sec:decomposition.svd-n}, \ref{sec:matrix.diag-n} & $\vec{\mathbf N}$&$=\mathbf D_1^{-\frac 12}\vec{\mathbf A}\mathbf D_2^{-\frac 12}$ & \texttt{diag-n;svd-n} & Unidirectional norm.\ adjacency m. &
+    & ?; ?  \\
+    ?;? & $\vec{\mathbf P}$&$ = \mathbf D_1^{-1}\vec{\mathbf A}$ & \texttt{stoch1;?} & Unidirectional stoch.\ adjacency m. &
+    Right-stoch\textsuperscript{1} 	& ? \\
+
+    \midrule
+
+    \ref{sec:decomposition.lapdiag2};? & $\mathbf L$&$ = \mathbf D_1 - \vec{\mathbf A}$ & \texttt{lapdiag2;?} & Unidirectional Laplacian &
+    & ? \\ 
 
     \bottomrule
   \end{tabular}
@@ -3226,13 +3245,24 @@ The use of the repulsive matrices is rare, and we have not seen uses of
 any beyond $\mathbf{\hat L}$ in the wild.  
 
 \subsection{Decompositions of Directed Graphs}
-In directed graphs, the adjacency matrix $\mathbf A$ is itself
+In directed graphs, the adjacency matrix is itself
 asymmetric, and there is no special half-adjacency matrix.  Since the
 adjacency matrix is symmetric, decompositions are more complex.  For
-instance, $\mathbf A$ is not normal in the general case, and therefore
+instance, the adjacency is not normal in the general case, and therefore
 there is no simply defined eigenvalue decomposition anymore. 
 
+For directed graphs, there is an ambiguity about the meaning of the
+matrix $\mathbf A$:  It may refer to the (generally asymmetric)
+adjacency matrix, or to its symmetrized variants.  As a general rule in
+KONECT, in contexts in which all graphs (directed and undirected) are
+considered, $\mathbf A$ is always symmetric.  To avoid ambiguities in
+this section, we use $\vec{\mathbf A}$ for the (generally asymmetric)
+adjacency matrix, and $\mathbf{\bar A}=\vec{\mathbf A}+\mathbf
+A^{\mathrm T}$ for the symmetric variant.  When a bare $\mathbf A$ is
+used, it is equal to $\vec{\mathbf A}$. 
+
 \subsubsection{Singular Value Decomposition}
+\label{sec:matrix.svd}
 The singular value decomposition is defined for any matrix, including
 those that are not symmetric, and even those that are not quadratic.
 Thus, it can be applied to the adjacency matrix of directed graphs. 
@@ -3253,6 +3283,7 @@ The largest singular value, i.e., $\Sigma_{11}$, equals the graphs
 operator 2-norm $\nu$. 
 
 \subsubsection{Normalized Adjacency Matrix}
+\label{sec:decomposition.svd-n}
 The adjacency matrix can be normalized for directed network, in the same
 way as for undirected networks.
 \begin{align}
@@ -3268,7 +3299,8 @@ value decomposition, too:
   \mathbf N &= \mathbf U \mathbf \Sigma \mathbf V^{\mathrm T}
 \end{align}
 
-\subsubsection{Eigenvectors}
+\subsubsection{Eigenvectors and Eigenvalues}
+\label{sec:matrix.diag}
 While the eigenvalue decomposition is not defined in the general case
 for an asymmetric matrix $\mathbf A$, its eigenvectors and eigenvalues
 are well-defined, if we distinguish between left and right
@@ -3291,11 +3323,17 @@ In the general case, the eigenvalues of the asymmetric $\mathbf A$ may
 be complex; if they are, they come in complex conjugate pairs. (This is
 a consequence of the fact that the matrix $\mathbf A$ itself is real.)
 
-\subsubsection{Eigenvectors (Normalized)}
+\subsubsection{Eigenvectors and Eigenvalues (Normalized)}
+\label{sec:matrix.diag-n}
 This corresponds to finding the eigenvectors of the asymmetric matrix
 $\mathbf N$. 
 \marginpar{\texttt{diag-n}}
 The same comments as for the non-normalized case apply. 
+
+\subsubsection{Stochastic Adjacency Matrix ($\mathbf P$)}
+The matrix $\mathbf P$ can be defined in the directed case in the same
+way as for undirected graphs.  Properties given in Section
+\ref{sec:matrix.P} remain valid. 
 
 \subsubsection{Skew Adjacency Matrix ($\mathbf Y$)}
 \label{sec:matrix.skew}
@@ -3459,19 +3497,21 @@ and therefore has real spectrum.  As is the ordinary Laplacian matrix,
 the magnetic Laplacian matrix is positive-semidefinite, i.e., all
 eigenvalues are nonnegative, for all values of $\theta$. 
 
-\subsubsection{Alternative Directed Laplacian}
+\subsubsection{Unidirectional Laplacian}
+\label{sec:decomposition.lapdiag2}
 This is the generally non-normal matrix
 \begin{align}
-  \mathnote{\texttt{lapdiag}}
-  \mathbf{\hat L} &= \mathbf D - \mathbf A, 
+  \mathnote{\texttt{lapdiag2}}
+  \vec{\mathbf L} &= \mathbf D_1 - \vec{\mathbf A}, 
 \end{align}
-where $\mathbf D$ is the usual diagonal degree matrix, and $\mathbf A$
+where $\mathbf D_1$ is the diagonal outdegree matrix, and $\vec{\mathbf A}$
 is the generally asymmetric adjacency matrix of the given directed
-graph. 
+graph.  
 
 This matrix is in general non-normal and as such its eigenvalue
 decomposition cannot be considered.  However, the eigenvalues and
-eigenvectors are well-defined. 
+eigenvectors are well-defined.  The eigenvalues have nonnegative real
+part, and are either real, or come in complex conjugate pairs. 
 
 \subsubsection{Decomposition into Directed Components}
 DEDICOM (decomposition into directed components) refers to a class of
