@@ -423,7 +423,7 @@ formats are summarized in Table~\ref{tab:format}.
 
 \subsection{Weights}
 The edge weight and multiplicity types of networks are represented by
-one of the following eight types. 
+one of the following types. 
 The types of edge weights and multiplicities are summarized in
 Table~\ref{tab:weights}. 
 \begin{itemize}
@@ -436,14 +436,14 @@ Table~\ref{tab:weights}.
   \marginpar{\texttt{positive}}
   two nodes can be
   connected by any number of edges, and all edges are unweighted. This
-  type of network is also called a multi  
+  type of network is also called a multigraph.  
 \item In a \textbf{positive network} ($+$), 
   \marginpar{\texttt{posweighted}}
   edges are annotated
   with positive weights, and only a single edge is allowed between
-  any node pair.  The weight zero identified with the lack of an edge
+  any node pair.  The weight of zero is identified with the lack of an edge
   and thus, we require that each edge has a weight strictly larger than
-  zero. 
+  zero, except when the special tag \texttt{\#zeroweight} is defined.
 \item In a \textbf{signed network} ($\pm$), 
   \marginpar{\texttt{signed}}
   both positive and negative edges are 
@@ -511,7 +511,7 @@ Table~\ref{tab:weights}.
 \end{table}
 
 \subsection{Temporal Networks}
-Furthermore, networks can one one more property: 
+Furthermore, networks can have one more property: 
 \begin{itemize}
 \item \textbf{Temporal networks} (\Clocklogo) include a timestamp for each
   edge, and thus the network can be reconstructed for any moment in the
@@ -789,8 +789,12 @@ Note that the category system of KONECT is in flux.  As networks are
 added to the collection, large categories are split into smaller ones. 
 
 \subsection{What Is and Is Not a Network}
-We do not include certain kinds of networks that lack a complex
-structure. This includes networks without a giant connected component,
+While the KONECT motto asserts that \emph{everything is a network}, this
+does not imply that everything is a complex network.  Thus, certain networks
+have a structure that is trivial in a way that render many network
+analysis methods moot.  In KONECT, 
+we do not include such networtks.
+This includes networks without a giant connected component,
 in which most nodes are not reachable from each other, and trees, in
 which there is only a single path between any two nodes.  Note that
 bipartite relationships extracted from n-to-1 relationships are
@@ -813,13 +817,17 @@ component trivially has a diameter of two or less.
 Certain other types of structures are equivalent to networks.  For
 instance, hypergraphs, in which each hyperedge may include any number of
 nodes, can be presented equivalently as bipartite graphs, up to certain
-small differences.  The same holds e.g.\ for partially-ordered sets and
+small differences described in Section~\ref{sec:definitions}.  The same holds e.g.\ for partially-ordered sets and
 directed graphs.  In KONECT, we choose the ``network'' aspect to model those. 
 
 \subsection{Groups}
 \label{sec:groups}
 Types of networks are separated into groups, as given in
-Table~\ref{tab:groups}. 
+Table~\ref{tab:groups}.
+Each groups represents a combination of metadata nased on network
+format, weights and other attributes.  The importance of groups is that
+for most network analysis methods, we can specify to which groups of
+networks they apply. 
 
 \begin{table}
   \centering
@@ -873,14 +881,15 @@ The following tags can be given to networks.  They are declared in the
   the degree distribution are not meaningful, since they may
   depend on which parts are missing.  In practice, many datasets
   fall into this category, and they are not always excluded. 
-\item \texttt{\#join}:  The network is actually the join of more
+\item \texttt{\#join}:  The network is actually the join (in the
+  database-theoretical sense) of more
   fundamental networks.  For instance, a co-authorship network
   is a join of the authorship network with itself.  In general, all
   networks that can be described as being a \emph{co-X} network are of
   this type. 
-  Networks
-  that have this tag may have skewed properties, such as skewed
-  degree distributions.
+  Networks that have this tag may have skewed properties, such as skewed
+  degree distributions.  In KONECT, we recommend to \emph{not} generate
+  the join of a given network, but to publish the underlying network itself. 
 \item \texttt{\#kcore}: The network contains only nodes with a
   certain minimal degree $k$. In other words, the nodes with
   degree less than a certain number $k$ were removed from the
@@ -967,6 +976,15 @@ basic definitions used within KONECT, including in the rest of this handbook.
 A general mathematical reference for basic definitions used in graph
 theory is given by a book by Bollobás \citeyearpar{b116}.  
 
+To give an example of the inconsistency across different discipline, the
+degree of a node (the number of neighbors it has) is usually denoted $d$
+in mathematics, but $k$ in certain other fields, in particular physics
+and network science.  In KONECT we have chosen to always denote it $d$.
+Similar choice have been made for other symbols.  For the sake of
+completeness, we give the definition as used in KONECT, then mention
+other commonly used symbols; the rest of the handbook and KONECT as a
+whole then uses the symbol defined initially. 
+
 \subsection{Graphs}
 Graphs will be denoted as $G=(V,E)$, in which $V$ is the set of
 vertices, and $E$ is the set of edges. Without loss of
@@ -984,7 +1002,7 @@ that two directed edges of opposite orientation exist between $u$ and $v$.
 We say that an
 edge is incident to a vertex if the edge touches the vertex. Strictly
 speaking, an edge $e$ is incident to node $u$ when $u\in e$, but this
-notation may confusing and we avoid it. 
+notation may be confusing and we avoid it. 
 
 We also allow loops, i.e., edges of the form $\{u,u\}=\{u\}$.  Loops
 appear for instance in email networks, where it is possible to send an
@@ -1004,7 +1022,7 @@ to it) or none at all (counting the number other nodes that are
 neighbours).  
 
 Most of the time, we work with only one given graph, and therefore it is
-unambigous with node and edge set are meant by $V$ and $E$.  When
+unambigous which node and edge set are meant by $V$ and $E$.  When
 ambiguity is possible, we will use the notation
 $V[G]$ and $E[G]$ to denote the vertex and edge sets of a graph $G$.
 This notation using brackets may occasionally be extended to other graph
