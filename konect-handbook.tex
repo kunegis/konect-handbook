@@ -2590,6 +2590,10 @@ statistics.
   \caption{
     \label{tab:matcross} Matrices that characterize networks.  All shown
     cases include weighted and signed graphs. 
+    All matrices shown here are written with a diacritic or a subscript.
+    When used without, $\mathbf{\bar X}$ is meant for undirected graphs,
+    and $\vec{\mathbf X}$ for undirected graphs; hence the need to use
+    diacritics when covering both types of networks. 
   }
   \makebox[\textwidth]{
   \begin{tabular}{ l l c@{\;}l c@{\;}l c }
@@ -2597,9 +2601,9 @@ statistics.
     & \textbf{Name} 					& \multicolumn{2}{l}{\textbf{Plain}}      & \multicolumn{2}{l}{\textbf{Normalized}} & \textbf{Stochastic} \\
     \midrule
     \multirow{6}{*}{\textbf{Undirected}} 
-    & Adjacency matrix    				& $\mathbf A$         && $\mathbf N$ && $\mathbf P$ \\
-    & Laplacian 					& $\mathbf L$         && $\mathbf Z$ && $\mathbf S$ \\
-    & Signless Laplacian				& $\mathbf K$         && $\mathbf C$ && $\mathbf J$ \\
+    & Adjacency matrix    				& $\mathbf{\bar A}$         && $\mathbf{\bar N}$ && $\mathbf{\bar P}$ \\
+    & Laplacian 					& $\mathbf{\bar L}$         && $\mathbf{\bar Z}$ && $\mathbf{\bar S}$ \\
+    & Signless Laplacian				& $\mathbf{\bar K}$         && $\mathbf{\bar C}$ && $\mathbf{\bar J}$ \\
     \cmidrule(lr){2-7}
     & Repulsive adjacency matrix\textsuperscript{1} 	& $\mathbf{\hat A}$   && $\mathbf{\hat N}$ && $\mathbf{\hat P}$ \\
     & Repulsive Laplacian$\dagger$\textsuperscript{2}	& $\mathbf{\hat L}$   && $\mathbf{\hat Z}$ && $\mathbf{\hat S}$\\
@@ -2622,12 +2626,12 @@ statistics.
     & Magnetic Laplacian				& $\mathbf L_{\theta}$  && \\
     & Magnetic signless Laplacian			& $\mathbf K_{\theta}$  && \\
     \cmidrule(lr){2-7}
-    & Unidirectional adjacency matrix$\dagger$		& $\mathbf A$   && $\mathbf N$ && $\mathbf P$ \\
-    & Unidirectional Laplacian$\dagger$			& $\mathbf L$   && $\mathbf Z$ && $\mathbf S$ \\
-    & Unidirectional signless Laplacian$\dagger$	& $\mathbf K$   && \\
+    & Unidirectional adjacency matrix$\dagger$		& $\vec{\mathbf A}$   && $\vec{\mathbf N}$ && $\vec{\mathbf P}$ \\
+    & Unidirectional Laplacian$\dagger$			& $\vec{\mathbf L}$   && $\vec{\mathbf Z}$ && $\vec{\mathbf S}$ \\
+    & Unidirectional signless Laplacian$\dagger$	& $\vec{\mathbf K}$   && $\vec{\mathbf C}$ && $\vec{\mathbf J}$ \\
     \midrule
     \multirow{1}{*}{\textbf{Bipartite}} 
-    & Biadjacency matrix*				& $\mathbf{\breve A}$&$=\mathbf B$ & $\mathbf{\breve N}$&$=\mathbf M$ & $\times$ \\
+    & Biadjacency matrix*				& $\mathbf{\grave A}$&$=\mathbf B$ & $\mathbf{\grave N}$&$=\mathbf M$ & $\times$ \\
     \bottomrule
   \end{tabular}
   }
@@ -2757,7 +2761,7 @@ statistics.
 
     \midrule
 
-    \ref{sec:decomposition.lapdiag2};? & $\mathbf L$&$ = \mathbf D_1 - \vec{\mathbf A}$ & \texttt{lapdiag2;?} & Unidirectional Laplacian &
+    \ref{sec:decomposition.lapdiag2};? & $\vec{\mathbf L}$&$ = \mathbf D_1 - \vec{\mathbf A}$ & \texttt{lapdiag2;?} & Unidirectional Laplacian &
     & ? \\ 
 
     \bottomrule
