@@ -33,6 +33,7 @@
 \usepackage{longtable}
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage{geometry}
 
 \newcommand{\wPlot}{0.45\textwidth}
 \newcommand{\wFull}{0.95\textwidth}
@@ -60,8 +61,8 @@
 \begin{document}
 
 \title{
-  \includegraphics[width=3cm]{konect-logo} \\
-  \vspace{1cm}
+  \includegraphics[width=2.8cm]{konect-logo} \\
+  \vspace{0.9cm}
          {\Huge Handbook of Network Analysis\footnote{This handbook is
              continuously updated; an up-to-date version can always be found at
          \href{https://github.com/kunegis/konect-handbook/raw/master/konect-handbook.pdf}{https://github.com/kunegis/konect-handbook/raw/master/konect-handbook.pdf}.}} \\
@@ -75,25 +76,33 @@
   naXys -- Namur Center for Complex Systems 
 }
 
+\newgeometry{top=4cm}
 \maketitle
 
 \section*{Abstract}
 This is the handbook for the KONECT project, a scientific project to
 archive network datasets, compute systematic network theoretic
 statistics about them, visualize their properties, and provide
-corresponding data and Free Software tools to researchers in all related
-fields of research related to network analysis and graph mining, by
+corresponding data and Free Software tools to programmers, researchers and teachers in 
+fields related to network analysis and graph mining, by
 Jérôme Kunegis at the Namur Center for Complex Systems (naXys) at the
 University of Namur, Belgium.  The name \emph{KONECT} stands for
 \emph{\underline{Ko}blenz \underline{Ne}twork \underline{C}ollec\underline{t}ion}, as parts of the KONECT project
 were initiated for the PhD thesis of Jérôme Kunegis at
-the University of Koblenz--Landau in Germany \citeyearpar{kunegis:phd}.  This handbook
+the University of Koblenz--Landau in Germany \citeyearpar{kunegis:phd}.  
+This handbook
 documents all methods, definitions and conventions used in the project,
 and serves as a general handbook of network mining, with an emphasis on
 spectral graph theoretical methods, i.e., such methods that are based on
 the use of specific characteristic matrices of graphs. 
-
+KONECT datasets and code is used in academia as the basis for research
+on real-world datasets, in education as the basis for teaching, and
+in particular it serves as the basis for research projects with the goal
+to study large numbers of network datasets.  KONECT borrows 
+datasets from many sources in and outside academia, and lends itself
+datasets to other network dataset collection projects. 
 \thispagestyle{empty}
+\restoregeometry
 \newpage
 
 \section{Introduction}
