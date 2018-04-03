@@ -884,6 +884,13 @@ The following tags can be given to networks.  They are declared in the
   considered when performing time-based methods and plots.  In most
   cases, this value is zero, but it can just as well be -1 or the most
   negative integer of the integer type used when creating the dataset. 
+\item \texttt{\#clique}:  All possible edges are present, i.e., the
+  graph is complete.  This is \emph{not} the opposite of
+  \texttt{\#incomplete}.  Which edges are taken into account depends on
+  the type of graph, i.e., whether the graph is bipartite, directed,
+  allows loops.  This does not take into account edge weights and
+  multiplicities, and in fact this tag only really makes sense when
+  those are present. 
 \item \texttt{\#incomplete}: The network is incomplete, i.e.,
   not all edges or nodes are included.  This implies that
   strictly speaking, certain statistics or plots like 
