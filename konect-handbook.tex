@@ -1327,6 +1327,12 @@ defined as
 \begin{align}
   \mathbf L = \mathbf D - \mathbf A. 
 \end{align}
+The term \emph{Laplacian matrix} is also used in a wider sense to refer
+to similar matrices, which, like $\mathbf L$, are
+positive-semidefinite.  An alternative convention exists in which the
+Laplacian matrix is defined as $\mathbf A - \mathbf D$, effectively
+negating all eigenvalues.  In KONECT, we use the $\mathbf D - \mathbf A$
+convention for all Laplacian-type matrices. 
 
 Note that in most cases, we work on just a single graph, and it is
 implicit that the characteristic matrices apply to this graph.  In a few
@@ -3095,6 +3101,7 @@ standardized notation of the normalized Laplacian.  The notation
 $\mathbf Z$ is specific to KONECT, and was chosen as the letter Z
 resembles a turned letter N, and the matrices represented by those
 letters share eigenvectors and have flipped eigenvalues. 
+The matrix $\mathbf Z$ is also called the \emph{random walk Laplacian}. 
 
 The normalized Laplacian is related to the normalized adjacency matrix
 by 
