@@ -4437,11 +4437,12 @@ value.  Whitespace is allowed everywhere, and is ignored.  The following metadat
   these. 
 \item \texttt{relationship-names}: (optional, recommended) The name of the
   relationship represented by edges, as a lowercase substantive in the singular (e.g.,
-  ``friendship'').
+  ``friendship'', ``road'').
   Again, we usually follow the nomenclature given by the data sources in naming
-  these.  The substantive may be a phrase, i.e., contain spaces such as
-  in ``tag assignment''.  If there are multiple relationship types, they
-  are separated by a slash, e.g. ``answer/comment''.
+  these.  The substantive may be a phrase, i.e., contain spaces (e.g., 
+  ``tag assignment'', ``metabolic reaction'').  If there are multiple
+  relationship types not otherwise distinguished by the dataset, they  
+  are separated by a slash (e.g., ``answer/comment'').
 \item \texttt{extr}: (optional, recommended) The name of the
   subdirectory under the directory \texttt{konect-extr/extr/} that
   contains the extraction code for this dataset in the KONECT
@@ -4465,7 +4466,7 @@ value.  Whitespace is allowed everywhere, and is ignored.  The following metadat
   comma separated list.  The given bibtex keys must correspond to the
   publications listed in the file \texttt{konect.bib} in the KONECT-Extr
   package. 
-  Most dataset have a single bibtex entry.  This
+  Most datasets have a single bibtex entry.  This
   is usually the actual paper about the dataset.  Many researchers have
   a preference about which of their papers should be cited for a dataset
   they have released, and we follow these. 
