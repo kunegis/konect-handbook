@@ -2056,7 +2056,7 @@ friendship links on Facebook''.  By construction, we can expect $P$ to
 be smaller when $G$ is larger, but there is no precise relationship
 between the two.
 
-Another statistic, which has been called the ``hubiness'' is given by
+Another statistic, which has been called the ``hubiness'' [sic], is given by
 the variance of the degree distribution \cite[e.g. by][]{b883,b884}.
 
 Statistics such as the power law exponent $\gamma$, the Gini coefficient
@@ -3084,6 +3084,30 @@ Note that while the matrix $\mathbf E^{\pm}$ is called the signed
 incidence matrix, it is not related to signed graphs.  In fact, the
 equality only holds for unsigned, unweighted graphs. 
 
+The Laplacian matrix can be used to compute the \emph{effective
+  resistance} in an electrical network \citep{b101}.  If a given graph is interpreted
+as an electrical network in which each edge is a resistor, then the
+graph as a whole acts as a resistor between any two nodes $u$ and $v$.
+The value of the resistance between two nodes $u$ and $v$ can be
+expressed using the Moore--Penrose inverse $\mathbf \Gamma = \mathbf
+L^+$ of the Laplacian $\mathbf L$:
+\begin{align}
+  r(u,v) &= \mathbf \Gamma_{uu} + \mathbf \Gamma_{vv} 
+  - \mathbf \Gamma_{uv} - \mathbf \Gamma_{vu} \\
+  &= (x^u - x^v)^{\mathrm T} \mathbf \Gamma (x^u - x^v)
+\end{align}
+Here, $x^u$ is a vector of size $|V|$ with $(x^u)_u=1$ and $(x^u)_v=0$
+whenever $u \neq v$.  The Moore--Penrose pseudoinverse can be expressed
+using the eigenvalue decomposition $\mathbf L = \mathbf U \mathbf
+\Lambda \mathbf U^{\mathrm T}$ as
+\begin{align}
+  \mathbf \Gamma &= \mathbf L^+ = \mathbf U \mathbf \Lambda^+ \mathbf U^{\mathrm T},
+\end{align}
+in which the Moore--Penrose pseudodoinverse of the diagonal matrix
+$\mathbf \Lambda$ is also diagonal and given by $(\mathbf
+\Lambda^+)_{ii}=(\mathbf \Lambda_{ii})^{-1}$ when $\mathbf \Lambda_{ii} \neq
+0$, and $(\mathbf L^+)_{ii}=0$ otherwise. 
+
 \subsubsection{Normalized Laplacian Matrix ($\mathbf Z$)}
 \label{sec:matrix.Z}
 The Laplacian matrix too, can be normalized.  It turns out that the
@@ -3237,6 +3261,38 @@ In signed graphs consisting of multiple connected components, the
 smallest eigenvalue of $\mathbf L$ is zero if and only if at least one
 connected component is balanced.  
 
+If a graph $G$ is balanced, then the eigenvalue decomposition of
+$\mathbf L[G]$ can be derived from that of underlying unsigned graph 
+\citep{kunegis:signed-kernels}.
+If $G$ is a balanced signed graph, and $|G|$ is underlying unsigned
+graph, then the eigenvalue decompositions of both graphs' Laplacian
+matrices can be considered:
+\begin{align*}
+  \mathbf L[G] &= \mathbf U \mathbf \Lambda \mathbf U^{\mathrm T} \\
+  \mathbf L[|G|] &= \mathbf V \mathbf \Lambda \mathbf V^{\mathrm T} 
+\end{align*}
+In that case, both Laplacian matrices have the same eigenvalues, and
+$\mathbf U$ and $\mathbf V$ differ only by negation of rows
+corresponding to nodes in one of the two clusters. 
+
+In signed graphs, the equivalent resistance can be defined by
+defining that an edge carrying a negative resistance value acts like the
+corresponding positive resistance in series with a component that
+negates potentials \citep{kunegis:netflix-srd}.  The result 
+gives a \emph{signed resistance distance kernel} based on the signed
+Laplacian:
+\begin{align}
+  r(u,v) &= \mathbf \Gamma_{uu} + \mathbf \Gamma_{vv} 
+  - \mathbf \Gamma_{uv} - \mathbf \Gamma_{vu} 
+\end{align}
+As in the unsigned case, the matrix $\mathbf \Gamma=\mathbf L^+$ is the
+Moore-Penrose pseudoinverse of $\mathbf L$.  See also Section~5.8.1 in
+the author's Phd thesis \citep{kunegis:phd}.  Note that if all connected
+components in the graph are unbalanced, then the Moore--Penrose
+pseudoinverse reduces to the ordinary matrix inverse, i.e., $\mathbf
+L^+=\mathbf L^{-1}$, due to the fact that $\mathbf L$ does not have
+eigenvalues of zero for such graphs. 
+
 \subsubsection{Repulsive Matrices}
 \label{sec:matrix.repulsive}
 The Laplacian matrix $\mathbf L = \mathbf D - \mathbf A$ as defined
@@ -3316,7 +3372,7 @@ Thus, it can be applied to the adjacency matrix of directed graphs.
   \mathbf A &= \mathbf U \mathbf \Sigma \mathbf V^{\mathrm T}
 \end{align}
 The matrices $\mathbf U$ and $\mathbf V$ are each orthogonal, but they
-are not equal.  They contain the left and right singular vectors are
+are not equal.  They contain the left and right singular vectors as
 columns.  The matrix $\mathbf \Sigma$ is diagonal, and contains the
 singular values, which are all nonnegative. 
 
@@ -4022,7 +4078,7 @@ eigenvectors of certain matrices.  For instance, the PageRank vector
 \marginpar{\texttt{pagerank}} is defined as the dominant eigenvector of
 the matrix $\mathbf G = (1-\alpha) \mathbf P + \alpha\mathbf 1$, and the
 eigenvector centrality as the component in the dominant eigenvector of
-the adjacency matrix $\mathbf A$. 
+the adjacency matrix $\mathbf A$ \citep{todo-from-book}. 
 
 The local clustering coefficients give the clustering coefficient
 distribution \marginpar{\texttt{cluscod}} \citep{b865}. 
@@ -4707,11 +4763,13 @@ to reflect best practices and to avoid confusion.
     diagonal or symmetric; a generalization of the diagonal eigenvalue
     matrix.
   \item[Class]
+    A class is a set of networks determined by the number of edges they
+    contain. 
     The networks of KONECT are divided into classes by their volume:
     Class~1 contains the ten smallest networks, Class~2 contains the
     next ten smallest networks, etc.  The class named `everything' contains all
     networks, and the class named `test' contains a set of small
-    representative network that cover most important network types. 
+    representative networks that cover most important network types. 
   \item[Claw]
     Three edges sharing a single vertex.  A claw can be understood as a 3-star. 
   \item[Code]
@@ -4985,13 +5043,21 @@ measures. \\
   $\mathbf Y$ & skew-symmetric adjacency matrix \\
   $\mathbf Z$ & normalized Laplacian matrix \\
   \midrule
+  $\mathbf \Gamma$ & Moore--Penrose pseudoinverse of $\mathbf L$ \\
   $\mathbf \Lambda$ & eigenvalue matrix \\
   $\mathbf \Sigma$ & singular value matrix \\
   \midrule
   $\bar G$ & unweighted graph \\
   $\bar{\bar G}$ & graph with unique edges \\
   $|G|$ & unsigned graph \\ 
-  $-G$  & negated graph 
+  $-G$  & negated graph \\
+  \midrule
+  $\bar{\mathbf X}$   & explicitly undirected or symmetrized version of a characteristic matrix \\
+  $\hat{\mathbf X}$   & repulsive version of a characteristic matrix \\
+  $\breve{\mathbf X}$ & Hermitian version of a characteristic matrix \\
+  $\acute{\mathbf X}$ & skew-Hermitian version of a characteristic matrix \\
+  $\vec{\mathbf X}$   & unidirectional version of a characteristic matrix \\
+  $\grave{\mathbf X}$ & bipartite version of a characteristic matrix \\
 \end{longtable}
 
 \end{document}
