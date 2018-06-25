@@ -1260,7 +1260,7 @@ and positively weighted networks, it leads to signed networks.
 \subsection{Algebraic Graph Theory}
 A very useful representation of graph is using matrices. In fact, a
 subfield of graph theory, algebraic graph theory, is devoted to
-this representation \citep{b118}.  When a graph is represented as a
+this representation \citep{b118,b646}.  When a graph is represented as a
 matrix, operations on graphs can often be expressed as simple algebraic
 expressions.  For instance, the number of common friends of
 two people in a social network can be expressed as the square of a
@@ -1332,7 +1332,8 @@ to similar matrices, which, like $\mathbf L$, are
 positive-semidefinite.  An alternative convention exists in which the
 Laplacian matrix is defined as $\mathbf A - \mathbf D$, effectively
 negating all eigenvalues.  In KONECT, we use the $\mathbf D - \mathbf A$
-convention for all Laplacian-type matrices. 
+convention for all Laplacian-type matrices.  The Laplacian is also
+called the \emph{Laplace matrix}. 
 
 Note that in most cases, we work on just a single graph, and it is
 implicit that the characteristic matrices apply to this graph.  In a few
@@ -1353,9 +1354,9 @@ value one when a node is incident to an edge, hence the name:
   \mathbf E_{u \{u,v\}} &= 1 \;\text{for edges $\{u,v\} \in E$} \\
   \mathbf E_{u \{v,w\}} &= 0 \;\text{when $u \neq v$ and $u \neq w$}
 \end{align*}
-The incidence matrix is ordinarily noted $\mathbf B$, but we use the name
-$\mathbf E$ in KONECT to avoid confusion with the biadjacency matrix,
-which we note $\mathbf B$. 
+The incidence matrix may also be denoted $\mathbf B$ and $\mathbf M$
+\cite[e.g.\ in][]{b646} in other literature. 
+
 To be precise, the exact definition of $\mathbf E$ requires one to
 define a numbering for the edges, just as a number of the nodes is necessary
 to define the adjacency matrix. 
@@ -2331,6 +2332,9 @@ network's giant connected component.  The algebraic connectivity is
 larger the better the network's largest connected component is
 connected.
 
+The largest absolute eigenvalue of $\mathbf W$ is a network statistic.
+\marginpar{\texttt{seidelnorm}}
+
 \subsection{Bipartivity Statistics}
 Some unipartite networks are almost bipartite.  Almost-bipartite
 networks include networks of sexual contact \citep{b719} and ratings in
@@ -2871,6 +2875,11 @@ eigenvalues of $\mathbf A$, i.e., $\mathbf \Lambda_{ii} =
 $\mathbf U$ is an $n \times n$ orthogonal matrix having the
 corresponding eigenvectors as columns. 
 
+The eigenvalues of $\mathbf A$ are widely used to characterize graphs,
+and often, the expression \emph{eigenvalue of a graph} is used without
+further qualification to refer to the eigenvalues of $\mathbf A$.  An
+example is given in \citep{b911}.
+
 The largest absolute eigenvalue of $\mathbf A$ is the networks spectral
 norm $\alpha$, i.e.,
 \begin{align*}
@@ -2912,6 +2921,9 @@ pairs $\{\pm\lambda\}$, i.e., they are distributed around zero
 symmetrically.  When the graph is not bipartite, then their distribution
 is not symmetric.  It follows that when the graph is bipartite, the
 smallest and largest eigenvalues have the same absolute value. 
+
+The sum of the absolute values of $\mathbf A$ is called the graph
+energy \citep{b910}. 
 
 \subsubsection{Normalized Adjacency Matrix ($\mathbf N$)}
 \label{sec:matrix.N}
@@ -3208,7 +3220,7 @@ The signless Laplacian exists in the following two normalized variants:
   \mathbf J &= \mathbf I + \mathbf D^{-1} \mathbf A
 \end{align}
 
-\subsubsection{Seidel Adjacency Matrix}
+\subsubsection{Seidel Adjacency Matrix ($\mathbf W$)}
 The Seidel adjacency matrix $\mathbf W$ is a symmetric $n \times n$ matrix given by 
 \begin{align}
   \mathnote{\texttt{seidel}}
@@ -3222,7 +3234,39 @@ The Seidel adjacency matrix $\mathbf W$ is a symmetric $n \times n$ matrix given
 The notation $\mathbf W$ is not standardized. 
 This type of matrices originates in \citep{b906}; see \citep{b907} for
 another reference.  This matrix is also called the $(-1,1,0)$-adjacency
-matrix. 
+matrix.  
+In that context, the ordinary adjacency matrix $\mathbf A$ may be called
+the $(0,1)$-adjacency matrix. 
+The matrix is also written as $\mathbf A^*$ \citep[e.g.\ in][]{b908} and
+$\mathbf S$ \citep[e.g.\ in][]{b909}. 
+Symmetric matrices such as $\mathbf W$ which have a zero diagonal and $\pm 1$ off
+the diagonal are also studied outside of graph theory, see
+e.g.\ \cite{b912}. 
+
+The matrix can also be expressed as
+\begin{align}
+  \mathbf W &= \mathbf J - \mathbf I - 2 \mathbf A,
+\end{align}
+where $\mathbf J$ is the matrix completely filled with ones, and
+$\mathbf A$ is the symmetric adjacency matrix of the graph.
+
+The matrix is not sparse, but due to its simple definition, its
+eigenvalue decomposition can be computed using sparse matrix methods. 
+In the general case, the matrix has both positive and negative
+eigenvalues. 
+The largest absolute eigenvalue of $\mathbf W$ is a network statistic.
+The sum of the absolute values of all eigenvalues of $\mathbf W$ has
+been called the Seidel energy of the graph \citep{b909}, in analogy with
+the sum of absolute eigenvalues of $\mathbf A$, called the energy. 
+
+The Seidel adjacency matrix has a particular significance for regular
+graphs \citep{b908}.  In particular, the number of eigenvalues of
+$\mathbf A$ and $\mathbf W$ whose eigenvector is not orthogonal to the
+all-ones vector has been considered.  This number is one for regular
+graphs, and larger otherwise. 
+
+Relations between the spectrum of $\mathbf W$ and the spectrum of
+$\mathbf A$ are given by \cite{b908}.
 
 \subsection{Decompositions of Signed Graphs}
 In this subsection, we review matrices and decompositions that apply to
