@@ -1138,7 +1138,7 @@ define the edge weight function $w$ for unweighted and rating networks:
   w(e) &= \left\{ \begin{array}{ll} 
     1 & \text{when $G$ is unweighted} \\
     r(e)-\mu & \text{when $G$ is a rating network} \\
-    \end{array} \right. 
+  \end{array} \right. 
 \end{align}
 
 We also define a weighting function for node pairs, also denoted
@@ -3208,6 +3208,22 @@ The signless Laplacian exists in the following two normalized variants:
   \mathbf J &= \mathbf I + \mathbf D^{-1} \mathbf A
 \end{align}
 
+\subsubsection{Seidel Adjacency Matrix}
+The Seidel adjacency matrix $\mathbf W$ is a symmetric $n \times n$ matrix given by 
+\begin{align}
+  \mathnote{\texttt{seidel}}
+  \mathbf W_{uv} &= 
+  \left\{ \begin{array}{ll}
+    0  & \text{when $u=v$} \\
+    -1 & \text{when $u \neq v$ and $u \leftrightarrow v$} \\
+    +1 & \text{when $u \neq v$ and $u \not\leftrightarrow v$} \\
+  \end{array} \right.
+\end{align}
+The notation $\mathbf W$ is not standardized. 
+This type of matrices originates in \citep{b906}; see \citep{b907} for
+another reference.  This matrix is also called the $(-1,1,0)$-adjacency
+matrix. 
+
 \subsection{Decompositions of Signed Graphs}
 In this subsection, we review matrices and decompositions that apply to
 signed graphs.  
@@ -5039,6 +5055,7 @@ measures. \\
   $\mathbf S$ & stochastic Laplacian matrix \\
   $\mathbf T$ & magnetic Laplacian matrix \\
   $\mathbf U, \mathbf V$ & eigenvector matrices \\
+  $\mathbf W$ & Seidel adjacency matrix \\
   $\mathbf X$ & central matrix \\
   $\mathbf Y$ & skew-symmetric adjacency matrix \\
   $\mathbf Z$ & normalized Laplacian matrix \\
