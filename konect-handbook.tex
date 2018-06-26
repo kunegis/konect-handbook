@@ -1260,7 +1260,7 @@ and positively weighted networks, it leads to signed networks.
 \subsection{Algebraic Graph Theory}
 A very useful representation of graph is using matrices. In fact, a
 subfield of graph theory, algebraic graph theory, is devoted to
-this representation \citep{b118,b646}.  When a graph is represented as a
+this representation \citep{b118,b646,b902}.  When a graph is represented as a
 matrix, operations on graphs can often be expressed as simple algebraic
 expressions.  For instance, the number of common friends of
 two people in a social network can be expressed as the square of a
@@ -1354,8 +1354,6 @@ value one when a node is incident to an edge, hence the name:
   \mathbf E_{u \{u,v\}} &= 1 \;\text{for edges $\{u,v\} \in E$} \\
   \mathbf E_{u \{v,w\}} &= 0 \;\text{when $u \neq v$ and $u \neq w$}
 \end{align*}
-The incidence matrix may also be denoted $\mathbf B$ and $\mathbf M$
-\cite[e.g.\ in][]{b646} in other literature. 
 
 To be precise, the exact definition of $\mathbf E$ requires one to
 define a numbering for the edges, just as a number of the nodes is necessary
@@ -1381,6 +1379,10 @@ for instance in the equality $\mathbf E^{\pm} [\mathbf E^{\pm}]^{\mathrm
   T} = \mathbf D - \mathbf A = \mathbf L$, which proves that the matrix
 $\mathbf L$ is positive-semidefinite.  Note that the equality holds
 independently of the chosen edge orientations. 
+
+Both variants of the incidence matrix may also be denoted $\mathbf B/\mathbf R$
+\cite[e.g.\ in][]{b902} and $\mathbf M$
+\cite[e.g.\ in][]{b646} in other literature. 
 
 Finally, the line matrix $\mathbf F \in \{0,1\}^{|E|\times|E|}$ of a graph is the edge-by-edge
 matrix given by 
@@ -3059,11 +3061,14 @@ i.e., the diagonal degree matrix from which we subtract the adjacency
 matrix.  The Laplacian matrix is also called the Kirchhoff matrix. 
 The Laplacian matrix is the discrete analogue of the Laplace operator
 ubiquitous in physics and other areas employing multivariate calculus.
-This operator is also simply called the Laplacian, and denoted $\Delta$ or
+This operator is also called the Laplacian, and denoted $\Delta$ or
 $\nabla^2$.  In that context, the Laplacian matrix is also called the
 discrete Laplace operator. 
 Due to this equivalence, the Laplacian matrix $\mathbf L$
 has many uses in network analysis. 
+The Laplacian matrix is also denoted with other letters, such as for
+instance $\mathbf Q$ as used by \cite{b902}.  It may also be called the
+admittance matrix.  
 
 We consider the eigenvalue decomposition of the Laplacian:
 \begin{align}
@@ -3084,7 +3089,7 @@ zero is a constant vector, i.e., a vector with all entries equal. The
 eigenvector corresponding the the second-smallest eigenvalue is called
 the Fiedler vector, and can be used to cluster nodes in the
 graph. Together with further eigenvectors, it can be used to draw
-graphs \citep{kunegis:signed-kernels}. 
+graphs \citep[see][]{kunegis:signed-kernels}. 
 
 The Laplacian matrix $\mathbf L$ can be expressed in terms of the signed
 incidence matrix $\mathbf E^{\pm}$:
@@ -3205,7 +3210,7 @@ call this smallest eigenvalue the algebraic non-bipartivity $\chi =
 \lambda_{\min}[\mathbf K]$. 
 
 In unsigned graphs, the multiplicity of the eigenvalue zero equals the
-number of connected component that are bipartite.  
+number of connected components that are bipartite.  
 In signed graphs, the multiplicity of the eigenvalue zero equals the
 number of connected components that are balanced after all their edges
 have been negated (i.e., switch between positive and negative). 
@@ -3232,7 +3237,7 @@ The Seidel adjacency matrix $\mathbf W$ is a symmetric $n \times n$ matrix given
   \end{array} \right.
 \end{align}
 The notation $\mathbf W$ is not standardized. 
-This type of matrices originates in \citep{b906}; see \citep{b907} for
+This type of matrix originates in \citep{b906}; see \citep{b907} for
 another reference.  This matrix is also called the $(-1,1,0)$-adjacency
 matrix.  
 In that context, the ordinary adjacency matrix $\mathbf A$ may be called
@@ -3245,9 +3250,9 @@ e.g.\ \cite{b912}.
 
 The matrix can also be expressed as
 \begin{align}
-  \mathbf W &= \mathbf J - \mathbf I - 2 \mathbf A,
+  \mathbf W &= \mathbf 1 - \mathbf I - 2 \mathbf A,
 \end{align}
-where $\mathbf J$ is the matrix completely filled with ones, and
+where $\mathbf 1$ is the matrix completely filled with ones, and
 $\mathbf A$ is the symmetric adjacency matrix of the graph.
 
 The matrix is not sparse, but due to its simple definition, its
@@ -4461,9 +4466,9 @@ the three cases:
 
 \subsection{TSV Format}
 In the following, we describe KONECT's TSV format.  Each network
-texttt{\$network} is represented by the file \texttt{out.\$network}. 
+\texttt{\$network} is represented by the file \texttt{out.\$network}. 
 
-The edges stored as tab-separated values (TSV).  The file is a text
+The edges are stored as tab-separated values (TSV).  The file is a text
 file, and each line contains information about one edge.  Each line
 contains two, three or four numbers represented textually, and separated
 by any sequence of whitespace.  The preferred separator is a single tab (\texttt{\textbackslash{t}}).
@@ -4477,7 +4482,7 @@ edges.  The fourth column is optional and contains the edge creation
 time, and is stored as UNIX time, i.e., the number of seconds since 1
 January 1970.  The fourth column is usually an integer, but may contain
 floating point numbers.  If the fourth column is present, the third
-column must also be given, and may be \emph{1} if it is otherwise not
+column must also be given, and may be \texttt{1} if it is otherwise not
 needed.  The beginning of the file contains  
 additional comment lines with the following information:
 \begin{verbatim}
@@ -4532,7 +4537,7 @@ value.  Whitespace is allowed everywhere, and is ignored.  The following metadat
   source.  The last character, if present, usually distinguishes
   the different networks from one source.  The code is unique across all
   of KONECT, although it is not an error if they are not:  It will only
-  lead to certain plots being confusing.  As KONECT grows, have become
+  lead to certain plots being confusing.  As KONECT grows, codes have become
   less and less unique; we may thus allow identical codes in the
   future. 
 \item \texttt{category}: (obligatory) The internal name of the category, as given in the
@@ -4997,14 +5002,17 @@ to reflect best practices and to avoid confusion.
 \end{description}
 
 \section{Glossary of Mathematical Symbols}
-
 The following symbols are used in mathematical expessions throughout
 KONECT.  Due to the large number of different measures used in graph
 theory and network analysis, many common symbols for measures overlap.
 For many measures, there is more than one commonly-used notation; the
 notation chosen in KONECT represents a reasonable balance between using established
 notation when it exists, and having distinct symbols for different
-measures. \\
+measures. 
+
+In KONECT and literature written by its authors, matrices are written as
+bold uppercase letters, and vectors as bold lowercase letters.
+Individual numbers and sets are written in non-bold symbols.  \\
 
 \begin{longtable}{ll}
   \toprule
