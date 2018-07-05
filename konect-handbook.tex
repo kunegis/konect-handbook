@@ -3509,6 +3509,37 @@ $\mathbf Y = \mathbf A - \mathbf A^{\mathrm T}$ to get a skew-symmetric matrix. 
 skew symmetric matrix $\mathbf X$ is a matrix such that $\mathbf X =
 -\mathbf X^{\mathrm T}$.
 
+One motivation for considering the matrix $\mathbf A - \mathbf
+A^{\mathrm T}$ is simply that this matrix is skew-symmetric, which makes
+it a normal matrix, and thus the eigenvalue decomposition is
+well-defined.  Beyond this, there is also an argument for why $\mathbf A
+- \mathbf A^{\mathrm T}$ in particular may be used -- if it was only for
+deriving a normal matrix from $\mathbf A$, then after all $\mathbf A +
+\mathbf A^{\mathrm T}$ would be perfectly adequate:  When $\mathbf A +
+\mathbf A^{\mathrm T}$ is used, the underlying assumption is that the
+direction of edges is unimportant and can be ignored.  This is usually a
+good assumption in directed networks in which edges are very often
+reciprocated anyway, i.e., in highly symmetric graphs.  Examples of such
+graphs are communication networks such as email networks.  In other
+directed networks however, the semantics of edge directions are
+different.  For instance, a sports result network in which nodes are
+teams and a directed edge denotes that a team has won against another
+team:  In such networks, we may interpret ``A has won against B'' as
+equivalent to ``B has lost against A''.  Thus, we can consider such a
+network as a signed directed network, making $\mathbf A - \mathbf
+A^{\mathrm T}$ the natural way to \emph{normalize} the network.  This
+has the advantage of taking into account who has won each game, as
+opposed to just considering the ``who has played whom'' network that is
+implicitly given by the symmetrical $\mathbf A + \mathbf A^{\mathrm
+  T}$.  This explains that the matrix $\mathbf Y$ is used in situations
+such as sports results which are inherently skew symmetric, i.e., where
+an edge in one direction is equivalent to a negated edge in the other
+direction.  Another example of such networks are dominance networks
+between animals, for instance cattle
+(\href{http://konect.cc/networks/moreno_cattle/}{\textsf{MA}}).  Such
+networks are indicated by the tag \texttt{\#skew}, as defined in
+Section~\ref{sec:tags}. 
+
 Skew symmetric matrices have well-defined eigenvalue decompositions,
 which are however complex, as both the eigenvectors and eigenvalues will
 be complex numbers.  The eigenvectors and eigenvalues however follow a
@@ -3550,7 +3581,10 @@ skew-symmetric matrix $\mathbf Y$ has the
 eigenvalue zero, which is the complex conjugate of itself.  Also, the
 expression $\mathbf U \mathbf D \mathbf V^{\mathrm T}$ is \emph{not} the
 singular value decomposition of $\mathbf A$, even if the form of the
-decomposition is the same. 
+decomposition is the same.  
+In particular, the matrix $\mathbf U \mathbf
+D \mathbf V^{\mathrm T}$ has at most rank $\lfloor n/2 \rfloor$, while
+$\mathbf A$ itself may have rank up to $n$. 
 
 In some cases, we may be interested in the matrix
 \begin{align}
@@ -3637,7 +3671,7 @@ Laplacian, effectively ignoring the edge directions.
 
 In the case $\theta \neq 0$, the magnetic Laplacian $T_{\theta}$ is
 distinct from the ordinary Laplacian, even if the directed graph is
-symmatric, i.e., when all edges are reciprocated. 
+symmetric, i.e., when all edges are reciprocated. 
 
 For the case $\theta = \pi/4$, this can be called the Hermitian
 Laplacian, and is simply denoted $\mathbf T$, in the same way that
