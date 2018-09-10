@@ -311,7 +311,7 @@ This handbook serves both as a compendium of mathematical definitions
 used in the KONECT project, as well as documentation of the software
 used in KONECT. 
 \begin{itemize}
-\item Section \ref{sec:taxonomy} \textbf{Networks} gives the basic
+\item Section \ref{sec:taxonomy} -- \textbf{Networks} gives the basic
   definition of a network as used in KONECT -- as networks exists in
   many different variants such as directed, bipartite, signed, etc., the
   exact definitions are often overlooked, but can be crucial for
@@ -319,14 +319,14 @@ used in KONECT.
   this section serves for the rest of the project.  This section also
   attempts to illustrate the breadth of the concept of \emph{network},
   bridging many different disciplines. 
-\item Section \ref{sec:definitions} \textbf{Graph Theory} gives the
+\item Section \ref{sec:definitions} -- \textbf{Graph Theory} gives the
   graph-theoretical definitions underlying all topics of network analysis.  Again,
   the devil is in the details and the graph theory literature is often
   split between multiple incompatible definitions for commonly used
   terms.  This sections presents the terminology and definitions as used
   in KONECT, which represents a compromise that has been proven useful
   in practice. 
-\item Section \ref{sec:statistics} \textbf{Statistics} is devoted to
+\item Section \ref{sec:statistics} -- \textbf{Statistics} is devoted to
   network statistics, i.e., numerical measures that characterize a
   network as a whole.  These are central to network analysis, and most
   common network statistics are covered.  The section is structured by
@@ -335,7 +335,7 @@ used in KONECT.
   introduction to the underlying topic, although not all subsections
   (yet) contain enough exposition to server as a general introduction to
   these topics. 
-\item Section \ref{sec:matrix} \textbf{Matrices and Decompositions} reviews
+\item Section \ref{sec:matrix} -- \textbf{Matrices and Decompositions} reviews
   characteristic matrices used to analyse graphs, with a focus on their
   decompositions.  These are crucial in various types of analyses,
   include pairwise node measures such as distances and similarities, as
@@ -344,19 +344,19 @@ used in KONECT.
   and complete, although the emphasis is mainly on the eigenvalue and
   singular value decompositions, and matrix to which they can be
   applied. 
-\item Section \ref{sec:plots} \textbf{Plots} reviews common ways to
+\item Section \ref{sec:plots} -- \textbf{Plots} reviews common ways to
   visualize properties of a network.  Some of those, such as the degree
   distribution, are ubiquitous in the literature.  Since KONECT plots
   are extensively used by the authors in published research, the plots
   cover quite distinct areas of network analysis. 
-\item Section \ref{sec:other} \textbf{Other Definitions} covers other
+\item Section \ref{sec:other} -- \textbf{Other Definitions} covers other
   definitions used in KONECT, including node features,
   i.e., numerical measures that characterize individual nodes in a
   network, and error measures.  These are often used as measures of centrality or
   importance, etc. 
-\item Section \ref{sec:toolbox} \textbf{The KONECT Toolbox} describes the GNU
+\item Section \ref{sec:toolbox} -- \textbf{The KONECT Toolbox} describes the GNU
   Octave and Matlab toolbox that is part of the KONECT project. 
-\item Section \ref{sec:format} \textbf{File Formats} finally documents the
+\item Section \ref{sec:format} -- \textbf{File Formats} finally documents the
   different file formats used by KONECT. 
 \end{itemize}
 
@@ -892,20 +892,30 @@ The following tags can be given to networks.  They are declared in the
   multiplicities, and in fact this tag only really makes sense when
   those are present. 
 \item \texttt{\#incomplete}: The network is incomplete, i.e.,
-  not all edges or nodes are included.  This implies that
-  strictly speaking, certain statistics or plots like 
+  the present dataset represents a subset of the actual data.  This is
+  mostly due to the fact that the data was crawled, or aggregated in
+  another way that cannot guarantee that all nodes and links were seen.
+  In such graphs, it is not specified \emph{which} nodes and edges are
+  missing.  
+  This implies that strictly speaking, certain statistics or plots like 
   the degree distribution are not meaningful, since they may
   depend on which parts are missing.  In practice, many datasets
-  fall into this category, and they are not always excluded. 
-\item \texttt{\#join}:  The network is actually the join (in the
+  fall into this category, and they do not necessarily all have this
+  tag. 
+\item \texttt{\#join}:  The network is the join (in the
   database-theoretical sense) of more
   fundamental networks.  For instance, a co-authorship network
   is a join of the authorship network with itself.  In general, all
-  networks that can be described as being a \emph{co-X} network are of
-  this type. 
+  networks that can be described as being a \emph{co-X network}, where
+  \emph{X} is some other network, are of this type. 
   Networks that have this tag may have skewed properties, such as skewed
   degree distributions.  In KONECT, we recommend to \emph{not} generate
-  the join of a given network, but to publish the underlying network itself. 
+  the join of a given network, but to publish the underlying network(s)
+  itself.  However, many networks are only known as their join, and thus
+  are included in KONECT.  (Note that in many cases, the self join has
+  been used to make a unipartite network out of a bipartite one, in
+  order to apply network analysis methods that otherwise do not apply to
+  bipartite networks.)
 \item \texttt{\#kcore}: The network contains only nodes with a
   certain minimal degree $k$. In other words, the nodes with
   degree less than a certain number $k$ were removed from the
@@ -949,7 +959,10 @@ The following tags can be given to networks.  They are declared in the
   time, but something else.  The only assumption that can be made is
   that timestamps are monotonously increasing, i.e., that larger values
   denote later times.  These could be simply year numbers, number of
-  days since a starting point, or something else. 
+  days since a starting point, or something else.  In networks having
+  this tag, the number of unique timestamps may be very low, making
+  temporal methods unsuited.  For instance, a network that is known from
+  only two snapshots may have the timestamp values 1 and 2. 
 \item \texttt{\#path}:  The edges represent paths have have been
   navigated in some form.  Thus, a purely network-analysis approach will
   fail to take into account the paths and only consider the
