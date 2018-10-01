@@ -2614,7 +2614,7 @@ computed with the function \texttt{konect\_decomposition()}.
 
 The first subsection contains decompositions that apply to simple
 graphs.  Subsequent subsections contain matrices that apply to specific
-types of graphs, in particular signed and directed graphs.  Almost all
+types of graphs: signed, bipartite, and directed graphs.  Almost all
 decompositions given in the first subsection can also be applied to
 non-simple graphs, in which cases the KONECT implementation will ignore
 the extra information.  Exceptions to this are when a decomposition
@@ -3422,6 +3422,65 @@ The repulsive Laplacian matrices are
 \end{align}
 The use of the repulsive matrices is rare, and we have not seen uses of
 any beyond $\mathbf{\hat L}$ in the wild.  
+
+\subsection{Decompositions of Bipartite Graphs}
+Bipartite graphs can be considered a subset of unipartite graphs, and
+thus the methods described previously apply to them.  However, this
+treatment ignores the special structure, and instead, methods specific
+to bipartite graphs can be used.  Indeed, bipartite graphs have
+adjacency matrices of the form  
+\begin{align}
+  \mathbf A &= \left[ \begin{array}{cc} \mathbf 0^{\phantom {\mathrm T}}
+      & \mathbf B \\ \mathbf 
+      B^{\mathrm T} & \mathbf 0 \end{array} \right], 
+\end{align}
+where $\mathbf B$ is called the biadjacency matrix of the graph.  This form can be
+exploited to reduce the eigenvalue decomposition of $\mathbf A$ to the equivalent
+singular value decomposition of $\mathbf B$~\citep{b614}. 
+Given the singular value
+decomposition $\mathbf B = \mathbf U \mathbf \Sigma \mathbf
+V^{\mathrm T}$, the eigenvalue decomposition of $\mathbf A$ is given by
+\begin{align}
+  \mathbf A &=
+  \left[ \begin{array}{cc} \mathbf {\bar U} & {\phantom -}\mathbf
+      {\bar U} \\ \mathbf {\bar V} & -\mathbf {\bar V} \end{array} \right] 
+  \left[ \begin{array}{cc} +\mathbf \Sigma & \mathbf 0 \\ \mathbf 0 &
+      -\mathbf \Sigma \end{array} \right] 
+  \left[ \begin{array}{cc} \mathbf {\bar U} & {\phantom -}\mathbf
+      {\bar U} \\ \mathbf {\bar V} & -\mathbf {\bar V} \end{array}
+    \right]^{\mathrm T}  
+\end{align}
+with $\mathbf {\bar U} =\mathbf U/\sqrt 2$ and $\mathbf {\bar V} =
+\mathbf V/\sqrt 2$.
+In this decomposition, 
+each singular value $\sigma$ corresponds to the eigenvalue pair $\{\pm
+\sigma\}$.  
+Odd powers of $\mathbf A$ then have the form
+\begin{align*}
+  \mathbf A^{2k+1} &= \left[ \begin{array}{cc} 
+      \mathbf 0 & (\mathbf B \mathbf B^{\mathrm T})^k \mathbf B \\
+      (\mathbf B^{\mathrm T} \mathbf B)^k \mathbf B^{\mathrm T} &
+      \mathbf 0 
+    \end{array} \right],
+\end{align*}
+where the alternating power $(\mathbf B \mathbf B^{\mathrm T})^k \mathbf
+B$ can be explained by the fact that in the bipartite network, a path
+will follow edges from one vertex set to the other in alternating
+directions, corresponding to the alternating transpositions of $\mathbf
+B$. 
+
+The same is true in the normalized case:  The eigenvalue decomposition
+of the normalized adjacency matrix $\mathbf N$ can be computed using the
+singular value decomposition of the normalized biadjacency matrix
+$\mathbf M$. 
+
+However, this technique cannot be extended to other matrices such as the Laplacian
+$\mathbf L$, since that matrix contains nonzero entries in its
+``block diagonal'' entries. 
+I.e., there is no corresponding expression relating the decomposition
+of the bipartite Laplacian matrix $\mathbf L = [\mathbf D_1 \; {-\mathbf B}; -\mathbf
+  B^{\mathrm T} \; \mathbf D_2]$ and the decomposition of the biadjacency
+matrix $\mathbf B$. 
 
 \subsection{Decompositions of Directed Graphs}
 In directed graphs, the adjacency matrix is itself
