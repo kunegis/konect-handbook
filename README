@@ -35,6 +35,8 @@ https://github.com/kunegis/stu/
 Once Stu is installed, just execute 'stu' within this directory to build
 the handbook.  See the file 'main.stu' for details. 
 
+Use 'stu -f standalone.stu' for stand-alone build.
+
 
 License
 =======
