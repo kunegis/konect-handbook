@@ -105,7 +105,8 @@ while IFS= read -r name ; do
 	if echo "$name" | grep -qvE '\.tex$' ; then
 		name="$name.tex"
 	fi
-	echo "$name"
+	"$0" "$name"
+	##	echo "$name"
 done
 
 #
