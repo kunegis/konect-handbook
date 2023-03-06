@@ -29,7 +29,7 @@
 \usepackage{tikz}
 \usepackage{natbib}
 \usepackage[nottoc]{tocbibind}
-\usepackage{wrapfig}
+%%\usepackage{wrapfig}
 \usepackage{longtable}
 \usepackage{multicol}
 \usepackage{multirow}
@@ -258,7 +258,11 @@ tool\footnote{\href{https://github.com/kunegis/stu}{https://github.com/kunegis/s
 was developed in parallel with KONECT.  KONECT used \texttt{make(1)} in
 the first years of its operation.  The Stu build system was initiated in
 2014, and KONECT was gradually switched to it, serving as its main use
-case.  Stu was essentially completed in August 2017 with publication of version 2.5. 
+case.  Stu was essentially completed in August 2017 with publication of version
+2.5, but continues to see occasional improvements.  
+
+As Jérôme Kunegis left academia in 2023 to join the industrial world in 2023,
+the KONECT website continues to be available. 
 
 \subsection{Status of this Handbook}
 This handbook is constantly updated.  The most up to date version can
@@ -1600,7 +1604,15 @@ that are connected by at least one edge.
 
 \subsection{Subgraph Count Statistics}
 \label{sec:count-statistics}
-\begin{wrapfigure}{r}{0.40\textwidth}
+The fundamental building block of a network are the edges.  Thus, the
+number of edges is a basic statistic of any network.  To understand the
+structure of a network, it is however not enough to analyse edges
+individually.  Instead, larger patterns such as triangles must be
+considered.  These patterns can be counted, and give rise to count
+statistics, i.e., statistics that count the number of ocurrences of
+specific patterns. 
+
+\begin{figure}
   \centering
   \includegraphics[width=0.20\textwidth]{img/Cherry_Stella444.jpg}
   \caption{
@@ -1609,14 +1621,7 @@ that are connected by at least one edge.
     their resemblance to the fruit.
     \label{fig:cherries}
   }
-\end{wrapfigure}
-The fundamental building block of a network are the edges.  Thus, the
-number of edges is a basic statistic of any network.  To understand the
-structure of a network, it is however not enough to analyse edges
-individually.  Instead, larger patterns such as triangles must be
-considered.  These patterns can be counted, and give rise to count
-statistics, i.e., statistics that count the number of ocurrences of
-specific patterns. 
+\end{figure}
 
 Table~\ref{tab:patterns} gives a list of fundamental patterns in
 networks, and their corresponding count statistics.

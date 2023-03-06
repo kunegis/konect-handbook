@@ -4,7 +4,8 @@
 % Ordering is from oldest to newest. 
 %
 % We include the main URL via the 'url' field, and other URLs via
-% 'url_*' fields. 
+% 'url_*' fields, as well as the 'text_prize' field.  (Those are used in the
+% CV.)  
 %
 % The 'kunegiscat' field is a custom field that represents the category of the
 % publication, and it can be: 
@@ -41,7 +42,7 @@
 %   * Miscellenaeous talk				(kunegiscat=talkmisc)
 %   * Software						(kunegiscat=software)
 %
-% We don't include newlines in fields. 
+% We don't include newlines in fields (to make it easier to parse). 
 %
 
 @mastersthesis{kunegis:master,
@@ -112,6 +113,7 @@
 	booktitle = {Proc. Industrial Conf. on Data Min.},
 	year = {2007},
 	pages= {269--282},
+	text_prize = {Best Paper Nominee},
 	kunegiscat = {conftalkown},
 }
 
@@ -236,6 +238,7 @@
 	booktitle = {Proc. SIAM Int. Conf. on Data Min.},
 	year = {2010},
 	pages = {559--570}, 
+	text_prize = {Won Student Travel Fellowship Award},
 	kunegiscat = {conftalkposterown},                   
 }
 
@@ -254,6 +257,7 @@
 	booktitle = {Proc. Int. Conf. on Inf. and Knowl. Manag.}, 
 	year = {2010}, 
 	pages = {739--748}, 
+	text_prize = {Won Student Travel Award},
 	kunegiscat = {conftalkown}, 
 }
 
@@ -366,6 +370,7 @@
 	booktitle = {Proc. Conf. on Hypertext and Soc. Media},
 	year = {2012}, 
 	pages = {255--264},
+        text_prize = {Nelson Newcomer Award Nominee},
 	kunegiscat = {conftalkown}, 
 }
 
@@ -564,6 +569,7 @@
 	booktitle = {Proc. Int. Conf. on Weblogs and Soc. Media},
 	year = {2015},
 	pages = {208--217}, 
+	text_prize = {Won Best Paper Honorable Mention},
 	kunegiscat = {conftalkother}, 
 }
 
@@ -749,7 +755,7 @@
 }
 
 @inproceedings{kunegis:benet2017,
-	title = {SynGraphy: Succinct Summarisation of Large Networks via Small Synthetic Representative Graphs},
+	title = {{SynGraphy}: Succinct Summarisation of Large Networks via Small Synthetic Representative Graphs},
 	author = {Jérôme Kunegis and Pawan Kumar and Jun Sun and Giuseppe Pirrò and Anna Samoilenko},
 	booktitle = {Proc. Belg. Netw. Res. Meet.},
 	year = {2017},
@@ -824,5 +830,44 @@
 	year = {2020},
 	journal = {CoRR},
 	volume = {abs/2009.09764},
+	kunegiscat = {misc},
+}
+
+@misc{kunegis:adventure-mi2,
+	title = {Game Dependency Graph: Monkey Island 2: LeChuck's Revenge},
+	author = {Jérôme Kunegis},
+	year = {2020},
+	kunegiscat = {popularization}, 
+}
+
+@misc{kunegis:adventure-mi3,
+	title = {Game Dependency Graph: The Curse of Monkey Island},
+	author = {Jérôme Kunegis},
+	year = {2020},
+	kunegiscat = {popularization}, 
+}
+
+@misc{kunegis:adventure-dot,
+	title = {Game Dependency Graph: Day of the Tentacle},
+	author = {Jérôme Kunegis},
+	year = {2021},
+	kunegiscat = {popularization}, 
+}
+
+@article{kunegis:caricature,
+	title = {{SynGraphy}: Succinct Summarisation of Large Networks via Small Synthetic Representative Graphs},   
+	author = {Jérôme Kunegis and Pawan Kumar and Jun Sun and Anna Samoilenko and Giuseppe Pirró},
+	year = {2023},
+	journal = {CoRR},
+	volume = {abs/2302.07755},
+	kunegiscat = {misc},
+}
+
+@article{kunegis:guided-graph-generation,
+	title = {Guided Graph Generation:  Evaluation of Graph Generators in Terms of Network Statistics, and a New Algorithm},
+	author = {Jérôme Kunegis and Jun Sun and Eiko Yoneki},
+	year = {2023},
+	journal = {CoRR},
+	volume = {abs/2303.00635},
 	kunegiscat = {misc},
 }
