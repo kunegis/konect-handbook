@@ -102,3 +102,9 @@ bibtex/$name.bib;
 
 konect.bib = -o konect-extr/;
 konect-extr/konect.bib;
+
+@clean {
+	rm -Rf $(cat .gitignore) 
+}
+
+
