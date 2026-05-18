@@ -7,7 +7,7 @@
 # directory.  
 #
 
-% version 2.5
+%version 2.10
 
 @main:   konect-handbook.pdf;
 @arxiv:  arxiv.tar.gz;
@@ -33,9 +33,9 @@ konect-handbook.pdf:  [FILES]
 	./mkcolors 
 }
 
-konect-toolbox/m/konect_data_category.m:  -p konect-toolbox;
+konect-toolbox/m/konect_data_category.m:  konect-toolbox;
 
-konect-toolbox: {
+-p konect-toolbox: {
 	echo "*** Symlink konect-toolbox/ to here"
 	echo "*** Konect-Toolbox is available at https://github.com/kunegis/konect-toolbox"
 	exit 1
@@ -106,5 +106,3 @@ konect-extr/konect.bib;
 @clean {
 	rm -Rf $(cat .gitignore) 
 }
-
-
